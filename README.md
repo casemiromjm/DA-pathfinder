@@ -5,9 +5,9 @@ All streets are assumed to be two-way streets. The city is represented as a weig
 
 If you can drive through an edge, you can walk through it as well. There are always free parking spots.
 
-The [data/](data/) folder contains the files used for creating the city representation graph.
+The [data/](code/data/) folder contains the files used for creating the city representation graph.
 
-[Locations.csv](data/Locations.csv) contains a header with 3 columns: *Location*, *Id*, *Code*, *Parking*.
+[Locations.csv](code/data/Locations.csv) contains a header with 3 columns: *Location*, *Id*, *Code*, *Parking*.
 - *Location* is the name of the location
 - *Id* is the unique identifier of the location
 - *Code* is the code that be a key in another table
@@ -15,7 +15,7 @@ The [data/](data/) folder contains the files used for creating the city represen
     - `0` means no parking
     - `1` means parking is available 
 
-[Distances.csv](data/Distances.csv) contains information about the travelling time (or distance) between two locations. The file contains a header with 4 columns: *Location1*, *Location2*, *Driving*, *Walking*.
+[Distances.csv](code/data/Distances.csv) contains information about the travelling time (or distance) between two locations. The file contains a header with 4 columns: *Location1*, *Location2*, *Driving*, *Walking*.
 - *Location1* and *Location2* are the *Code* of the locations. Goes from 1 to 2.
 - *Driving* is the time, in minutes, it takes to drive from *Location1* to *Location2*.
 - *Walking* is the time, in minutes, it takes to walk from *Location1* to *Location2*.
