@@ -77,7 +77,8 @@ public:
     Edge(Vertex<T> *orig, Vertex<T> *dest, double w);
 
     Vertex<T> * getDest() const;
-    double getWeight() const;
+    double getDrive() const;
+    double getWalk() const;
     bool isSelected() const;
     Vertex<T> * getOrig() const;
     Edge<T> *getReverse() const;
@@ -88,7 +89,8 @@ public:
     void setFlow(double flow);
 protected:
     Vertex<T> * dest; // destination vertex
-    double weight; // edge weight, can also be used for capacity
+    double drive; // edge weight when driving, can also be used for capacity
+    double walk; // edge weight when walking, can also be used for capacity
 
     // auxiliary fields
     bool selected = false;
@@ -326,8 +328,13 @@ Vertex<T> * Edge<T>::getDest() const {
 }
 
 template <class T>
-double Edge<T>::getWeight() const {
-    return this->weight;
+double Edge<T>::getDrive() const {
+    return this->drive;
+}
+
+template <class T>
+double Edge<T>::getWalk() const {
+    return this->walk;
 }
 
 template <class T>
