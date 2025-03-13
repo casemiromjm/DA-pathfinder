@@ -73,8 +73,9 @@ int main() {
 
     std::cout << "City constructed successfully!" << std::endl;
 
-    while (true) {
-        int choice = 0;
+    bool isRunning = true;
+    while (isRunning) {
+        char choice = 0;
 
         std::cout << "To choose an option, enter the symbol inside the brackets:" << std::endl;
         std::cout << std::endl;
@@ -82,22 +83,21 @@ int main() {
         std::cout << "[x] Close the program" << std::endl;
 
         std::cin >> choice;
+        choice = std::tolower(choice);
 
         switch (choice) {
 
-            case 1:
+            case '1':
                 std::cout << "Reading the input file" << std::endl;
-                break;
-            case 2:
-                break;
-            case 3:
                 break;
             case 'x':
                 std::cout << "Finished the demo!" << std::endl;
+                isRunning = false;
                 break;
+            default:
+                std::cout << "Invalid option! Please try again." << std::endl;
+            break;
         }
-
-        break;
     }
 
     return 0;
