@@ -1,48 +1,20 @@
 #include <iostream>
-#include <sstream>
 #include <map>
 #include "./data_structures/Graph.h"
 #include <string>
-#include <fstream>
+#include "include/csv.h"
+#include <thread>
 
-/*!
- * Function for reading CSV files
- * @param file_name is the file name for better error messages
- * @return return all lines separated in vectors
- */
-std::vector<std::vector<std::string>> readCSV(const std::string& file_name) {
-    std::vector<std::vector<std::string>> data;
-    std::ifstream file(file_name);
-
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << file_name << std::endl;
-        return data;
-    }
-
-    std::string line;
-    std::getline(file, line);       // skips the header line
-    while (getline(file, line)) {
-        std::vector<std::string> row;
-        std::stringstream ss(line);
-        std::string cell;
-
-        while (std::getline(ss, cell, ',')) {
-            row.push_back(cell);
-        }
-
-        data.push_back(row);
-    }
-
-    file.close();
-    return data;
-}
 
 /*!
  * Function for constructing a graph
+ * @param g is where the graph will be constructed
  * @retval true if the construction was successful
  * @retval false if it was not
  */
 bool constructGraph(Graph<int>& g) {
+    // poderia ser um metodo do grafo? e outra, devíamos dividir o Graph.h em outros .h?
+
     // readCSV faz com q leiamos o ficheiro 2x, mas faz a função ficar consideravelmente mais simples
 
     // read Locations.csv;
@@ -79,6 +51,7 @@ bool constructGraph(Graph<int>& g) {
         auto source = loc_IdCode[edge_info[0]];
         auto dest = loc_IdCode[edge_info[1]];
 
+        // handle the case when you cant drive
         g.addEdge(source, dest, edge_info[2] == "X" ? INF : stoi(edge_info[2]), stoi(edge_info[3]));
     }
 
@@ -89,12 +62,43 @@ int main() {
 
     Graph<int> city;
 
+    std::cout << "Building the city..." << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
     if (!constructGraph(city)) {
-        std::cerr << "Graph construction failed" << std::endl;
+        std::cerr << "City construction failed" << std::endl;
         return 1;
     }
 
-    std::cout << "Graph constructed successfully!" << std::endl;
+    std::cout << "City constructed successfully!" << std::endl;
+
+    while (true) {
+        int choice = 0;
+
+        std::cout << "To choose an option, enter the symbol inside the brackets:" << std::endl;
+        std::cout << std::endl;
+        std::cout << "[1] Read an input.txt file" << std::endl;
+        std::cout << "[x] Close the program" << std::endl;
+
+        std::cin >> choice;
+
+        switch (choice) {
+
+            case 1:
+                std::cout << "Reading the input file" << std::endl;
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 'x':
+                std::cout << "Finished the demo!" << std::endl;
+                break;
+        }
+
+        break;
+    }
 
     return 0;
 }
