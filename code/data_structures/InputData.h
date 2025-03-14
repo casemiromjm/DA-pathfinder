@@ -37,39 +37,38 @@ std::vector<InputData> readInputFile(std::string &filename, InputData &input_dat
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string input;
-        auto value;
+        std::string value;
 
         getline(ss, input, ':');
         getline(ss, value);
 
-        switch (input) {
-            case 'Mode':
-                input_data.mode = value;
-            break;
+        if (input == "Mode") {
+            input_data.mode = value;
+        }
 
-            case 'Source':
-                input_data.source = std::stoi(value);
-            break;
+        else if (input == "Source") {
+            input_data.source = std::stoi(value);
+        }
 
-            case 'Destination':
-                input_data.destination = std::stoi(value);
-            break;
+        else if (input == "Destination") {
+            input_data.destination = std::stoi(value);
+        }
 
-            case 'MaxWalkTime':
-                input_data.maxWalkTime = std::stoi(value);
-            break;
+        else if (input == "MaxWalkTime") {
+            input_data.maxWalkTime = std::stoi(value);
+        }
 
-            case 'AvoidNodes':
-                std::stringstream ssNodes(value);
+        else if (input == "AvoidNodes") {
+            std::stringstream ssNodes(value);
             std::string node;
 
             while (getline(ssNodes, node, ',')) {
                 input_data.avoidNodes.push_back(std::stoi(node));
             }
-            break;
+        }
 
-            case 'AvoidSegments':
-                std::stringstream ssSegments(value);
+        else if (input == "AvoidSegments") {
+            std::stringstream ssSegments(value);
             int first, second;
             char ch;
 
@@ -82,11 +81,10 @@ std::vector<InputData> readInputFile(std::string &filename, InputData &input_dat
                     input_data.avoidSegments.push_back(std::make_pair(first, second));
                 }
             }
-            break;
+        }
 
-            case 'IncludeNode':
-                input_data.includeNode = std::stoi(value);
-            break;
+        else if (input == "IncludeNodes") {
+            input_data.includeNode = std::stoi(value);
         }
     }
 
