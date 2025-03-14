@@ -38,7 +38,7 @@ void dijkstra_driving(Graph<T> * g, const int &origin) {
     while (!pq.empty()) {
         Vertex<T> * v = pq.extractMin();
         for (auto e : v -> getAdj()) { //para todos os edges do nó a ser processado
-          if(!(e -> getDest() -> isVisited())) continue;
+          if(e -> getDest() -> isVisited()) continue; //se o nó foi visitado na primeira chamada da função, ignora-o
             double oldDist = e -> getDest() ->getDist();
             if (relax(e)) {
                 if (oldDist == INF) {
