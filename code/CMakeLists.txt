@@ -3,4 +3,7 @@ project(code)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(code main.cpp)
+# Add the directory containing the header fies
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+add_executable(code main.cpp src/csv.cpp)
