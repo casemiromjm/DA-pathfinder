@@ -3,6 +3,7 @@
 #include "./data_structures/Graph.h"
 #include <string>
 #include "include/csv.h"
+#include "./data_structures/InputData.h"
 #include <thread>
 
 

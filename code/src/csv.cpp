@@ -5,8 +5,8 @@
  * @param file_name is the file name for better error messages
  * @return return all lines separated in vectors
  */
-std::vector<std::vector<std::string>> readCSV(const std::string& file_name) {
-    std::vector<std::vector<std::string>> data;
+std::vector<std::vector<std::string> > readCSV(const std::string& file_name) {
+    std::vector<std::vector<std::string> > data;
     std::ifstream file(file_name);
 
     if (!file.is_open()) {
