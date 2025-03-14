@@ -16,6 +16,7 @@ struct InputData {
     int maxWalkTime;
     std::vector<int> avoidNodes;
     std::vector<std::pair<int,int> > avoidSegments;
+    int includeNode;
  };
 
 
@@ -81,6 +82,10 @@ std::vector<InputData> readInputFile(std::string &filename, InputData &input_dat
                     input_data.avoidSegments.push_back(std::make_pair(first, second));
                 }
             }
+            break;
+
+            case 'IncludeNode':
+                input_data.includeNode = std::stoi(value);
             break;
         }
     }
