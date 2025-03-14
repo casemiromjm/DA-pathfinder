@@ -56,13 +56,6 @@ build CMakeFiles/code.dir/main.cpp.o: CXX_COMPILER__code_unscanned_Debug /home/c
   OBJECT_DIR = CMakeFiles/code.dir
   OBJECT_FILE_DIR = CMakeFiles/code.dir
 
-build CMakeFiles/code.dir/src/csv.cpp.o: CXX_COMPILER__code_unscanned_Debug /home/casemiromjm/feup/y2/s2/da/projects/DA-project1/code/src/csv.cpp || cmake_object_order_depends_target_code
-  DEP_FILE = CMakeFiles/code.dir/src/csv.cpp.o.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -I/home/casemiromjm/feup/y2/s2/da/projects/DA-project1/code/include
-  OBJECT_DIR = CMakeFiles/code.dir
-  OBJECT_FILE_DIR = CMakeFiles/code.dir/src
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target code
@@ -71,7 +64,7 @@ build CMakeFiles/code.dir/src/csv.cpp.o: CXX_COMPILER__code_unscanned_Debug /hom
 #############################################
 # Link the executable code
 
-build code: CXX_EXECUTABLE_LINKER__code_Debug CMakeFiles/code.dir/main.cpp.o CMakeFiles/code.dir/src/csv.cpp.o
+build code: CXX_EXECUTABLE_LINKER__code_Debug CMakeFiles/code.dir/main.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/code.dir
   POST_BUILD = :
