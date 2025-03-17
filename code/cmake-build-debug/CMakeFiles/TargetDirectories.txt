@@ -1,3 +1,0 @@
-/home/casemiromjm/feup/y2/s2/da/projects/DA-project1/code/cmake-build-debug/CMakeFiles/code.dir
-/home/casemiromjm/feup/y2/s2/da/projects/DA-project1/code/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/casemiromjm/feup/y2/s2/da/projects/DA-project1/code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
