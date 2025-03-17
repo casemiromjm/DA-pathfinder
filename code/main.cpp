@@ -6,68 +6,17 @@
 #include "./data_structures/InputData.h"
 #include <thread>
 
-
-/*!
- * Function for constructing a graph
- * @param g is where the graph will be constructed
- * @retval true if the construction was successful
- * @retval false if it was not
- */
-bool constructGraph(Graph<int>& g) {
-    // poderia ser um metodo do grafo? e outra, devíamos dividir o Graph.h em outros .h?
-
-    // readCSV faz com q leiamos o ficheiro 2x, mas faz a função ficar consideravelmente mais simples
-
-    // read Locations.csv;
-
-    auto data = readCSV("../data/Locations.csv");
-
-    if (data.empty()) {
-        std::cerr << "Failed to read Locations.csv or file is empty." << std::endl;
-        return false;
-    }
-
-    std::map<std::string, int> loc_IdCode;      // maps each code to its id
-
-    // create vertexes; create map
-    for (auto loc_info : data) {
-        int locId = std::stoi(loc_info[1]); // Convert loc ID to int
-        int parkingStatus = std::stoi(loc_info[3]); // Convert parking status to int
-
-        g.addVertex(locId, parkingStatus);
-        loc_IdCode[loc_info[2]] = locId;
-    }
-
-    // read distances
-
-    data = readCSV("../data/Distances.csv");
-
-    if (data.empty()) {
-        std::cerr << "Failed to read Distances.csv or file is empty." << std::endl;
-        return false;
-    }
-
-    // create edges
-    for (auto edge_info : data) {
-        auto source = loc_IdCode[edge_info[0]];
-        auto dest = loc_IdCode[edge_info[1]];
-
-        // handle the case when you cant drive
-        g.addEdge(source, dest, edge_info[2] == "X" ? INF : stoi(edge_info[2]), stoi(edge_info[3]));
-    }
-
-    return true;
-}
+#include "output.h"
 
 int main() {
 
-    Graph<int> city;
+    Graph city;
 
     std::cout << "Building the city..." << std::endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    if (!constructGraph(city)) {
+    if (!city.constructCity()) {
         std::cerr << "City construction failed" << std::endl;
         return 1;
     }
@@ -99,6 +48,7 @@ int main() {
                 std::cout << "Invalid option! Please try again." << std::endl;
             break;
         }
+
     }
 
     return 0;
