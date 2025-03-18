@@ -9,7 +9,8 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-#include "../include/csv.h"
+#include <map>
+#include "../data_structures/CSV.h"
 #include "../data_structures/MutablePriorityQueue.h" // not needed for now
 
 class Edge;
@@ -46,7 +47,7 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
-    Edge * addEdge(Vertex *dest, double d, double w);
+    Edge* addEdge(Vertex *dest, double d, double w);
     bool removeEdge(int in);
     void removeOutgoingEdges();
 
@@ -158,13 +159,13 @@ void deleteMatrix(double **m, int n);
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int in, int p): info(in), parking(p) {}
+inline Vertex::Vertex(int in, int p): info(in), parking(p) {}
 /*
  * Auxiliary function to add an outgoing edge to a vertex (this),
  * with a given destination vertex (d) and edge weight (w).
  */
 
-Edge * Vertex::addEdge(Vertex *b, double d, double w) {
+inline Edge* Vertex::addEdge(Vertex *b, double d, double w) {
     auto newEdge = new Edge(this, b, d, w);
     adj.push_back(newEdge);
     b->incoming.push_back(newEdge);
@@ -177,7 +178,7 @@ Edge * Vertex::addEdge(Vertex *b, double d, double w) {
  * Returns true if successful, and false if such edge does not exist.
  */
 
-bool Vertex::removeEdge(int in) {
+inline bool Vertex::removeEdge(int in) {
     bool removedEdge = false;
     auto it = adj.begin();
     while (it != adj.end()) {
@@ -198,7 +199,7 @@ bool Vertex::removeEdge(int in) {
 /*
  * Auxiliary function to remove an outgoing edge of a vertex.
  */
-void Vertex::removeOutgoingEdges() {
+inline void Vertex::removeOutgoingEdges() {
     auto it = adj.begin();
     while (it != adj.end()) {
         Edge *edge = *it;
@@ -207,93 +208,93 @@ void Vertex::removeOutgoingEdges() {
     }
 }
 
-bool Vertex::operator<(Vertex & vertex) const {
+inline bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
 
-int Vertex::getInfo() const {
+inline int Vertex::getInfo() const {
     return this->info;
 }
 
-int Vertex::getLow() const {
+inline int Vertex::getLow() const {
     return this->low;
 }
 
-void Vertex::setLow(int value) {
+inline void Vertex::setLow(int value) {
     this->low = value;
 }
 
 //adicionamos o setParking
-void Vertex::setParking(int value) {
+inline void Vertex::setParking(int value) {
     this->parking = value;
 }
 
 //adicionamos o getParking
-int Vertex::getParking() const {
+inline int Vertex::getParking() const {
     return this->low;
 }
 
-int Vertex::getNum() const {
+inline int Vertex::getNum() const {
     return this->num;
 }
 
-void Vertex::setNum(int value) {
+inline void Vertex::setNum(int value) {
     this->num = value;
 }
 
-std::vector<Edge*> Vertex::getAdj() const {
+inline std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
 
-bool Vertex::isVisited() const {
+inline bool Vertex::isVisited() const {
     return this->visited;
 }
 
-bool Vertex::isProcessing() const {
+inline bool Vertex::isProcessing() const {
     return this->processing;
 }
 
-unsigned int Vertex::getIndegree() const {
+inline unsigned int Vertex::getIndegree() const {
     return this->indegree;
 }
 
-double Vertex::getDist() const {
+inline double Vertex::getDist() const {
     return this->dist;
 }
 
-Edge *Vertex::getPath() const {
+inline Edge* Vertex::getPath() const {
     return this->path;
 }
 
-std::vector<Edge *> Vertex::getIncoming() const {
+inline std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-void Vertex::setInfo(int in) {
+inline void Vertex::setInfo(int in) {
     this->info = in;
 }
 
-void Vertex::setVisited(bool visited) {
+inline void Vertex::setVisited(bool visited) {
     this->visited = visited;
 }
 
-void Vertex::setProcessing(bool processing) {
+inline void Vertex::setProcessing(bool processing) {
     this->processing = processing;
 }
 
-void Vertex::setIndegree(unsigned int indegree) {
+inline void Vertex::setIndegree(unsigned int indegree) {
     this->indegree = indegree;
 }
 
-void Vertex::setDist(double dist) {
+inline void Vertex::setDist(double dist) {
     this->dist = dist;
 }
 
-void Vertex::setPath(Edge *path) {
+inline void Vertex::setPath(Edge *path) {
     this->path = path;
 }
 
-void Vertex::deleteEdge(Edge *edge) {
+inline void Vertex::deleteEdge(Edge *edge) {
     Vertex *dest = edge->getDest();
     // Remove the corresponding edge from the incoming list
     auto it = dest->incoming.begin();
@@ -310,62 +311,62 @@ void Vertex::deleteEdge(Edge *edge) {
 
 /********************** Edge  ****************************/
 
-Edge::Edge(Vertex *orig, Vertex *dest, double d, double w): orig(orig), dest(dest), drive(d), walk(w) {} //mudamos o construtor
+inline Edge::Edge(Vertex *orig, Vertex *dest, double d, double w): orig(orig), dest(dest), drive(d), walk(w) {} //mudamos o construtor
 
-Vertex * Edge::getDest() const {
+inline Vertex* Edge::getDest() const {
     return this->dest;
 }
 
-double Edge::getDrive() const {
+inline double Edge::getDrive() const {
     return this->drive;
 }
 
-double Edge::getWalk() const {
+inline double Edge::getWalk() const {
     return this->walk;
 }
 
-Vertex * Edge::getOrig() const {
+inline Vertex* Edge::getOrig() const {
     return this->orig;
 }
 
-Edge *Edge::getReverse() const {
+inline Edge* Edge::getReverse() const {
     return this->reverse;
 }
 
-bool Edge::isSelected() const {
+inline bool Edge::isSelected() const {
     return this->selected;
 }
 
-double Edge::getFlow() const {
+inline double Edge::getFlow() const {
     return flow;
 }
 
-void Edge::setSelected(bool selected) {
+inline void Edge::setSelected(bool selected) {
     this->selected = selected;
 }
 
-void Edge::setReverse(Edge *reverse) {
+inline void Edge::setReverse(Edge *reverse) {
     this->reverse = reverse;
 }
 
-void Edge::setFlow(double flow) {
+inline void Edge::setFlow(double flow) {
     this->flow = flow;
 }
 
 /********************** Graph  ****************************/
 
-int Graph::getNumVertex() const {
+inline int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::vector<Vertex *> Graph::getVertexSet() const {
+inline std::vector<Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-Vertex * Graph::findVertex(const int &in) const {
+inline Vertex* Graph::findVertex(const int &in) const {
     for (auto v : vertexSet)
         if (v->getInfo() == in)
             return v;
@@ -375,7 +376,7 @@ Vertex * Graph::findVertex(const int &in) const {
 /*
  * Finds the index of the vertex with a given content.
  */
-int Graph::findVertexIdx(const int &in) const {
+inline int Graph::findVertexIdx(const int &in) const {
     for (unsigned i = 0; i < vertexSet.size(); i++)
         if (vertexSet[i]->getInfo() == in)
             return i;
@@ -385,7 +386,7 @@ int Graph::findVertexIdx(const int &in) const {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const int &in, int& parking) {
+inline bool Graph::addVertex(const int &in, int& parking) {
     if (findVertex(in) != nullptr)
         return false;
     vertexSet.push_back(new Vertex(in, parking));
@@ -397,7 +398,7 @@ bool Graph::addVertex(const int &in, int& parking) {
  *  all outgoing and incoming edges.
  *  Returns true if successful, and false if such vertex does not exist.
  */
-bool Graph::removeVertex(const int &in) {
+inline bool Graph::removeVertex(const int &in) {
     for (auto it = vertexSet.begin(); it != vertexSet.end(); it++) {
         if ((*it)->getInfo() == in) {
             auto v = *it;
@@ -418,7 +419,7 @@ bool Graph::removeVertex(const int &in) {
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-bool Graph::addEdge(const int &sourc, const int &dest, double d, double w) {
+inline bool Graph::addEdge(const int &sourc, const int &dest, double d, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
@@ -432,7 +433,7 @@ bool Graph::addEdge(const int &sourc, const int &dest, double d, double w) {
  * The edge is identified by the source (sourc) and destination (dest) contents.
  * Returns true if successful, and false if such edge does not exist.
  */
-bool Graph::removeEdge(const int &sourc, const int &dest) {
+inline bool Graph::removeEdge(const int &sourc, const int &dest) {
     Vertex * srcVertex = findVertex(sourc);
     if (srcVertex == nullptr) {
         return false;
@@ -440,7 +441,7 @@ bool Graph::removeEdge(const int &sourc, const int &dest) {
     return srcVertex->removeEdge(dest);
 }
 
-bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double d, double w) {
+inline bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double d, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
@@ -457,7 +458,7 @@ bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double d, do
  * @retval true if the construction was successful
  * @retval false if it was not
  */
-bool Graph::constructCity() {
+inline bool Graph::constructCity() {
     // poderia ser um metodo do grafo? e outra, devíamos dividir o Graph.h em outros .h?
 
     // readCSV faz com q leiamos o ficheiro 2x, mas faz a função ficar consideravelmente mais simples
@@ -522,7 +523,7 @@ inline void deleteMatrix(double **m, int n) {
     }
 }
 
-Graph::~Graph() {
+inline Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());
 }

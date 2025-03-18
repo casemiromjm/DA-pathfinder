@@ -49,26 +49,30 @@ struct OutputData {
         std::cout << "Destination:" << dest << std::endl;
     }
 
-    void print_multiroute_cli(const OutputData& data) {
-        printSource_cli(data.source);
-        printDest_cli(data.destination);
+    /*!
+     * print the best route and alternative route on terminal
+     */
+    void print_multiroute_cli() {
+        printSource_cli(this->source);
+        printDest_cli(this->destination);
 
-        if (data.bestDrivingRoute.empty()) {
+        if (this->bestDrivingRoute.empty()) {
             std::cout << "BestDrivingRoute:none" << std::endl;
         } else {
             std::cout << "BestDrivingRoute:";
-            printVector_cli(data.bestDrivingRoute);
+            printVector_cli(this->bestDrivingRoute);
             std::cout << std::endl;
         }
 
-        if (data.alternativeDrivingRoute.empty()) {
+        if (this->alternativeDrivingRoute.empty()) {
             std::cout << "AlternativeDrivingRoute:none" << std::endl;
         } else {
             std::cout << "AlternativeDrivingRoute:";
-            printVector_cli(data.alternativeDrivingRoute);
+            printVector_cli(this->alternativeDrivingRoute);
             std::cout << std::endl;
         }
     }
+
     /*!
      * print a vector in the format x1,x2,...,xn on out_file
      * @param vec the vector you want to print
@@ -102,31 +106,34 @@ struct OutputData {
         out_file << "Destination:" << dest << std::endl;
     }
 
-    void print_multiroute_file(const OutputData& data) {
+    /*!
+     * print the best route and alternative route on an output file
+     */
+    void print_multiroute_file() {
         std::ofstream out_file;
 
-        out_file.open("/output.txt");
+        out_file.open("../input_output/output.txt");
 
         if (!out_file.is_open()) {
             std::cerr << "Failed to open output file" << std::endl;
         }
 
-        printSource_cli(data.source);
-        printDest_cli(data.destination);
+        printSource_file(this->source, out_file);
+        printDest_file(this->destination, out_file);
 
-        if (data.bestDrivingRoute.empty()) {
+        if (this->bestDrivingRoute.empty()) {
             out_file << "BestDrivingRoute:none" << std::endl;
         } else {
             out_file << "BestDrivingRoute:";
-            printVector_cli(data.bestDrivingRoute);
+            printVector_cli(this->bestDrivingRoute);
             out_file << std::endl;
         }
 
-        if (data.alternativeDrivingRoute.empty()) {
+        if (this->alternativeDrivingRoute.empty()) {
             out_file << "AlternativeDrivingRoute:none" << std::endl;
         } else {
             out_file << "AlternativeDrivingRoute:";
-            printVector_cli(data.alternativeDrivingRoute);
+            printVector_cli(this->alternativeDrivingRoute);
             out_file << std::endl;
         }
 

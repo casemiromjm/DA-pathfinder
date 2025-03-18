@@ -1,10 +1,11 @@
 #include <iostream>
-#include <map>
-#include "./data_structures/Graph.h"
+#include "data_structures/Graph.h"
 #include "data_structures/InputData.h"
 #include <string>
-#include "include/csv.h"
+#include "data_structures/CSV.h"
+#include "algorithms/dijsktra_driving.cpp"
 #include <thread>
+#include "data_structures/OutputData.h"
 
 
 int main() {
@@ -12,7 +13,7 @@ int main() {
 
     std::cout << "Building the city..." << std::endl;
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    //std::this_thread::sleep_for(std::chrono::seconds(1));
 
     if (!city.constructCity()) {
         std::cerr << "City construction failed" << std::endl;
@@ -27,7 +28,8 @@ int main() {
 
         std::cout << "To choose an option, enter the symbol inside the brackets:" << std::endl;
         std::cout << std::endl;
-        std::cout << "[1] Read an input.txt file" << std::endl;
+        std::cout << "[1] Read an input via .txt file" << std::endl;
+        std::cout << "[2] Read an input via CLI" << std::endl;
         std::cout << "[x] Close the program" << std::endl;
 
         std::cin >> choice;
@@ -41,11 +43,17 @@ int main() {
                 std::cin >> filename;
 
                 InputData input_data = readInputFile(filename);
+                OutputData output_data;
+                output_data.source = input_data.source;
+                output_data.destination = input_data.destination;
 
-                std::cout << "Mode:" << input_data.mode << "\n";
-                std::cout << "Source:" << input_data.source << "\n";
-                std::cout << "Destination:" << input_data.destination << "\n";
-                std::cout << "MaxWalkTime:" << input_data.maxWalkTime << "\n";
+                dijkstra_driving(&city, input_data.source);
+                output_data.bestDrivingRoute = getPath(&city, input_data.source, input_data.destination);
+
+                dijkstra_driving(&city, input_data.source);
+                output_data.alternativeDrivingRoute = getPath(&city, input_data.source, input_data.destination);
+
+                output_data.print_multiroute_file();
 
             break;
             }

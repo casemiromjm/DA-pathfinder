@@ -3,20 +3,18 @@
 
 using namespace std;
 
-template <class T>
-bool relax(Edge<T> *edge) { // d[u] + w(u,v) < d[v]
-    Vertex<T> * u = edge->getOrig();
-    Vertex<T> * v = edge->getDest();
-    if ( u->getDist() + edge->getDrive() < v->getDist()) {
-        v -> setDist(u -> getDist() + edge->getDrive());
-        v -> setPath(edge);
+bool relax(Edge *edge) { // d[u] + w(u,v) < d[v]
+
+    if (edge->getOrig()->getDist() + edge->getDrive() < edge->getDest()->getDist()) {
+        edge->getDest()->setDist(edge->getOrig()->getDist() + edge->getDrive());
+        edge->getDest()->setPath(edge);
         return true;
     }
+
     return false;
 }
 
-template <class T>
-void dijkstra_driving(Graph<T> * g, const int &origin) {
+void dijkstra_driving(Graph * g, const int &origin) {
 
     if (g->getVertexSet().empty()) {
         return;
@@ -29,16 +27,16 @@ void dijkstra_driving(Graph<T> * g, const int &origin) {
         v -> setPath(nullptr);
     }
 
-    Vertex<T> *s = g->findVertex(origin); //nó de origem
+    Vertex *s = g->findVertex(origin); //nó de origem
     s -> setDist(0);
 
-    MutablePriorityQueue<Vertex<T>> pq;
+    MutablePriorityQueue<Vertex> pq;
     pq.insert(s);
 
     while (!pq.empty()) {
-        Vertex<T> * v = pq.extractMin();
-        for (auto e : v -> getAdj()) { //para todos os edges do nó a ser processado
-          if(e -> getDest() -> isVisited()) continue; //se o nó foi visitado na primeira chamada da função, ignora-o
+        Vertex * v = pq.extractMin();
+        for (auto e : v -> getAdj()) { // para todos os edges do nó a ser processado
+          if(e -> getDest() -> isVisited()) continue; // se o nó foi visitado na primeira chamada da função, ignora-o
             double oldDist = e -> getDest() ->getDist();
             if (relax(e)) {
                 if (oldDist == INF) {
@@ -54,21 +52,26 @@ void dijkstra_driving(Graph<T> * g, const int &origin) {
 
 }
 
-template <class T>
-static std::vector<T> getPath(Graph<T> * g, const int &origin, const int &dest) {
-    std::vector<T> res;
-    Vertex<T> *q = g->findVertex(dest);
+std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
+    std::vector<int> res;
+    auto d = g->findVertex(dest);
 
-    res.push_back(q->getInfo());
-    q = q->getPath()->getOrig();
+    if (d == nullptr || d->getDist() == INF) {
+        return res;     // dest not reachable
+    }
 
-    while (q->getInfo() != origin) {
-        res.push_back(q->getInfo());
-        q -> setVisited(true);  //nós que não sejam dest ou origin marcados como visitados após a primeira call do dijkstra
-        q = q->getPath()->getOrig();
+    while (d->getInfo() != origin) {
+        res.push_back(d->getInfo());
+
+        // nós que não sejam dest ou origin marcados como visitados após a primeira call do dijkstra
+        if (d->getInfo() != origin && d->getInfo() != dest) {
+            d->setVisited(true);
+        }
+
+        d = d->getPath()->getOrig();
 
     }
-    res.push_back(origin);
+    res.push_back(d->getInfo());
     reverse(res.begin(), res.end());
 
     return res;
