@@ -21,12 +21,9 @@ struct InputData {
 
 
 InputData readInputFile(std::string &filename) {
-    std::ifstream file("./input_output/" + filename); //recebe o filename e procura na pasta input_output
+    std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
 
-    InputData input_data; //nao sei se vai ser necessário
-
-    //perguntar se cada ficheiro vai ter só um input ou vários?
-    //se tiver vários como fazer?
+    InputData input_data;
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;

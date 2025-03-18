@@ -35,19 +35,20 @@ int main() {
 
         switch (choice) {
 
-            case '1':
+            case '1': {
                 std::string filename;
                 std::cout << "Please enter the filename: ";
                 std::cin >> filename;
 
                 InputData input_data = readInputFile(filename);
 
-                std::cout << "Mode: " << input_data.mode << "\n";
-                std::cout << "Source: " << input_data.source << "\n";
-                std::cout << "Destination: " << input_data.destination << "\n";
-                std::cout << "MaxWalkTime: " << input_data.maxWalkTime << "\n";
+                std::cout << "Mode:" << input_data.mode << "\n";
+                std::cout << "Source:" << input_data.source << "\n";
+                std::cout << "Destination:" << input_data.destination << "\n";
+                std::cout << "MaxWalkTime:" << input_data.maxWalkTime << "\n";
 
             break;
+            }
 
             case 'x':
                 std::cout << "Finished the demo!" << std::endl;
