@@ -9,18 +9,24 @@
 
 
 int main() {
-    Graph city;
-
-    std::cout << "Building the city..." << std::endl;
+    // Graph city;
+    // std::cout << "Building the city..." << std::endl;
 
     //std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    if (!city.constructCity()) {
-        std::cerr << "City construction failed" << std::endl;
+    // if (!city.constructCity()) {
+    //     std::cerr << "City construction failed" << std::endl;
+    //     return 1;
+    // }
+    //
+    // std::cout << "City constructed successfully!" << std::endl;
+
+    Graph test_city;
+    if (!test_city.constructCity()) {
+        std::cerr << "Test City construction failed" << std::endl;
         return 1;
     }
-
-    std::cout << "City constructed successfully!" << std::endl;
+    std::cout << "Test City constructed successfully!" << std::endl;
 
     bool isRunning = true;
     while (isRunning) {
@@ -47,16 +53,17 @@ int main() {
                 output_data.source = input_data.source;
                 output_data.destination = input_data.destination;
 
-                dijkstra_driving(&city, input_data.source);
-                output_data.bestDrivingRoute = getPath(&city, input_data.source, input_data.destination);
+                dijkstra_driving(&test_city, input_data.source);
+                output_data.bestDrivingRoute = getPath(&test_city, input_data.source, input_data.destination);
+                output_data.min_time_1 = test_city.findVertex(input_data.destination)->getDist();
 
-                dijkstra_driving(&city, input_data.source);
-                output_data.alternativeDrivingRoute = getPath(&city, input_data.source, input_data.destination);
+                dijkstra_driving(&test_city, input_data.source);
+                output_data.alternativeDrivingRoute = getPath(&test_city, input_data.source, input_data.destination);
+                output_data.min_time_2 = test_city.findVertex(input_data.destination)->getDist();
 
                 output_data.print_multiroute_file();
-
-            break;
             }
+            break;
 
             case 'x':
                 std::cout << "Finished the demo!" << std::endl;
@@ -67,9 +74,7 @@ int main() {
                 std::cout << "Invalid option! Please try again." << std::endl;
             break;
         }
-
-
-
-        return 0;
     }
+
+    return 0;
 }

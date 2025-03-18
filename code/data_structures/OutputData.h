@@ -14,6 +14,8 @@ struct OutputData {
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
     std::vector<int> restrictedDrivingRoute;
+    double min_time_1;
+    double min_time_2;
 
     // methods
 
@@ -23,7 +25,7 @@ struct OutputData {
      * print a vector in the format x1,x2,...,xn on terminal
      * @param vec the vector you want to print
      */
-    void printVector_cli(const std::vector<int>& vec) {
+    void printRoute_cli(const std::vector<int>& vec) {
         for (auto node : vec) {
             if (node == vec[vec.size() - 1]) {
                 std::cout << node << std::endl;
@@ -60,7 +62,8 @@ struct OutputData {
             std::cout << "BestDrivingRoute:none" << std::endl;
         } else {
             std::cout << "BestDrivingRoute:";
-            printVector_cli(this->bestDrivingRoute);
+            printRoute_cli(this->bestDrivingRoute);
+            std::cout << "(" << min_time_1 << ")";
             std::cout << std::endl;
         }
 
@@ -68,7 +71,8 @@ struct OutputData {
             std::cout << "AlternativeDrivingRoute:none" << std::endl;
         } else {
             std::cout << "AlternativeDrivingRoute:";
-            printVector_cli(this->alternativeDrivingRoute);
+            printRoute_cli(this->alternativeDrivingRoute);
+            std::cout << "(" << min_time_2 << ")";
             std::cout << std::endl;
         }
     }
@@ -78,10 +82,10 @@ struct OutputData {
      * @param vec the vector you want to print
      * @param out_file where the text will be written
      */
-    void printVector_file(const std::vector<int>& vec, std::ofstream& out_file) {
+    void printRoute_file(const std::vector<int>& vec, std::ofstream& out_file) {
         for (auto node : vec) {
             if (node == vec[vec.size() - 1]) {
-                out_file << node << std::endl;
+                out_file << node;
             } else {
                 out_file << node << ",";
             }
@@ -125,7 +129,8 @@ struct OutputData {
             out_file << "BestDrivingRoute:none" << std::endl;
         } else {
             out_file << "BestDrivingRoute:";
-            printVector_cli(this->bestDrivingRoute);
+            printRoute_file(this->bestDrivingRoute, out_file);
+            out_file << "(" << min_time_1 << ")";
             out_file << std::endl;
         }
 
@@ -133,9 +138,13 @@ struct OutputData {
             out_file << "AlternativeDrivingRoute:none" << std::endl;
         } else {
             out_file << "AlternativeDrivingRoute:";
-            printVector_cli(this->alternativeDrivingRoute);
+            printRoute_file(this->alternativeDrivingRoute, out_file);
+            out_file << "(" << min_time_2 << ")";
             out_file << std::endl;
         }
+
+        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << std::endl;
 
         out_file.close();
     }

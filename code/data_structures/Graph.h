@@ -459,14 +459,12 @@ inline bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, doubl
  * @retval false if it was not
  */
 inline bool Graph::constructCity() {
-    // poderia ser um metodo do grafo? e outra, devíamos dividir o Graph.h em outros .h?
-
-    // readCSV faz com q leiamos o ficheiro 2x, mas faz a função ficar consideravelmente mais simples
 
     // read Locations.csv;
 
     Csv *csv_file = new Csv();
-    csv_file->readCSV("../data/Locations.csv");
+    // csv_file->readCSV("../data/Locations.csv");  uncomment for creating the real graph
+    csv_file->readCSV("../data/Locations_test.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Locations.csv or file is empty." << std::endl;
@@ -486,7 +484,8 @@ inline bool Graph::constructCity() {
 
     // read distances
 
-    csv_file->readCSV("../data/Distances.csv");
+    // csv_file->readCSV("../data/Distances.csv");      // uncomment for the real graph
+    csv_file->readCSV("../data/Distances_test.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Distances.csv or file is empty." << std::endl;
@@ -499,7 +498,7 @@ inline bool Graph::constructCity() {
         auto dest = loc_IdCode[edge_info[1]];
 
         // handle the case when you cant drive
-        this->addEdge(source, dest, edge_info[2] == "X" ? INF : stoi(edge_info[2]), stoi(edge_info[3]));
+        this->addBidirectionalEdge(source, dest, edge_info[2] == "X" ? INF : stoi(edge_info[2]), stoi(edge_info[3]));
     }
 
     return true;

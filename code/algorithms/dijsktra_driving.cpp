@@ -1,13 +1,16 @@
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
+#include <algorithm>
 
 using namespace std;
 
 bool relax(Edge *edge) { // d[u] + w(u,v) < d[v]
 
     if (edge->getOrig()->getDist() + edge->getDrive() < edge->getDest()->getDist()) {
+
         edge->getDest()->setDist(edge->getOrig()->getDist() + edge->getDrive());
         edge->getDest()->setPath(edge);
+
         return true;
     }
 
@@ -23,31 +26,37 @@ void dijkstra_driving(Graph * g, const int &origin) {
     //inicializar variáveis auxiliares
 
     for (auto v : g->getVertexSet()) {
-        v -> setDist(INF);
-        v -> setPath(nullptr);
+        v->setDist(INF);
+        v->setPath(nullptr);
     }
 
-    Vertex *s = g->findVertex(origin); //nó de origem
-    s -> setDist(0);
+    //nó de origem
+    Vertex *s = g->findVertex(origin);
+    s->setDist(0);
 
     MutablePriorityQueue<Vertex> pq;
     pq.insert(s);
 
     while (!pq.empty()) {
-        Vertex * v = pq.extractMin();
-        for (auto e : v -> getAdj()) { // para todos os edges do nó a ser processado
-          if(e -> getDest() -> isVisited()) continue; // se o nó foi visitado na primeira chamada da função, ignora-o
-            double oldDist = e -> getDest() ->getDist();
+        auto v = pq.extractMin();
+
+        for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
+            if (e->getDest()->isVisited()) {
+              // se o nó foi visitado na primeira chamada da função, ignora-o
+              continue;
+            }
+
+            double oldDist = e->getDest()->getDist();
+
             if (relax(e)) {
                 if (oldDist == INF) {
-                    pq.insert(e -> getDest());
+                    pq.insert(e->getDest());
                 }
                 else {
-                    pq.decreaseKey(e -> getDest());
+                    pq.decreaseKey(e->getDest());
                 }
             }
         }
-
     }
 
 }
@@ -57,7 +66,7 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     auto d = g->findVertex(dest);
 
     if (d == nullptr || d->getDist() == INF) {
-        return res;     // dest not reachable
+        return res;     // dest ñ alcançável
     }
 
     while (d->getInfo() != origin) {
@@ -69,8 +78,8 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
         }
 
         d = d->getPath()->getOrig();
-
     }
+
     res.push_back(d->getInfo());
     reverse(res.begin(), res.end());
 
