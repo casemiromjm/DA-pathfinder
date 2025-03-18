@@ -30,7 +30,7 @@ InputData readInputFile(std::string &filename) {
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
-        return result;
+        return input_data;
     }
 
     std::string line;
@@ -89,7 +89,7 @@ InputData readInputFile(std::string &filename) {
     }
 
     file.close();
-    return intput_data;
+    return input_data;
 }
 
 #endif //INPUTDATA_H
