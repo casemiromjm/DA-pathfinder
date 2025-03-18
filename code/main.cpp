@@ -65,6 +65,11 @@ int main() {
             }
             break;
 
+            case '2': {
+
+            }
+            break;
+
             case 'x':
                 std::cout << "Finished the demo!" << std::endl;
                 isRunning = false;

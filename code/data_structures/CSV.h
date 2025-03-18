@@ -18,7 +18,7 @@ class Csv {
 /*!
  *@return the CSV data
  */
-inline std::vector<std::vector<std::string>> Csv::getData() {
+std::vector<std::vector<std::string>> Csv::getData() {
     return data;
 }
 
@@ -27,7 +27,7 @@ inline std::vector<std::vector<std::string>> Csv::getData() {
  * @param file_name is the file name for better error messages
  * @return return all lines separated in vectors
  */
-inline void Csv::readCSV(const std::string& file_name) {
+void Csv::readCSV(const std::string& file_name) {
     std::ifstream file(file_name);
 
     data.clear();
