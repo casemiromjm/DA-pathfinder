@@ -20,17 +20,14 @@ struct InputData {
  };
 
 
-std::vector<InputData> readInputFile(std::string &filename, InputData &input_data) {
-    std::ifstream file(filename);
+InputData readInputFile(std::string &filename) {
+    std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
 
-    std::vector<InputData> result; //nao sei se vai ser necessário
-
-    //perguntar se cada ficheiro vai ter só um input ou vários?
-    //se tiver vários como fazer?
+    InputData input_data;
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
-        return result;
+        return input_data;
     }
 
     std::string line;
@@ -89,7 +86,7 @@ std::vector<InputData> readInputFile(std::string &filename, InputData &input_dat
     }
 
     file.close();
-    return result;
+    return input_data;
 }
 
 #endif //INPUTDATA_H
