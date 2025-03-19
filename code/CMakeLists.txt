@@ -4,6 +4,6 @@ project(code)
 set(CMAKE_CXX_STANDARD 14)
 
 # Add the directory containing the header fies
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/data_structures)
 
-add_executable(code main.cpp data_structures/OutputData.h data_structures/InputData.h)
+add_executable(code main.cpp)
