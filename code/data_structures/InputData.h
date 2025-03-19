@@ -13,10 +13,10 @@ struct InputData {
     std::string mode;
     int source;
     int destination;
-    int maxWalkTime;
+    int maxWalkTime = -1;
     std::vector<int> avoidNodes;
     std::vector<std::pair<int,int> > avoidSegments;
-    int includeNode;
+    int includeNode = -1;
  };
 
 
