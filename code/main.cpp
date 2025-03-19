@@ -63,6 +63,7 @@ int main() {
 
                 output_data.print_multiroute_file();
             }
+            test_city.clear();
             break;
 
             case '2': {
