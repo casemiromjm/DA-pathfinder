@@ -1,6 +1,7 @@
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
 #include <algorithm>
+#include <OutputData.h>
 
 using namespace std;
 
@@ -61,6 +62,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
 
 }
 
+
 std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     std::vector<int> res;
     auto d = g->findVertex(dest);
@@ -84,4 +86,26 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     reverse(res.begin(), res.end());
 
     return res;
+}
+
+void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_data, Graph* g) {
+    output_data->source = input_data->source;
+    output_data->destination = input_data->destination;
+
+    //Verificar se a rota vai ser restrita
+    if (input_data->includeNode != -1 || input_data->avoidNodes.size() != 0 || input_data->avoidSegments.size() != 0) {
+
+    }
+
+    else {
+        dijkstra_driving(g, input_data->source);
+        output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
+        output_data->min_time_1 = g->findVertex(input_data->destination)->getDist();
+
+        dijkstra_driving(g, input_data->source);
+        output_data->alternativeDrivingRoute = getPath(g, input_data->source, input_data->destination);
+        output_data->min_time_2 = g->findVertex(input_data->destination)->getDist();
+    }
+
+    output_data->print_multiroute_file();
 }

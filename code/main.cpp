@@ -50,18 +50,10 @@ int main() {
 
                 InputData input_data = readInputFile(filename);
                 OutputData output_data;
-                output_data.source = input_data.source;
-                output_data.destination = input_data.destination;
 
-                dijkstra_driving(&test_city, input_data.source);
-                output_data.bestDrivingRoute = getPath(&test_city, input_data.source, input_data.destination);
-                output_data.min_time_1 = test_city.findVertex(input_data.destination)->getDist();
-
-                dijkstra_driving(&test_city, input_data.source);
-                output_data.alternativeDrivingRoute = getPath(&test_city, input_data.source, input_data.destination);
-                output_data.min_time_2 = test_city.findVertex(input_data.destination)->getDist();
-
-                output_data.print_multiroute_file();
+                if (input_data.mode == "driving") {
+                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city);
+                }
             }
             break;
 

@@ -1,4 +1,4 @@
-Source:8
-Destination:1
-BestDrivingRoute:8,4,2,1(24)
-AlternativeDrivingRoute:none
+Source:3
+Destination:8
+BestDrivingRoute:3,2,4,8(19)
+AlternativeDrivingRoute:3,7,8(34)
