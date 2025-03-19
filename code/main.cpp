@@ -55,6 +55,7 @@ int main() {
                     dijkstra_driving_wrapper(&input_data, &output_data, &test_city);
                 }
             }
+            test_city.clear();
             break;
 
             case '2': {
