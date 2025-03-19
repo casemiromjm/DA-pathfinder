@@ -7,15 +7,17 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <iostream>
+#include <unordered_set>
 
 struct InputData {
     std::string mode;
     int source;
     int destination;
     int maxWalkTime = -1;
-    std::vector<int> avoidNodes;
-    std::vector<std::pair<int,int> > avoidSegments;
+    std::unordered_set<int> avoidNodes;
+    std::set<std::pair<int,int> > avoidSegments;
     int includeNode = -1;
  };
 
@@ -60,7 +62,7 @@ InputData readInputFile(std::string &filename) {
             std::string node;
 
             while (getline(ssNodes, node, ',')) {
-                input_data.avoidNodes.push_back(std::stoi(node));
+                input_data.avoidNodes.insert(std::stoi(node));
             }
         }
 
@@ -75,7 +77,7 @@ InputData readInputFile(std::string &filename) {
                     ssSegments >> ch;
                     ssSegments >> second;
                     ssSegments >> ch;
-                    input_data.avoidSegments.push_back(std::make_pair(first, second));
+                    input_data.avoidSegments.insert(std::make_pair(first, second));
                 }
             }
         }
