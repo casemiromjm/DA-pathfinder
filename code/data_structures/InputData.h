@@ -13,7 +13,7 @@
 
 struct InputData {
     std::string mode;
-    int source;
+    int source ;
     int destination;
     int maxWalkTime = -1;
     std::unordered_set<int> avoidNodes;
@@ -82,7 +82,7 @@ InputData readInputFile(std::string &filename) {
             }
         }
 
-        else if (input == "IncludeNodes") {
+        else if (input == "IncludeNode") {
             input_data.includeNode = std::stoi(value);
         }
     }

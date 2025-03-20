@@ -149,6 +149,33 @@ struct OutputData {
         out_file.close();
     }
 
+    void print_restricted_route_file() {
+        std::ofstream out_file;
+
+        out_file.open("../input_output/output.txt");
+
+        if (!out_file.is_open()) {
+            std::cerr << "Failed to open output file" << std::endl;
+        }
+
+        printSource_file(this->source, out_file);
+        printDest_file(this->destination, out_file);
+
+        if (this->restrictedDrivingRoute.empty()) {
+            out_file << "RestrictedDrivingRoute:none" << std::endl;
+        } else {
+            out_file << "RestrictedDrivingRoute:";
+            printRoute_file(this->restrictedDrivingRoute, out_file);
+            out_file << "(" << min_time_1 << ")";
+            out_file << std::endl;
+        }
+
+        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << std::endl;
+
+        out_file.close();
+    }
+
 };
 
 #endif //OUTPUT_H

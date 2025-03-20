@@ -2,6 +2,8 @@
 #include "../data_structures/MutablePriorityQueue.h"
 #include <algorithm>
 #include <OutputData.h>
+#include <unordered_set>
+#include <set>
 
 using namespace std;
 
@@ -63,7 +65,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
 }
 
 void dijkstra_restricted_driving(Graph * g, const int &origin,
-    const  unordered_set<int> &avoidNodes, const unordered_set<pair<int, int>> &avoidSegments) {
+    const  unordered_set<int> &avoidNodes, const set<pair<int, int>> &avoidSegments) {
 
     if (g->getVertexSet().empty()) {
         return;
@@ -86,9 +88,16 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
     while (!pq.empty()) {
         auto v = pq.extractMin();
 
+        //verifica se o vertex está na lista a ser ignorado, se sim continua (ignora)
+        if (avoidNodes.contains(v->getInfo())) {
+            continue;
+        }
+
         for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
-            if (e->getDest()->isVisited() || e->isVisited()) {
-                // se o nó ou a aresta em si foi visitado, ignorar
+
+
+            //verifica se o a aresta (par de vertex) está na lista de arestas a serem ignoradas
+            if (avoidSegments.contains({v->getInfo(), e->getDest()->getInfo()})) {
                 continue;
             }
 
@@ -139,9 +148,37 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
 
     //Verificar se a rota vai ser restrita
     if (input_data->includeNode != -1 || input_data->avoidNodes.size() != 0 || input_data->avoidSegments.size() != 0) {
+        //Verificar se tem include node
         if (input_data->includeNode != -1) {
-            //TODO
+
+            dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
+
+            //depois do dijkstra vamos encontrar o caminho mais curto até ao "include Node"
+            std::vector<int> path_to_include = getPath(g,input_data->source, input_data->includeNode);
+            int path_size1 = g->findVertex(input_data->includeNode)->getDist();
+
+            dijkstra_restricted_driving(g, input_data->includeNode, input_data->avoidNodes, input_data->avoidSegments);
+
+            //depois fazemos outro dijkstra e encontramos o caminho mais curto do "include Node" até ao nó final
+            std::vector<int> path_include_to_dest = getPath(g,input_data->includeNode, input_data->destination);
+            int path_size2 = g->findVertex(input_data->destination)->getDist();
+
+            path_to_include.pop_back(); //tirar o "include Node" do primeiro caminho
+            //depois combinamos o caminho 1 com o 2 para ter o caminho final
+            path_to_include.insert(path_to_include.end(), path_include_to_dest.begin(), path_include_to_dest.end());
+
+            output_data->restrictedDrivingRoute = path_to_include;
+            output_data->min_time_1 = path_size1 + path_size2;
         }
+
+        //Não tem include node, mas tem restrições de vértices e/ou de arestas
+        else {
+            dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
+            output_data->restrictedDrivingRoute = getPath(g, input_data->source, input_data->destination);
+            output_data->min_time_1 = g->findVertex(input_data->destination)->getDist();
+        }
+
+        output_data->print_restricted_route_file();
     }
 
     else {
@@ -152,8 +189,8 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         dijkstra_driving(g, input_data->source);
         output_data->alternativeDrivingRoute = getPath(g, input_data->source, input_data->destination);
         output_data->min_time_2 = g->findVertex(input_data->destination)->getDist();
-    }
 
-    output_data->print_multiroute_file();
+        output_data->print_multiroute_file();
+    }
 }
 
