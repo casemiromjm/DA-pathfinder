@@ -54,7 +54,9 @@ InputData readInputFile(std::string &filename) {
         }
 
         else if (input == "MaxWalkTime") {
-            input_data.maxWalkTime = std::stoi(value);
+            if (!value.empty()) {
+                input_data.maxWalkTime = std::stoi(value);
+            }
         }
 
         else if (input == "AvoidNodes") {
@@ -83,7 +85,9 @@ InputData readInputFile(std::string &filename) {
         }
 
         else if (input == "IncludeNode") {
-            input_data.includeNode = std::stoi(value);
+            if (!value.empty()) {  //Só converte n estiver vazio
+                input_data.includeNode = std::stoi(value);
+            }
         }
     }
 
