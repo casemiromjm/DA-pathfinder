@@ -96,7 +96,7 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
         for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
 
 
-            //verifica se o a aresta (par de vertex) está na lista de arestas a serem ignoradas
+            //verifica se a aresta (par de vertex) está na lista de arestas a serem ignoradas
             if (avoidSegments.contains({v->getInfo(), e->getDest()->getInfo()})) {
                 continue;
             }

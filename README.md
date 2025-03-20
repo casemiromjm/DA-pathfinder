@@ -26,11 +26,12 @@ After parsing the information, we need to create one (or more) appropriate data 
 
 ## TODO
 ### Task 1 - Initial Functionalities
-- [ ] *T1.1* - **CLI menu (+ batch mode)** that exposes all functionalities. When displaying the results, show all relevant details, including the full sequence path
+- [X] *T1.1* - **CLI menu (+ batch mode)** that exposes all functionalities. When displaying the results, show all relevant details, including the full sequence path
 points from origin to destination. The program should handle exceptional cases/errors properly *(1 point)*
-- [ ] *T1.2* - **Read and parse Input Data** (accessible through menu). This functionality enable the user to request information such as the start and end points of your trip, the
+- [X] *T1.2* - **Read and parse Input Data** (accessible through menu). This functionality enable the user to request information such as the start and end points of your trip, the
 alternative independent route, the locations and/or segments to exclude, and the environmentally-friendly
 routing parameters. The **batch mode** must rely on input via `input.txt` and output via `output.txt` *(1 point)*
+- [ ] **Inputs/Outputs via CLI** same as the batch mode, but get inputs (and give outputs) via terminal.
 - [ ] *T1.3* - Generate ***Doxygen* documentation**. It should also indicate the *time complexity* for each of the most relevant algorithms. *(2 points)*
 
 ### Task 2 - Route Planning Functionalities (driving only)
@@ -41,7 +42,7 @@ Assumptions:
 
 Tasks:
 
-- [ ] *T2.1* - **Independent Route Planning**. Find the fastest route *(Route A)*. Also, find the best alternative independent route *(Route B)*. *(3 points)*
+- [X] *T2.1* - **Independent Route Planning**. Find the fastest route *(Route A)*. Also, find the best alternative independent route *(Route B)*. *(3 points)*
 
     This means that *Route A* and *Route B* should **NOT** share intermediate nodes/edges and *Route B* **MUST TAKE** the same time or longer than *Route A*.
 
@@ -65,7 +66,7 @@ Tasks:
     If there is an impossible route (A or B), the output should be `...DrivingRoute:none`
 
 
-- [ ] *T2.2* - **Restricted Route Planning**. Find the fastest route considering restrictions. *(5 points)*
+- [X] *T2.2* - **Restricted Route Planning**. Find the fastest route considering restrictions. *(5 points)*
 
     Restrictions could be:
     - Exclude some nodes (locations)
