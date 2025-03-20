@@ -52,15 +52,21 @@ int main() {
                 OutputData output_data;
 
                 if (input_data.mode == "driving") {
-                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city);
+                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, choice);
                 }
             }
             test_city.clear();
             break;
 
             case '2': {
+                InputData input_data = readTerminal();
+                OutputData output_data;
 
+                if (input_data.mode == "driving") {
+                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, choice);
+                }
             }
+            test_city.clear();
             break;
 
             case 'x':

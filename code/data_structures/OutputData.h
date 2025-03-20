@@ -13,7 +13,6 @@ struct OutputData {
     int destination;
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
-    std::vector<int> restrictedDrivingRoute;
     double min_time_1;
     double min_time_2;
 
@@ -161,11 +160,11 @@ struct OutputData {
         printSource_file(this->source, out_file);
         printDest_file(this->destination, out_file);
 
-        if (this->restrictedDrivingRoute.empty()) {
+        if (this->bestDrivingRoute.empty()) {
             out_file << "RestrictedDrivingRoute:none" << std::endl;
         } else {
             out_file << "RestrictedDrivingRoute:";
-            printRoute_file(this->restrictedDrivingRoute, out_file);
+            printRoute_file(this->bestDrivingRoute, out_file);
             out_file << "(" << min_time_1 << ")";
             out_file << std::endl;
         }

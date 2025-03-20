@@ -93,4 +93,75 @@ InputData readInputFile(std::string &filename) {
     return input_data;
 }
 
+InputData readTerminal() {
+
+    InputData input_data;
+
+    std::string line;
+    while (std::getline(std::cin, line)) {
+
+        if (line.empty()) {
+            continue;
+        }
+
+        std::istringstream iss(line);
+        std::string input;
+        std::string value;
+
+        std::getline(iss, input, ':');
+        std::getline(iss, value);
+
+        if (input == "Mode") {
+            input_data.mode = value;
+        }
+
+        else if (input == "Source") {
+            input_data.source = std::stoi(value);
+        }
+
+        else if (input == "Destination") {
+            input_data.destination = std::stoi(value);
+        }
+
+        else if (input == "MaxWalkTime") {
+            if (!value.empty()) {
+                input_data.maxWalkTime = std::stoi(value);
+            }
+        }
+
+        else if (input == "AvoidNodes") {
+            std::stringstream ssNodes(value);
+            std::string node;
+
+            while (getline(ssNodes, node, ',')) {
+                input_data.avoidNodes.insert(std::stoi(node));
+            }
+        }
+
+        else if (input == "AvoidSegments") {
+            std::stringstream ssSegments(value);
+            int first, second;
+            char ch;
+
+            while (ssSegments >> ch) {
+                if (ch == '(') {
+                    ssSegments >> first;
+                    ssSegments >> ch;
+                    ssSegments >> second;
+                    ssSegments >> ch;
+                    input_data.avoidSegments.insert(std::make_pair(first, second));
+                }
+            }
+        }
+
+        else if (input == "IncludeNode") {
+            if (!value.empty()) {  //Só converte n estiver vazio
+                input_data.includeNode = std::stoi(value);
+            }
+        }
+    }
+
+    return input_data;
+}
+
 #endif //INPUTDATA_H

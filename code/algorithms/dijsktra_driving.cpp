@@ -142,7 +142,7 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     return res;
 }
 
-void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_data, Graph* g) {
+void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, const char& output_mode) {
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
@@ -167,18 +167,24 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
             //depois combinamos o caminho 1 com o 2 para ter o caminho final
             path_to_include.insert(path_to_include.end(), path_include_to_dest.begin(), path_include_to_dest.end());
 
-            output_data->restrictedDrivingRoute = path_to_include;
+            output_data->bestDrivingRoute = path_to_include;
             output_data->min_time_1 = path_size1 + path_size2;
         }
 
         //Não tem include node, mas tem restrições de vértices e/ou de arestas
         else {
             dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
-            output_data->restrictedDrivingRoute = getPath(g, input_data->source, input_data->destination);
+            output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
             output_data->min_time_1 = g->findVertex(input_data->destination)->getDist();
         }
 
-        output_data->print_restricted_route_file();
+        if (output_mode == '1') {
+            output_data->print_restricted_route_file();
+        } else {
+            std::cout << std::endl;
+            output_data->print_multiroute_cli();
+        }
+
     }
 
     else {
@@ -190,7 +196,13 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         output_data->alternativeDrivingRoute = getPath(g, input_data->source, input_data->destination);
         output_data->min_time_2 = g->findVertex(input_data->destination)->getDist();
 
-        output_data->print_multiroute_file();
+        if (output_mode == '1') {
+            output_data->print_restricted_route_file();
+        } else {
+            std::cout << std::endl;
+            output_data->print_multiroute_cli();
+            std::cout << std::endl;
+        }
     }
 }
 
