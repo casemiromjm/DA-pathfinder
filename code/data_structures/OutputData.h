@@ -74,6 +74,7 @@ struct OutputData {
             std::cout << "(" << min_time_2 << ")";
             std::cout << std::endl;
         }
+        std::cout << std::endl;
     }
 
     /*!
@@ -173,6 +174,43 @@ struct OutputData {
         std::cout << std::endl;
 
         out_file.close();
+    }
+
+    void print_restricted_route_cli() {
+
+        printSource_cli(this->source);
+        printDest_cli(this->destination);
+
+        if (this->bestDrivingRoute.empty()) {
+            std::cout << "RestrictedDrivingRoute:none" << std::endl;
+        } else {
+            std::cout << "RestrictedDrivingRoute:";
+            printRoute_cli(this->bestDrivingRoute);
+            std::cout << "(" << min_time_1 << ")";
+            std::cout << std::endl;
+        }
+
+        std::cout << std::endl;
+
+    }
+
+    void out(const char& choice, const bool& isRestricted) {
+        if (choice == '1') {
+            if (!isRestricted) {
+                print_multiroute_file();
+            }
+            else {
+                print_restricted_route_file();
+            }
+        }
+        else if (choice == '2') {
+            if (!isRestricted) {
+                print_multiroute_cli();
+            }
+            else {
+                print_restricted_route_cli();
+            }
+        }
     }
 
 };
