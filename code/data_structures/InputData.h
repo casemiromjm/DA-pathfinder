@@ -1,13 +1,9 @@
-//
-// Created by Rafael dos Santos Rodrigues on 14/03/2025.
-
 #ifndef INPUTDATA_H
 #define INPUTDATA_H
 
 #include <string>
 #include <iostream>
 #include <set>
-#include <unordered_set>
 #include <fstream>
 #include <sstream>
 #include <utility>
@@ -31,7 +27,7 @@ struct InputData {
     int source ;
     int destination;
     int maxWalkTime = -1;
-    std::unordered_set<int> avoidNodes;
+    std::set<int> avoidNodes;
     std::set<std::pair<int,int>> avoidSegments;
     int includeNode = -1;
 

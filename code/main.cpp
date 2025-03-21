@@ -79,9 +79,9 @@ int main() {
             break;
 
             case '0':
-                std::cout << "- Give inputs via CLI or via .txt file inside input_output/" << std::endl;
-                std::cout << "- Calculates the best route and an alternative given where you are and to where you want to go" << std::endl;
-                std::cout << "- Calculates the best route that from a point to another respecting the constraints given" << std::endl;
+                std::cout << "- Receive inputs via CLI or via .txt file inside input_output/. Outputs are made in the same place where the inputs were." << std::endl;
+                std::cout << "- Calculates the best route and an alternative given where you are and to where you want to go." << std::endl;
+                std::cout << "- Calculates the best route that from a point to another respecting the constraints given." << std::endl;
                 std::cout << std::endl;
             break;
 

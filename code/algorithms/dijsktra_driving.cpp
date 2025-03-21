@@ -65,7 +65,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
 }
 
 void dijkstra_restricted_driving(Graph * g, const int &origin,
-    const  unordered_set<int> &avoidNodes, const set<pair<int, int>> &avoidSegments) {
+    const set<int> &avoidNodes, const set<pair<int, int>> &avoidSegments) {
 
     if (g->getVertexSet().empty()) {
         return;
