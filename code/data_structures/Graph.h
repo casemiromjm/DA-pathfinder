@@ -1,5 +1,4 @@
-// Original code by Gonçalo Leão
-// Updated by DA 2024/2025 Team
+// Based on the code made available by DA Team
 
 #ifndef DA_TP_CLASSES_GRAPH
 #define DA_TP_CLASSES_GRAPH
@@ -87,9 +86,6 @@ public:
     Edge *getReverse() const;
     double getFlow() const;
 
-    bool isVisited() const;
-    void setVisited(bool visited);
-
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
@@ -100,7 +96,6 @@ protected:
 
     // auxiliary fields
     bool selected = false;
-    bool visited = false;
 
     // used for bidirectional edges
     Vertex *orig;
@@ -347,14 +342,6 @@ inline double Edge::getFlow() const {
     return flow;
 }
 
-bool Edge::isVisited() const {
-    return this->visited;
-}
-
-void Edge::setVisited(const bool visited) {
-    this->visited = visited;
-}
-
 inline void Edge::setSelected(bool selected) {
     this->selected = selected;
 }
@@ -524,10 +511,6 @@ void Graph::clear() {
         v->setVisited(false);
         v->setDist(0);      // de volta ao padrão
         v->setPath(nullptr);
-
-        for (auto e : v->getAdj()) {
-            e->setVisited(false);
-        }
     }
 }
 

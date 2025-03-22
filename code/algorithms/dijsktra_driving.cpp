@@ -65,7 +65,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
 }
 
 void dijkstra_restricted_driving(Graph * g, const int &origin,
-    const  unordered_set<int> &avoidNodes, const set<pair<int, int>> &avoidSegments) {
+    const set<int> &avoidNodes, const set<pair<int, int>> &avoidSegments) {
 
     if (g->getVertexSet().empty()) {
         return;
@@ -142,12 +142,13 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     return res;
 }
 
-void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_data, Graph* g) {
+void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
     //Verificar se a rota vai ser restrita
     if (input_data->includeNode != -1 || input_data->avoidNodes.size() != 0 || input_data->avoidSegments.size() != 0) {
+        isRestricted = true;
         //Verificar se tem include node
         if (input_data->includeNode != -1) {
 
@@ -167,18 +168,16 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
             //depois combinamos o caminho 1 com o 2 para ter o caminho final
             path_to_include.insert(path_to_include.end(), path_include_to_dest.begin(), path_include_to_dest.end());
 
-            output_data->restrictedDrivingRoute = path_to_include;
+            output_data->bestDrivingRoute = path_to_include;
             output_data->min_time_1 = path_size1 + path_size2;
         }
 
         //Não tem include node, mas tem restrições de vértices e/ou de arestas
         else {
             dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
-            output_data->restrictedDrivingRoute = getPath(g, input_data->source, input_data->destination);
+            output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
             output_data->min_time_1 = g->findVertex(input_data->destination)->getDist();
         }
-
-        output_data->print_restricted_route_file();
     }
 
     else {
@@ -189,8 +188,6 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         dijkstra_driving(g, input_data->source);
         output_data->alternativeDrivingRoute = getPath(g, input_data->source, input_data->destination);
         output_data->min_time_2 = g->findVertex(input_data->destination)->getDist();
-
-        output_data->print_multiroute_file();
     }
 }
 

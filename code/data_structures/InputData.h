@@ -1,33 +1,44 @@
-//
-// Created by Rafael dos Santos Rodrigues on 14/03/2025.
-//
-
 #ifndef INPUTDATA_H
 #define INPUTDATA_H
 
 #include <string>
 #include <iostream>
 #include <set>
-#include <unordered_set>
+#include <fstream>
+#include <sstream>
+#include <utility>
+
+
+/*!
+ * given a string, transforms it to its lower form
+ * @param str string that will be transformed
+ * @return void
+ */
+void str_tolower(std::string& str) {
+    for (char& c : str) {
+        if (c >= 'A' && c <= 'Z') {
+            c = 'a' + (c - 'A');
+        }
+    }
+}
 
 struct InputData {
     std::string mode;
     int source ;
     int destination;
     int maxWalkTime = -1;
-    std::unordered_set<int> avoidNodes;
+    std::set<int> avoidNodes;
     std::set<std::pair<int,int>> avoidSegments;
     int includeNode = -1;
- };
 
-InputData readInputFile(std::string &filename) {
+    // methods
+
+    void readInputFile(const std::string &filename) {
     std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
-
-    InputData input_data;
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
-        return input_data;
+        return;
     }
 
     std::string line;
@@ -39,34 +50,36 @@ InputData readInputFile(std::string &filename) {
         getline(ss, input, ':');
         getline(ss, value);
 
-        if (input == "Mode") {
-            input_data.mode = value;
+        str_tolower(input);
+
+        if (input == "mode") {
+            this->mode = value;
         }
 
-        else if (input == "Source") {
-            input_data.source = std::stoi(value);
+        else if (input == "source") {
+            this->source = std::stoi(value);
         }
 
-        else if (input == "Destination") {
-            input_data.destination = std::stoi(value);
+        else if (input == "destination") {
+            this->destination = std::stoi(value);
         }
 
-        else if (input == "MaxWalkTime") {
+        else if (input == "maxwalktime") {
             if (!value.empty()) {
-                input_data.maxWalkTime = std::stoi(value);
+                this->maxWalkTime = std::stoi(value);
             }
         }
 
-        else if (input == "AvoidNodes") {
+        else if (input == "avoidnodes") {
             std::stringstream ssNodes(value);
             std::string node;
 
             while (getline(ssNodes, node, ',')) {
-                input_data.avoidNodes.insert(std::stoi(node));
+                this->avoidNodes.insert(std::stoi(node));
             }
         }
 
-        else if (input == "AvoidSegments") {
+        else if (input == "avoidsegments") {
             std::stringstream ssSegments(value);
             int first, second;
             char ch;
@@ -77,20 +90,103 @@ InputData readInputFile(std::string &filename) {
                     ssSegments >> ch;
                     ssSegments >> second;
                     ssSegments >> ch;
-                    input_data.avoidSegments.insert(std::make_pair(first, second));
+                    this->avoidSegments.insert(std::make_pair(first, second));
                 }
             }
         }
 
-        else if (input == "IncludeNode") {
+        else if (input == "includenode") {
             if (!value.empty()) {  //Só converte n estiver vazio
-                input_data.includeNode = std::stoi(value);
+                this->includeNode = std::stoi(value);
             }
         }
     }
 
-    file.close();
-    return input_data;
-}
+        file.close();
+    }
+
+    void readTerminal() {
+
+        std::string line;
+        while (std::getline(std::cin, line)) {
+
+            if (line == "q") {
+                break;
+            }
+
+            std::istringstream iss(line);
+            std::string input;
+            std::string value;
+
+            std::getline(iss, input, ':');
+            std::getline(iss, value);
+
+            str_tolower(input);
+
+            if (input == "mode") {
+                this->mode = value;
+            }
+
+            else if (input == "source") {
+                this->source = std::stoi(value);
+            }
+
+            else if (input == "destination") {
+                this->destination = std::stoi(value);
+            }
+
+            else if (input == "maxwalktime") {
+                if (!value.empty()) {
+                    this->maxWalkTime = std::stoi(value);
+                }
+            }
+
+            else if (input == "avoidnodes") {
+                std::stringstream ssNodes(value);
+                std::string node;
+
+                while (getline(ssNodes, node, ',')) {
+                    this->avoidNodes.insert(std::stoi(node));
+                }
+            }
+
+            else if (input == "avoidsegments") {
+                std::stringstream ssSegments(value);
+                int first, second;
+                char ch;
+
+                while (ssSegments >> ch) {
+                    if (ch == '(') {
+                        ssSegments >> first;
+                        ssSegments >> ch;
+                        ssSegments >> second;
+                        ssSegments >> ch;
+                        this->avoidSegments.insert(std::make_pair(first, second));
+                    }
+                }
+            }
+
+            else if (input == "includenode") {
+                if (!value.empty()) {  //Só converte n estiver vazio
+                    this->includeNode = std::stoi(value);
+                }
+            }
+        }
+    }
+
+    /*!
+     * wrapper function to read inputs
+     * @param choice the method of the input. 1 for .txt or 2 for CLI
+     * @param filename the file name if it is via file
+     */
+    void in(const char &choice, const std::string& filename="") {
+        if (choice == '1') {
+            this->readInputFile(filename);
+        }
+        else if (choice == '2') {
+            this->readTerminal();
+        }
+    }
+};
 
 #endif //INPUTDATA_H

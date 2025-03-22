@@ -34,6 +34,7 @@ int main() {
 
         std::cout << "To choose an option, enter the symbol inside the brackets:" << std::endl;
         std::cout << std::endl;
+        std::cout << "[0] What we have implemented!" << std::endl;
         std::cout << "[1] Read an input via .txt file" << std::endl;
         std::cout << "[2] Read an input via CLI" << std::endl;
         std::cout << "[x] Close the program" << std::endl;
@@ -48,19 +49,40 @@ int main() {
                 std::cout << "Please enter the filename: ";
                 std::cin >> filename;
 
-                InputData input_data = readInputFile(filename);
+                InputData input_data; input_data.in(choice, filename);
                 OutputData output_data;
+                bool isRestricted = false;
 
                 if (input_data.mode == "driving") {
-                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city);
+                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
+
+                output_data.out(choice, isRestricted);
             }
             test_city.clear();
             break;
 
             case '2': {
+                std::cout << "When you have finished passing inputs, enter 'q' " << std::endl;
+                InputData input_data;
+                input_data.in(choice);
+                OutputData output_data;
+                bool isRestricted = false;
 
+                if (input_data.mode == "driving") {
+                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                }
+
+                output_data.out(choice, isRestricted);
             }
+            test_city.clear();
+            break;
+
+            case '0':
+                std::cout << "- Receive inputs via CLI or via .txt file inside input_output/. Outputs are made in the same place where the inputs were." << std::endl;
+                std::cout << "- Calculates the best route and an alternative given where you are and to where you want to go." << std::endl;
+                std::cout << "- Calculates the best route that from a point to another respecting the constraints given." << std::endl;
+                std::cout << std::endl;
             break;
 
             case 'x':
