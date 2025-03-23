@@ -1,8 +1,8 @@
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
 #include <algorithm>
+#include <InputData.h>
 #include <OutputData.h>
-#include <unordered_set>
 #include <set>
 
 using namespace std;
@@ -133,7 +133,7 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
             d->setVisited(true);
         }
 
-        d = d->getPath()->getOrig();
+        d = d->getWalkPath()->getOrig();
     }
 
     res.push_back(d->getInfo());
