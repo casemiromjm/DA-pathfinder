@@ -7,8 +7,7 @@
 #include "dijsktra_driving.cpp"
 #include <InputData.h>
 #include <OutputData.h>
-#include <unordered_set>
-
+#include <string>
 
 using namespace std;
 
@@ -80,7 +79,7 @@ void dijkstra_walk(Graph * g, const int &origin,
 
 //Associar a cada nó de parking uma distância
 map<int, int> parking_nodes_dist(const Graph* g) {
-    map<int,int> parking_nodes;
+    map<int,int> parking_nodes {};
 
     if (g->getVertexSet().empty()) {
         return {};
@@ -110,8 +109,34 @@ vector<int> getWalkPath(Graph * g, const int &origin, const int &dest) {
     return res;
 }
 
+//Devolve o nó de parking e distancia total do melhor trajeto
+pair<int,int> getBestPath(const map<int, int> &dist_map, const Graph* g) {
+    pair<int, int> best_path;
+    for (const auto &d : dist_map) {
+        int best_sum = 0, best_parking = 0;
+
+        if (d.second > best_sum) {
+            best_sum = d.second;
+            best_parking = d.first;
+        }
+
+        //Maior distancia walk desempata
+        else if (d.second == best_sum) {
+
+            //Como o dijkstra_walk foi chamado mais recentemente, getDist retorna a distância walk
+            if (g->findVertex(d.first)->getDist() > g->findVertex(best_parking)->getDist()) {
+                best_path.first = d.first;
+                best_path.second = d.second;
+            }
+        }
+    }
+
+    return best_path;
+}
+
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g) {
-    map<int, int> dist_map; //Vão se guardar as somas das distâncias drive + walk e o nó de parking usado por caminho
+    map<int, int> dist_map; //Vão se guardar o nó de parking usado por caminho e as somas das distâncias drive + walk
+    pair<int, int> best_path;
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
@@ -120,7 +145,7 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
     map<int,int> parking_nodes_drive = parking_nodes_dist(g);
 
     //Computar distâncias walking da dest aos nós com parking e guardá-las
-    dijkstra_walk(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
+    dijkstra_walk(g, input_data->destination, input_data->avoidNodes, input_data->avoidSegments);
     map<int,int> parking_nodes_walk = parking_nodes_dist(g);
 
     for (const auto &p : parking_nodes_walk) {
@@ -131,9 +156,27 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
     }
 
     for (const auto &p : parking_nodes_drive) {
-        //Só se vai inserir as distâncias driving se já estiver lá a distância walk
-        if (dist_map.find(p.first) != dist_map.end()) {
+        //Só se vai inserir as distâncias driving se já estiver lá a distância walk (válida)
+        if (dist_map.contains(p.first)) {
             dist_map[p.first] += p.second;
         }
     }
+
+    if (parking_nodes_drive.empty()) {
+        output_data->message = "No parking nodes found.";
+    }
+    else if (dist_map.empty()) {
+        output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
+    }
+    else {
+        best_path  = getBestPath(dist_map, g);
+
+        output_data->parkingNode = best_path.first;
+        output_data->total_time = best_path.second;
+
+        output_data->min_time_1 = parking_nodes_drive[best_path.first];
+        output_data->min_time_2 = parking_nodes_walk[best_path.first];
+
+    }
+
 }
