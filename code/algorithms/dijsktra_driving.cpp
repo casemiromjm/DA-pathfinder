@@ -133,7 +133,7 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
             d->setVisited(true);
         }
 
-        d = d->getWalkPath()->getOrig();
+        d = d->getPath()->getOrig();
     }
 
     res.push_back(d->getInfo());

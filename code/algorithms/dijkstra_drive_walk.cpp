@@ -37,7 +37,7 @@ void dijkstra_walk(Graph * g, const int &origin,
 
     for (auto v : g->getVertexSet()) {
         v->setDist(INF);
-        v->setPath(nullptr);
+        v->setWalkPath(nullptr);
     }
 
     //nó de origem
@@ -79,8 +79,8 @@ void dijkstra_walk(Graph * g, const int &origin,
 }
 
 //Associar a cada nó de parking uma distância
-set<pair<int, int>> parking_nodes_dist(const Graph* g) {
-    set<pair<int,int>> parking_nodes;
+map<int, int> parking_nodes_dist(const Graph* g) {
+    map<int,int> parking_nodes;
 
     if (g->getVertexSet().empty()) {
         return {};
@@ -111,17 +111,29 @@ vector<int> getWalkPath(Graph * g, const int &origin, const int &dest) {
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g) {
-    set<pair<int, int>> path_dist;
+    map<int, int> dist_map; //Vão se guardar as somas das distâncias drive + walk e o nó de parking usado por caminho
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
     //Computar distâncias driving da source aos nós com parking e guardá-las
     dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
-    set<pair<int,int>> parking_nodes_drive = parking_nodes_dist(g);
+    map<int,int> parking_nodes_drive = parking_nodes_dist(g);
 
     //Computar distâncias walking da dest aos nós com parking e guardá-las
     dijkstra_walk(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
-    set<pair<int,int>> parking_nodes_walk = parking_nodes_dist(g);
+    map<int,int> parking_nodes_walk = parking_nodes_dist(g);
 
+    for (const auto &p : parking_nodes_walk) {
+        //Se a distância walk do caminho excede o MaxWalkTime, não se adiciona ao dist_map
+        if (p.second <= input_data->maxWalkTime) {
+            dist_map[p.first] = p.second;
+        }
+    }
 
+    for (const auto &p : parking_nodes_drive) {
+        //Só se vai inserir as distâncias driving se já estiver lá a distância walk
+        if (dist_map.find(p.first) != dist_map.end()) {
+            dist_map[p.first] += p.second;
+        }
+    }
 }
