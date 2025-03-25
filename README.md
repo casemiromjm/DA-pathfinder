@@ -108,7 +108,7 @@ Assumptions:
 
 Tasks:
 
-- [ ] *T3.1* - **Best route for driving and walking**. *(4 points)*
+- [X] *T3.1* - **Best route for driving and walking**. *(4 points)*
 
     Must be aware of the parameters, `Max. Walking Time`, `AvoidNodes` and `AvoidSegments`.
 
