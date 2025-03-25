@@ -211,7 +211,7 @@ struct OutputData {
         printSource_file(this->source, out_file);
         printDest_file(this->destination, out_file);
 
-        if (this->bestDrivingRoute.empty()) {
+        if (this->drivingRoute.empty()) {
             out_file << "DrivingRoute:" << std::endl;
             out_file << "ParkingNode:" << std::endl;
             out_file << "WalkingRoute:" << std::endl;
@@ -225,7 +225,7 @@ struct OutputData {
 
             out_file << "ParkingNode:" << parkingNode << std::endl;
 
-            out_file << "WalkingRoute:" << std::endl;
+            out_file << "WalkingRoute:";
             printRoute_file(this->walkingRoute, out_file);
             out_file << "(" << min_time_2 << ")" << std::endl;
 

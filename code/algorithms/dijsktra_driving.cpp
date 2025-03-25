@@ -4,7 +4,7 @@
 #include <InputData.h>
 #include <OutputData.h>
 #include <set>
-#include "../algorithms/dijkstra_.h"
+#include "../algorithms/dijkstra.h"
 
 using namespace std;
 

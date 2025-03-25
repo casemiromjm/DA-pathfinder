@@ -235,7 +235,7 @@ inline void Vertex::setParking(int value) {
 
 //adicionamos o getParking
 inline int Vertex::getParking() const {
-    return this->low;
+    return this->parking;
 }
 
 inline int Vertex::getNum() const {
