@@ -33,6 +33,10 @@ struct InputData {
 
     // methods
 
+    /*!
+     * reads a file with a certain name
+     * @param filename the name of the file
+     */
     void readInputFile(const std::string &filename) {
     std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
 
@@ -105,6 +109,9 @@ struct InputData {
         file.close();
     }
 
+    /*!
+     * reads inputs made on the terminal
+     */
     void readTerminal() {
 
         std::string line;
