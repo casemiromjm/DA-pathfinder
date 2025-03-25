@@ -14,6 +14,8 @@ struct OutputData {
     int parkingNode;
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
+    std::vector<int> drivingRoute;
+    std::vector<int> walkingRoute;
     std::string message;
     double min_time_1;
     double min_time_2;
@@ -197,15 +199,62 @@ struct OutputData {
 
     }
 
-    void out(const char& choice, const bool& isRestricted) {
+    void print_restricted_drive_walk_file() {
+        std::ofstream out_file;
+
+        out_file.open("../input_output/output.txt");
+
+        if (!out_file.is_open()) {
+            std::cerr << "Failed to open output file" << std::endl;
+        }
+
+        printSource_file(this->source, out_file);
+        printDest_file(this->destination, out_file);
+
+        if (this->bestDrivingRoute.empty()) {
+            out_file << "DrivingRoute:" << std::endl;
+            out_file << "ParkingNode:" << std::endl;
+            out_file << "WalkingRoute:" << std::endl;
+            out_file << "TotalTime:" << std::endl;
+            out_file << "Message:" << message << std::endl;
+
+        } else {
+            out_file << "DrivingRoute:";
+            printRoute_file(this->drivingRoute, out_file);
+            out_file << "(" << min_time_1 << ")" << std::endl;
+
+            out_file << "ParkingNode:" << parkingNode << std::endl;
+
+            out_file << "WalkingRoute:" << std::endl;
+            printRoute_file(this->walkingRoute, out_file);
+            out_file << "(" << min_time_2 << ")" << std::endl;
+
+            out_file << "TotalTime:" << total_time << std::endl;
+
+        }
+
+        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << std::endl;
+
+        out_file.close();
+    }
+
+    void out(const char& choice, const std::string& mode, const bool& isRestricted) {
         if (choice == '1') {
-            if (!isRestricted) {
-                print_multiroute_file();
+            if (mode == "driving") {
+                if (!isRestricted) {
+                    print_multiroute_file();
+                }
+                else {
+                    print_restricted_route_file();
+                }
             }
-            else {
-                print_restricted_route_file();
+
+            else if (mode == "driving-walking") {
+                print_restricted_drive_walk_file();
             }
         }
+
         else if (choice == '2') {
             if (!isRestricted) {
                 print_multiroute_cli();

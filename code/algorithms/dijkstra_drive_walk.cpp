@@ -4,10 +4,10 @@
 
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
-#include "dijsktra_driving.cpp"
 #include <InputData.h>
 #include <OutputData.h>
 #include <string>
+#include "../algorithms/dijkstra_.h"
 
 using namespace std;
 
@@ -100,12 +100,15 @@ vector<int> getWalkPath(Graph * g, const int &origin, const int &dest) {
         return res;     // dest não alcançável
     }
 
-    while (d->getInfo() != dest) {
+    while (d->getInfo() != origin) {
         res.push_back(d->getInfo());
+        if (d->getWalkPath() == nullptr) return {};
+
         d = d->getWalkPath()->getOrig();
     }
 
-    res.push_back(d->getInfo());
+    res.push_back(origin);
+    reverse(res.begin(), res.end());
     return res;
 }
 
@@ -177,6 +180,8 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
         output_data->min_time_1 = parking_nodes_drive[best_path.first];
         output_data->min_time_2 = parking_nodes_walk[best_path.first];
 
+        //output_data->drivingRoute = getDrivePath(g, input_data->source, best_path.first);
+        //output_data->walkingRoute = getWalkPath(g, best_path.first, input_data->destination);
     }
 
 }

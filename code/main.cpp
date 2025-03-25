@@ -4,6 +4,7 @@
 #include <string>
 #include "data_structures/CSV.h"
 #include "algorithms/dijsktra_driving.cpp"
+#include "algorithms/dijkstra_drive_walk.cpp"
 #include <thread>
 #include "data_structures/OutputData.h"
 
@@ -57,7 +58,11 @@ int main() {
                     dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
 
-                output_data.out(choice, isRestricted);
+                else if (input_data.mode == "driving-walking") {
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city);
+                }
+
+                output_data.out(choice, input_data.mode, isRestricted);
             }
             test_city.clear();
             break;
@@ -73,7 +78,7 @@ int main() {
                     dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
 
-                output_data.out(choice, isRestricted);
+                output_data.out(choice, input_data.mode, isRestricted);
             }
             test_city.clear();
             break;

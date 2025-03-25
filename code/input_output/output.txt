@@ -1,4 +1,7 @@
-Source:1750621712
-Destination:32764
-BestDrivingRoute:none
-AlternativeDrivingRoute:none
+Source:0
+Destination:0
+DrivingRoute:
+ParkingNode:
+WalkingRoute:
+TotalTime:
+Message:No parking nodes found.
