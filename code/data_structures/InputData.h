@@ -22,9 +22,12 @@ void str_tolower(std::string& str) {
     }
 }
 
+/*!
+ * stores the input data
+ */
 struct InputData {
     std::string mode;
-    int source ;
+    int source;
     int destination;
     int maxWalkTime = -1;
     std::set<int> avoidNodes;
@@ -33,6 +36,10 @@ struct InputData {
 
     // methods
 
+    /*!
+     * Function for reading an input file
+     * @param filename which file you are trying to read from input_output folder
+     */
     void readInputFile(const std::string &filename) {
     std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
 
@@ -105,6 +112,9 @@ struct InputData {
         file.close();
     }
 
+    /*!
+     * Function for inputs from terminal
+     */
     void readTerminal() {
 
         std::string line;
@@ -175,11 +185,11 @@ struct InputData {
     }
 
     /*!
-     * wrapper function to read inputs
-     * @param choice the method of the input. 1 for .txt or 2 for CLI
-     * @param filename the file name if it is via file
+     * Wrapper function to read inputs
+     * @param choice method of the input (1 for file or 2 for CLI)
+     * @param filename file name if it is via file
      */
-    void in(const char &choice, const std::string& filename="") {
+    void in (const char &choice, const std::string& filename="") {
         if (choice == '1') {
             this->readInputFile(filename);
         }

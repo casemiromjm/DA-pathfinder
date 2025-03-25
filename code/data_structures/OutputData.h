@@ -1,7 +1,3 @@
-//
-// Created by casemiromjm on 14-03-2025.
-//
-
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
@@ -26,7 +22,7 @@ struct OutputData {
     // CLI SIGNIFICA QUE VAI PARA O TERMINAL
 
     /*!
-     * print a vector in the format x1,x2,...,xn on terminal
+     * Function for printing a vector in the format x1,x2,...,xn on terminal
      * @param vec the vector you want to print
      */
     void printRoute_cli(const std::vector<int>& vec) {
@@ -40,16 +36,16 @@ struct OutputData {
     }
 
     /*!
-     * print the source on terminal
-     * @param source the source node
+     * Function for printing the source on terminal
+     * @param source source node
      */
     void printSource_cli(const int& source) {
         std::cout << "Source:" << source << std::endl;
     }
 
     /*!
-     * print the dest on terminal
-     * @param dest the dest node
+     * Function for printing the dest on terminal
+     * @param dest destination node
      */
     void printDest_cli(const int& dest) {
         std::cout << "Destination:" << dest << std::endl;
@@ -83,7 +79,7 @@ struct OutputData {
     }
 
     /*!
-     * print a vector in the format x1,x2,...,xn on out_file
+     * Print a vector in the format x1,x2,...,xn on out_file
      * @param vec the vector you want to print
      * @param out_file where the text will be written
      */
@@ -98,7 +94,7 @@ struct OutputData {
     }
 
     /*!
-     * print the source to the out_file
+     * Function for printing the source on out_file
      * @param source the source node
      * @param out_file where the text will be written
      */
@@ -107,7 +103,7 @@ struct OutputData {
     }
 
     /*!
-     * print the dest to the out_file
+     * Prints the destination on out_file
      * @param dest the dest node
      * @param out_file where the text will be written
      */
@@ -116,7 +112,7 @@ struct OutputData {
     }
 
     /*!
-     * print the best route and alternative route on an output file
+     * Prints the best route and alternative route on an output file
      */
     void print_multiroute_file() {
         std::ofstream out_file;
@@ -154,6 +150,9 @@ struct OutputData {
         out_file.close();
     }
 
+    /*!
+     * Prints the best route, considering restrictions, to output file
+     */
     void print_restricted_route_file() {
         std::ofstream out_file;
 
@@ -181,6 +180,9 @@ struct OutputData {
         out_file.close();
     }
 
+    /*!
+     * Prints the best route, considering restrictions, to terminal
+     */
     void print_restricted_route_cli() {
 
         printSource_cli(this->source);
@@ -196,9 +198,11 @@ struct OutputData {
         }
 
         std::cout << std::endl;
-
     }
 
+    /*!
+     * Prints the best route, considering restrictions and driving+walking, to an output file
+     */
     void print_restricted_drive_walk_file() {
         std::ofstream out_file;
 
@@ -239,28 +243,45 @@ struct OutputData {
         out_file.close();
     }
 
-    void out(const char& choice, const std::string& mode, const bool& isRestricted) {
+    /*!
+     * Prints the best route, considering restrictions and driving+walking, to an output file
+     */
+    void print_restricted_drive_walk_cli() {
+
+    }
+
+    /*!
+     * Wrapper function to output data
+     * @param choice stores from where it took the inputs and to where it should output route information
+     * @param mode mode of the route planning. can be "driving" or "driving-walking"
+     * @param isRestricted stores if there are restrictions on the route or not
+     */
+    void out (const char& choice, const std::string& mode, const bool& isRestricted) {
         if (choice == '1') {
-            if (mode == "driving") {
-                if (!isRestricted) {
-                    print_multiroute_file();
-                }
-                else {
+            if (isRestricted) {
+                if (mode == "driving") {
                     print_restricted_route_file();
                 }
+                else if (mode == "driving-walking") {
+                    print_restricted_drive_walk_file();
+                }
             }
-
-            else if (mode == "driving-walking") {
-                print_restricted_drive_walk_file();
+            else {
+                print_multiroute_file();
             }
         }
 
         else if (choice == '2') {
-            if (!isRestricted) {
-                print_multiroute_cli();
+            if (isRestricted) {
+                if (mode == "driving") {
+                    print_restricted_route_file();
+                }
+                else if (mode == "driving-walking") {
+                    print_restricted_drive_walk_file();
+                }
             }
             else {
-                print_restricted_route_cli();
+                print_multiroute_file();
             }
         }
     }

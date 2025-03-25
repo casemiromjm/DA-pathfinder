@@ -16,7 +16,8 @@ class Csv {
 };
 
 /*!
- *@return the CSV data
+ *access the CSV data
+ *@return CSV data
  */
 std::vector<std::vector<std::string>> Csv::getData() {
     return data;
@@ -24,8 +25,8 @@ std::vector<std::vector<std::string>> Csv::getData() {
 
 /*!
  * Function for reading CSV files and storing it
- * @param file_name is the file name for better error messages
- * @return return all lines separated in vectors
+ * @param file_name file name that you are trying to open
+ * @return all lines in a 2D vector
  */
 void Csv::readCSV(const std::string& file_name) {
     std::ifstream file(file_name);
