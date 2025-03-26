@@ -287,6 +287,7 @@ struct OutputData {
             else if (mode == "driving-walking") {
                 print_restricted_drive_walk_cli();
             }
+        }
     }
 
 };
