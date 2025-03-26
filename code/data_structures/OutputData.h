@@ -256,34 +256,37 @@ struct OutputData {
      * @param mode mode of the route planning. can be "driving" or "driving-walking"
      * @param isRestricted stores if there are restrictions on the route or not
      */
-    void out (const char& choice, const std::string& mode, const bool& isRestricted) {
+    void out(const char& choice, const std::string& mode, const bool& isRestricted) {
+        // file
         if (choice == '1') {
-            if (isRestricted) {
-                if (mode == "driving") {
+            if (mode == "driving") {
+                if (!isRestricted) {
+                    print_multiroute_file();
+                }
+                else {
                     print_restricted_route_file();
                 }
-                else if (mode == "driving-walking") {
-                    print_restricted_drive_walk_file();
-                }
             }
-            else {
-                print_multiroute_file();
+
+            else if (mode == "driving-walking") {
+                print_restricted_drive_walk_file();
             }
         }
 
+        // command line
         else if (choice == '2') {
-            if (isRestricted) {
-                if (mode == "driving") {
-                    print_restricted_route_file();
+            if (mode == "driving") {
+                if (!isRestricted) {
+                    print_multiroute_cli();
                 }
-                else if (mode == "driving-walking") {
-                    print_restricted_drive_walk_file();
+                else {
+                    print_restricted_route_cli();
                 }
             }
-            else {
-                print_multiroute_file();
+
+            else if (mode == "driving-walking") {
+                print_restricted_drive_walk_cli();
             }
-        }
     }
 
 };
