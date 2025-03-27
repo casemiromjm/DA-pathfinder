@@ -59,7 +59,7 @@ int main() {
                 }
 
                 else if (input_data.mode == "driving-walking") {
-                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city);
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
 
                 output_data.out(choice, input_data.mode, isRestricted);

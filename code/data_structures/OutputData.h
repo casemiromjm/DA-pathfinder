@@ -7,15 +7,22 @@
 struct OutputData {
     int source;
     int destination;
-    int parkingNode;
+    int parkingNode1;
+    int parkingNode2;
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
-    std::vector<int> drivingRoute;
-    std::vector<int> walkingRoute;
+    std::vector<int> drivingRoute1;
+    std::vector<int> drivingRoute2;
+    std::vector<int> walkingRoute1;
+    std::vector<int> walkingRoute2;
+    std::vector<OutputData> alternative_routes;
     std::string message;
     double min_time_1;
     double min_time_2;
-    double total_time;
+    double min_time_3;
+    double min_time_4;
+    double total_time1;
+    double total_time2;
 
     // methods
 
@@ -215,7 +222,7 @@ struct OutputData {
         printSource_file(this->source, out_file);
         printDest_file(this->destination, out_file);
 
-        if (this->drivingRoute.empty()) {
+        if (this->drivingRoute1.empty()) {
             out_file << "DrivingRoute:" << std::endl;
             out_file << "ParkingNode:" << std::endl;
             out_file << "WalkingRoute:" << std::endl;
@@ -224,18 +231,64 @@ struct OutputData {
 
         } else {
             out_file << "DrivingRoute:";
-            printRoute_file(this->drivingRoute, out_file);
+            printRoute_file(this->drivingRoute1, out_file);
             out_file << "(" << min_time_1 << ")" << std::endl;
 
-            out_file << "ParkingNode:" << parkingNode << std::endl;
+            out_file << "ParkingNode:" << parkingNode1 << std::endl;
 
             out_file << "WalkingRoute:";
-            printRoute_file(this->walkingRoute, out_file);
+            printRoute_file(this->walkingRoute1, out_file);
             out_file << "(" << min_time_2 << ")" << std::endl;
 
-            out_file << "TotalTime:" << total_time << std::endl;
+            out_file << "TotalTime:" << total_time1 << std::endl;
 
         }
+
+        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << std::endl;
+
+        out_file.close();
+    }
+
+
+    void print_alternative_drive_walk_file() {
+        std::ofstream out_file;
+
+        out_file.open("../input_output/output.txt");
+
+        if (!out_file.is_open()) {
+            std::cerr << "Failed to open output file" << std::endl;
+        }
+
+        printSource_file(this->source, out_file);
+        printDest_file(this->destination, out_file);
+
+
+        out_file << "DrivingRoute1:";
+        printRoute_file(this->drivingRoute1, out_file);
+        out_file << "(" << min_time_1 << ")" << std::endl;
+
+        out_file << "ParkingNode1:" << parkingNode1 << std::endl;
+
+        out_file << "WalkingRoute1:";
+        printRoute_file(this->walkingRoute1, out_file);
+        out_file << "(" << min_time_2 << ")" << std::endl;
+
+        out_file << "TotalTime1:" << total_time1 << std::endl;
+
+
+        out_file << "DrivingRoute2:";
+        printRoute_file(this->drivingRoute2, out_file);
+        out_file << "(" << min_time_3 << ")" << std::endl;
+
+        out_file << "ParkingNode2:" << parkingNode2 << std::endl;
+
+        out_file << "WalkingRoute2:";
+        printRoute_file(this->walkingRoute2, out_file);
+        out_file << "(" << min_time_4 << ")" << std::endl;
+
+        out_file << "TotalTime2:" << total_time2 << std::endl;
+
 
         std::cout << "output.txt successfully created in ./input_output/" << std::endl;
         std::cout << std::endl;
@@ -269,7 +322,13 @@ struct OutputData {
             }
 
             else if (mode == "driving-walking") {
-                print_restricted_drive_walk_file();
+                if (!isRestricted) {
+                    print_restricted_drive_walk_file();
+                }
+
+                else {
+                    print_alternative_drive_walk_file();
+                }
             }
         }
 
