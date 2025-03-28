@@ -13,7 +13,6 @@ struct OutputData {
     int destination;
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
-    std::vector<int> restrictedDrivingRoute;
     double min_time_1;
     double min_time_2;
 
@@ -75,6 +74,7 @@ struct OutputData {
             std::cout << "(" << min_time_2 << ")";
             std::cout << std::endl;
         }
+        std::cout << std::endl;
     }
 
     /*!
@@ -161,11 +161,11 @@ struct OutputData {
         printSource_file(this->source, out_file);
         printDest_file(this->destination, out_file);
 
-        if (this->restrictedDrivingRoute.empty()) {
+        if (this->bestDrivingRoute.empty()) {
             out_file << "RestrictedDrivingRoute:none" << std::endl;
         } else {
             out_file << "RestrictedDrivingRoute:";
-            printRoute_file(this->restrictedDrivingRoute, out_file);
+            printRoute_file(this->bestDrivingRoute, out_file);
             out_file << "(" << min_time_1 << ")";
             out_file << std::endl;
         }
@@ -174,6 +174,43 @@ struct OutputData {
         std::cout << std::endl;
 
         out_file.close();
+    }
+
+    void print_restricted_route_cli() {
+
+        printSource_cli(this->source);
+        printDest_cli(this->destination);
+
+        if (this->bestDrivingRoute.empty()) {
+            std::cout << "RestrictedDrivingRoute:none" << std::endl;
+        } else {
+            std::cout << "RestrictedDrivingRoute:";
+            printRoute_cli(this->bestDrivingRoute);
+            std::cout << "(" << min_time_1 << ")";
+            std::cout << std::endl;
+        }
+
+        std::cout << std::endl;
+
+    }
+
+    void out(const char& choice, const bool& isRestricted) {
+        if (choice == '1') {
+            if (!isRestricted) {
+                print_multiroute_file();
+            }
+            else {
+                print_restricted_route_file();
+            }
+        }
+        else if (choice == '2') {
+            if (!isRestricted) {
+                print_multiroute_cli();
+            }
+            else {
+                print_restricted_route_cli();
+            }
+        }
     }
 
 };

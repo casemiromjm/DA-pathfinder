@@ -31,7 +31,7 @@ points from origin to destination. The program should handle exceptional cases/e
 - [X] *T1.2* - **Read and parse Input Data** (accessible through menu). This functionality enable the user to request information such as the start and end points of your trip, the
 alternative independent route, the locations and/or segments to exclude, and the environmentally-friendly
 routing parameters. The **batch mode** must rely on input via `input.txt` and output via `output.txt` *(1 point)*
-- [ ] **Inputs/Outputs via CLI** same as the batch mode, but get inputs (and give outputs) via terminal.
+- [X] **Inputs/Outputs via CLI** same as the batch mode, but get inputs (and give outputs) via terminal.
 - [ ] *T1.3* - Generate ***Doxygen* documentation**. It should also indicate the *time complexity* for each of the most relevant algorithms. *(2 points)*
 
 ### Task 2 - Route Planning Functionalities (driving only)
