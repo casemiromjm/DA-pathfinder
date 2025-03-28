@@ -1,13 +1,13 @@
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
 #include <algorithm>
+#include <InputData.h>
 #include <OutputData.h>
-#include <unordered_set>
 #include <set>
 
 using namespace std;
 
-bool relax(Edge *edge) { // d[u] + w(u,v) < d[v]
+bool relax_drive(Edge *edge) { // d[u] + w(u,v) < d[v]
 
     if (edge->getOrig()->getDist() + edge->getDrive() < edge->getDest()->getDist()) {
 
@@ -51,7 +51,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
 
             double oldDist = e->getDest()->getDist();
 
-            if (relax(e)) {
+            if (relax_drive(e)) {
                 if (oldDist == INF) {
                     pq.insert(e->getDest());
                 }
@@ -103,7 +103,7 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
 
             double oldDist = e->getDest()->getDist();
 
-            if (relax(e)) {
+            if (relax_drive(e)) {
                 if (oldDist == INF) {
                     pq.insert(e->getDest());
                 }

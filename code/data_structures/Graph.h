@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <map>
 #include "../data_structures/CSV.h"
-#include "../data_structures/MutablePriorityQueue.h" // not needed for now
+#include "../data_structures/MutablePriorityQueue.h"
 
 class Edge;
 
@@ -30,6 +30,7 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     Edge *getPath() const;
+    Edge *getWalkPath() const;
     std::vector<Edge *> getIncoming() const;
 
     void setInfo(int info);
@@ -46,13 +47,14 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
+    void setWalkPath(Edge *path);
     Edge* addEdge(Vertex *dest, double d, double w);
     bool removeEdge(int in);
     void removeOutgoingEdges();
 
     friend class MutablePriorityQueue<Vertex>;
 protected:
-    int info;                // info node
+    int info;                // info node; alterado para int pq no nosso dataset só temos nós com inteiros
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
@@ -62,8 +64,9 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     Edge *path = nullptr;
+    Edge *walkPath = nullptr; // adicionado para o path do modo Drive-Walk
 
-    int parking; // adicionamos parking var (0 s/ park or 1 c/ park)
+    int parking; // adicionamos parking var (0 s/ park ou 1 c/ park)
 
     std::vector<Edge *> incoming; // incoming edges
 
@@ -267,6 +270,10 @@ inline Edge* Vertex::getPath() const {
     return this->path;
 }
 
+inline Edge* Vertex::getWalkPath() const {
+    return this->walkPath;
+}
+
 inline std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
@@ -293,6 +300,10 @@ inline void Vertex::setDist(double dist) {
 
 inline void Vertex::setPath(Edge *path) {
     this->path = path;
+}
+
+inline void Vertex::setWalkPath(Edge *path) {
+    this->walkPath = path;
 }
 
 inline void Vertex::deleteEdge(Edge *edge) {

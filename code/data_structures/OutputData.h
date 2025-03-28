@@ -11,10 +11,13 @@
 struct OutputData {
     int source;
     int destination;
+    int parkingNode;
     std::vector<int> bestDrivingRoute;
     std::vector<int> alternativeDrivingRoute;
+    std::string message;
     double min_time_1;
     double min_time_2;
+    double total_time;
 
     // methods
 
