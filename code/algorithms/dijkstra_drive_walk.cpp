@@ -52,7 +52,6 @@ void dijkstra_walk(Graph * g, const int &origin,
 
         for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
 
-
             //verifica se a aresta (par de vertex) está na lista de arestas a serem ignoradas
             if (avoidSegments.contains({v->getInfo(), e->getDest()->getInfo()})) {
                 continue;
@@ -80,11 +79,13 @@ map<int, double> parking_nodes_dist(const Graph* g) {
     if (g->getVertexSet().empty()) {
         return {};
     }
+
     for (auto v : g->getVertexSet()) {
-        if (v->getParking() == 1) {
+        if (v->getParking()) {
             parking_nodes[v->getInfo()] = v->getDist();
         }
     }
+
     return parking_nodes;
 }
 

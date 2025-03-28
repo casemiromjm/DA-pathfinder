@@ -113,7 +113,7 @@ struct InputData {
     }
 
     /*!
-     * Function for inputs from terminal
+     * Function for reading inputs from terminal
      */
     void readTerminal() {
 
