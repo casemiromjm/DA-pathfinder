@@ -10,9 +10,8 @@
 
 
 /*!
- * given a string, transforms it to its lower form
+ * Given a string, transforms it to its lower form
  * @param str string that will be transformed
- * @return void
  */
 inline void str_tolower(std::string& str) {
     for (char& c : str) {
@@ -23,7 +22,7 @@ inline void str_tolower(std::string& str) {
 }
 
 /*!
- * stores the input data
+ * Stores the input data
  */
 struct InputData {
     std::string mode;

@@ -466,9 +466,9 @@ inline bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, doubl
 }
 
 /*!
- * Function for constructing a city/graph
- * @retval true if the construction was successful
- * @retval false if it was not
+ * Constructs a city/graph
+ * @retval True if the construction was successful
+ * @retval False if it was not
  */
 inline bool Graph::constructCity() {
 
@@ -516,7 +516,9 @@ inline bool Graph::constructCity() {
     return true;
 }
 
-// clear the graph for each task
+/*!
+ * Cleans the graph for being able to run multiple tasks
+ */
 inline void Graph::clear() {
     for (auto v : this->getVertexSet()) {
         v->setVisited(false);

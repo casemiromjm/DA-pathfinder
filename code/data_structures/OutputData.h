@@ -4,6 +4,9 @@
 #include <vector>
 #include <fstream>
 
+/*!
+ * Stores output data
+ */
 struct OutputData {
     int source;
     int destination;
@@ -15,7 +18,7 @@ struct OutputData {
     std::vector<int> drivingRoute2;
     std::vector<int> walkingRoute1;
     std::vector<int> walkingRoute2;
-    std::vector<OutputData> alternative_routes;
+    std::vector<OutputData> alternative_routes;     // approx routes
     std::string message;
     double min_time_1;
     double min_time_2;
@@ -59,7 +62,7 @@ struct OutputData {
     }
 
     /*!
-     * print the best route and alternative route on terminal
+     * Prints the best route and alternative route on terminal
      */
     void print_multiroute_cli() {
         printSource_cli(this->source);
@@ -86,7 +89,7 @@ struct OutputData {
     }
 
     /*!
-     * Print a vector in the format x1,x2,...,xn on out_file
+     * Prints a vector in the format x1,x2,...,xn on out_file
      * @param vec the vector you want to print
      * @param out_file where the text will be written
      */
@@ -101,7 +104,7 @@ struct OutputData {
     }
 
     /*!
-     * Function for printing the source on out_file
+     * Prints the source on out_file
      * @param source the source node
      * @param out_file where the text will be written
      */
