@@ -140,8 +140,79 @@ pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) 
     return {best_parking, best_sum};
 }
 
-void findAlternativeRoutes(const map<int, double> &dist_map, const Graph* g) {
-  //TODO
+void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, map<int, double>& dist_map,
+    bool& isRestricted, map<int,double> parking_nodes_drive, map<int,double> parking_nodes_walk, Graph* g) {
+
+    int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
+    map <int, double>  alternative_routes;
+
+    //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar range maximo do walkTime)
+    while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK_RANGE) {
+
+        //atualizar o dist_map com o novo walkTime
+        for (const auto &p : parking_nodes_walk) {
+            if (p.second <= helperWalkTime) {
+                    dist_map[p.first] = p.second;
+            }
+        }
+
+        for (const auto &p : parking_nodes_drive) {
+            if (dist_map.contains(p.first)) {
+                dist_map[p.first] += p.second;
+            }
+        }
+
+        //depois de fazer as combinações com o novo walkTime vamos colocando as melhores rotas no vetor "alternative_routes"
+        //até o dist_map ficar vazio ou o vetor ter 2 rotas alternativas
+        while (!dist_map.empty()) {
+            auto best = getBestPath(dist_map, g);
+
+            if (!alternative_routes.contains(best.first)) {
+                alternative_routes.insert(best);
+            }
+
+            dist_map.erase(best.first); //apaga o "best" atual
+
+            if (alternative_routes.size() >= 2) break;
+        }
+
+        helperWalkTime += WALK_INCREMENT;
+    }
+
+    if (!alternative_routes.empty()) {
+        isRestricted = true;
+        auto first_elem = alternative_routes.begin(); //1 elemento
+        auto second_elem = first_elem++; //2 elemento
+
+        //verifica se existe segunda rota alternativa, se sim trata de ordenar como vai ser feito o output e atribuir os valores da 2 rota
+        if (second_elem != alternative_routes.end()) {
+
+            //logica para fazer output na ordem certa, ou seja, com o menor totalTime primeiro
+            if (first_elem->second > second_elem->second) {
+                auto aux = first_elem;
+                first_elem = second_elem;
+                second_elem = aux;
+            }
+
+            output_data->parkingNode2 = second_elem->first;
+            output_data->total_time2 = second_elem->second;
+
+            output_data->min_time_3 = parking_nodes_drive[second_elem->first];
+            output_data->min_time_4 = parking_nodes_walk[second_elem->first];
+
+            output_data->alternativeDrivingRoute2 = getPath(g, input_data->source, second_elem->first);
+            output_data->alternativeWalkingRoute2 = getWalkPath(g, second_elem->first, input_data->destination);
+        }
+
+        output_data->parkingNode1 = first_elem->first;
+        output_data->total_time1 = first_elem->second;
+
+        output_data->min_time_1 = parking_nodes_drive[first_elem->first];
+        output_data->min_time_2 = parking_nodes_walk[first_elem->first];
+
+        output_data->alternativeDrivingRoute1 = getPath(g, input_data->source, first_elem->first);
+        output_data->alternativeWalkingRoute1 = getWalkPath(g, first_elem->first, input_data->destination);
+    }
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
@@ -176,86 +247,12 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
     }
 
     else if (dist_map.empty()) {  //se não achar nenhum caminho com o maxWalkTime "normal"
+
+        //procura rotas alternativas aumentando o maxWalkTime e dá output num ficheiro a parte
+        findAlternativeRoutes(input_data, output_data, dist_map, isRestricted, parking_nodes_drive, parking_nodes_walk, g);
+
         // guarda mensagem de erro pq decidimos deixar o output das outras alterantivas num outro ficheiro pq não está 100 correto
         output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
-
-        findAlternativeRoutes(dist_map, g);
-
-        int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
-        map <int, double>  alternative_routes;
-
-        //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar range maximo do walkTime)
-        while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK_RANGE) {
-
-            //atualizar o dist_map com o novo walkTime
-            for (const auto &p : parking_nodes_walk) {
-                if (p.second <= helperWalkTime) {
-                    dist_map[p.first] = p.second;
-                }
-            }
-
-            for (const auto &p : parking_nodes_drive) {
-                if (dist_map.contains(p.first)) {
-                    dist_map[p.first] += p.second;
-                }
-            }
-
-            //depois de fazer as combinações com o novo walkTime vamos colocando as melhores rotas no vetor "alternative_routes"
-            //até o dist_map ficar vazio ou o vetor ter 2 rotas alternativas
-            while (!dist_map.empty()) {
-                auto best = getBestPath(dist_map, g);
-
-                if (!alternative_routes.contains(best.first)) {
-                    alternative_routes.insert(best);
-                }
-
-                dist_map.erase(best.first); //apaga o "best" atual
-
-                if (alternative_routes.size() >= 2) break;
-            }
-
-            helperWalkTime += WALK_INCREMENT;
-        }
-
-        if (!alternative_routes.empty()) {
-            isRestricted = true;
-            auto first_elem = alternative_routes.begin(); //1 elemento
-            auto second_elem = first_elem++; //2 elemento
-
-            //logica para fazer output na ordem certa, ou seja, com o menor totalTime primeiro
-            if (second_elem != alternative_routes.end()) {
-                if (first_elem->second > second_elem->second) {
-                    auto aux = first_elem;
-                    first_elem = second_elem;
-                    second_elem = aux;
-                }
-            }
-
-            output_data->parkingNode1 = first_elem->first;
-            output_data->total_time1 = first_elem->second;
-
-            output_data->min_time_1 = parking_nodes_drive[first_elem->first];
-            output_data->min_time_2 = parking_nodes_walk[first_elem->first];
-
-            output_data->drivingRoute1 = getPath(g, input_data->source, first_elem->first);
-            output_data->walkingRoute1 = getWalkPath(g, first_elem->first, input_data->destination);
-
-
-            if (second_elem != alternative_routes.end()) {
-                output_data->parkingNode2 = second_elem->first;
-                output_data->total_time2 = second_elem->second;
-
-                output_data->min_time_3 = parking_nodes_drive[second_elem->first];
-                output_data->min_time_4 = parking_nodes_walk[second_elem->first];
-
-                output_data->drivingRoute2 = getPath(g, input_data->source, second_elem->first);
-                output_data->walkingRoute2 = getWalkPath(g, second_elem->first, input_data->destination);
-            }
-        }
-
-        else {
-            output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
-        }
     }
 
     else {
@@ -267,7 +264,7 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
         output_data->min_time_1 = parking_nodes_drive[best_path.first];
         output_data->min_time_2 = parking_nodes_walk[best_path.first];
 
-        output_data->drivingRoute1 = getPath(g, input_data->source, best_path.first);
-        output_data->walkingRoute1 = getWalkPath(g, best_path.first, input_data->destination);
+        output_data->bestDrivingRoute = getPath(g, input_data->source, best_path.first);
+        output_data->bestWalkingRoute = getWalkPath(g, best_path.first, input_data->destination);
     }
 }

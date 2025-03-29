@@ -110,12 +110,24 @@ std::pair<int, double> getBestPath(const std::map<int, double> &dist_map, const 
 
 /*!
  * Finds alternative routes in case of not having one that respects the original max walk time
+ * @param input_data Struct that contains the input itself (e.g., source, destination, constraints...)
+ * @param output_data Struct to store computed routes and distances
  * @param dist_map A map containing precomputed distances where:
  * - Key: Parking node ID
  * - Value: Total travel time (sum of driving time with walking time)
+ * @param isRestricted If True, there are restrictions and in this case also an alternative route
+ * @param parking_nodes_drive A map containing the shortest driving time to each parking node
+ * - Key: Parking node ID
+ * - Value: The driving time to that node
+ * @param parking_nodes_walk A map containing the shortest walking time to each parking node
+ * - Key: Parking node ID
+ * - Value: The walking time to that node
  * @param g The graph previously initialized
+ * @note
+ * Time Complexity: O(
  */
-void findAlternativeRoutes(const std::map<int, double> &dist_map, const Graph* g);
+void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, std::map<int, double>& dist_map,
+    bool& isRestricted, std::map<int,double> parking_nodes_drive, std::map<int,double> parking_nodes_walk, Graph* g);
 
 /*!
  * Wrapper function for driving-walking route planning logic. Populates the output_data with results

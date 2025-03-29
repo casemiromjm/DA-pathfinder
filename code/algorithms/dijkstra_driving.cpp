@@ -189,7 +189,7 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         output_data->min_time_1 = g->findVertex(input_data->destination)->getDist();
 
         dijkstra_driving(g, input_data->source);
-        output_data->alternativeDrivingRoute = getPath(g, input_data->source, input_data->destination);
+        output_data->alternativeDrivingRoute1 = getPath(g, input_data->source, input_data->destination);
         output_data->min_time_2 = g->findVertex(input_data->destination)->getDist();
     }
 }
