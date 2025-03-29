@@ -6,7 +6,7 @@
 #include "dijkstra.h"
 
 // useful macros for creating alternative routes
-#define MAX_WALK 100
+#define MAX_WALK_RANGE 100
 #define WALK_INCREMENT 10
 
 using namespace std;
@@ -81,13 +81,15 @@ map<int, double> parking_nodes_dist(const Graph* g) {
     map<int,double> parking_nodes {};
 
     if (g->getVertexSet().empty()) {
-        return {};
+        return parking_nodes;       // vazio
     }
+
     for (auto v : g->getVertexSet()) {
         if (v->getParking() == 1) {
             parking_nodes[v->getInfo()] = v->getDist();
         }
     }
+
     return parking_nodes;
 }
 
@@ -182,8 +184,8 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
         int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
         map <int, double>  alternative_routes;
 
-        //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar "gap" maximo do walkTime)
-        while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK) {
+        //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar range maximo do walkTime)
+        while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK_RANGE) {
 
             //atualizar o dist_map com o novo walkTime
             for (const auto &p : parking_nodes_walk) {

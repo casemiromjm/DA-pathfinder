@@ -129,6 +129,7 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
         res.push_back(d->getInfo());
 
         // nós que não sejam dest ou origin marcados como visitados após a primeira call do dijkstra
+        // p não ter nós repetidos em cada rota
         if (d->getInfo() != origin && d->getInfo() != dest) {
             d->setVisited(true);
         }
@@ -147,10 +148,11 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
     output_data->destination = input_data->destination;
 
     //Verificar se a rota vai ser restrita
-    if (input_data->includeNode != -1 || input_data->avoidNodes.size() != 0 || input_data->avoidSegments.size() != 0) {
+    if (input_data->includeNode != -1 || !input_data->avoidNodes.empty() || !input_data->avoidSegments.empty()) {
         isRestricted = true;
         //Verificar se tem include node
         if (input_data->includeNode != -1) {
+            // se tem q passar por um nó, faz 2 dijkstras. 1 ate o nó e outro do nó ao destino
 
             dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
 
@@ -180,6 +182,7 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         }
     }
 
+    // sem quaisquer restrições
     else {
         dijkstra_driving(g, input_data->source);
         output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
