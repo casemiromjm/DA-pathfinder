@@ -19,7 +19,7 @@ class Csv {
  *access the CSV data
  *@return CSV data
  */
-std::vector<std::vector<std::string>> Csv::getData() {
+inline std::vector<std::vector<std::string>> Csv::getData() {
     return data;
 }
 
@@ -28,7 +28,7 @@ std::vector<std::vector<std::string>> Csv::getData() {
  * @param file_name file name that you are trying to open
  * @return all lines in a 2D vector
  */
-void Csv::readCSV(const std::string& file_name) {
+inline void Csv::readCSV(const std::string& file_name) {
     std::ifstream file(file_name);
 
     data.clear();

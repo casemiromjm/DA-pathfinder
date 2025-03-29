@@ -254,7 +254,7 @@ struct OutputData {
     void print_alternative_drive_walk_file() {
         std::ofstream out_file;
 
-        out_file.open("../input_output/output.txt");
+        out_file.open("../input_output/alternative_routes.txt");
 
         if (!out_file.is_open()) {
             std::cerr << "Failed to open output file" << std::endl;
@@ -290,7 +290,7 @@ struct OutputData {
         out_file << "TotalTime2:" << total_time2 << std::endl;
 
 
-        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << "alternatives_routes.txt successfully created in ./input_output/" << std::endl;
         std::cout << std::endl;
 
         out_file.close();
@@ -300,7 +300,7 @@ struct OutputData {
      * Prints the best route, considering restrictions and driving+walking, to an output file
      */
     void print_restricted_drive_walk_cli() {
-
+        //TODO
     }
 
     /*!
@@ -322,13 +322,8 @@ struct OutputData {
             }
 
             else if (mode == "driving-walking") {
-                if (!isRestricted) {
-                    print_restricted_drive_walk_file();
-                }
-
-                else {
-                    print_alternative_drive_walk_file();
-                }
+                print_restricted_drive_walk_file();
+                print_alternative_drive_walk_file();
             }
         }
 

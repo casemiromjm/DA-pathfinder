@@ -3,10 +3,13 @@
 #include <InputData.h>
 #include <OutputData.h>
 #include <string>
-#include "../algorithms/dijkstra.h"
+#include "dijkstra.h"
+
+// useful macros for creating alternative routes
+#define MAX_WALK 100
+#define WALK_INCREMENT 10
 
 using namespace std;
-
 
 bool relax_walk(Edge *edge) { // d[u] + w(u,v) < d[v]
 
@@ -88,7 +91,7 @@ map<int, double> parking_nodes_dist(const Graph* g) {
     return parking_nodes;
 }
 
-vector<int> getWalkPath(Graph * g, const int &origin, const int &dest) {
+vector<int> getWalkPath(Graph* g, const int &origin, const int &dest) {
     vector<int> res;
     auto d = g->findVertex(origin);
 
@@ -105,19 +108,23 @@ vector<int> getWalkPath(Graph * g, const int &origin, const int &dest) {
     return res;
 }
 
-//Devolve o nó de parking e distancia total do melhor trajeto
 pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) {
-    pair<int, int> best_path;
 
-    int best_sum = INF, best_parking = 0;
+    double best_sum = INF;  // double p/ usar o INF sem ter problemas
+    int best_parking = 0;
+
     for (const auto &d : dist_map) {
 
+        //d.first = id do nó
+        //d.second = dist computada p esse nó
+
+        // se existir um distancia menor do q atual, atualiza o parking node
         if (d.second < best_sum) {
             best_sum = d.second;
             best_parking = d.first;
         }
 
-        //Maior distancia walk desempata
+        // critério de desempate: maior distancia walking
         else if (d.second == best_sum) {
 
             //Como o dijkstra_walk foi chamado mais recentemente, getDist retorna a distância walk
@@ -128,10 +135,11 @@ pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) 
         }
     }
 
-    best_path.first = best_parking;
-    best_path.second = best_sum;
+    return {best_parking, best_sum};
+}
 
-    return best_path;
+void findAlternativeRoutes(const map<int, double> &dist_map, const Graph* g) {
+  //TODO
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
@@ -166,11 +174,16 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
     }
 
     else if (dist_map.empty()) {  //se não achar nenhum caminho com o maxWalkTime "normal"
-        int helperWalkTime = input_data->maxWalkTime;
+        // guarda mensagem de erro pq decidimos deixar o output das outras alterantivas num outro ficheiro pq não está 100 correto
+        output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
+
+        findAlternativeRoutes(dist_map, g);
+
+        int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
         map <int, double>  alternative_routes;
 
         //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar "gap" maximo do walkTime)
-        while (alternative_routes.size() < 2 && helperWalkTime < 100) {
+        while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK) {
 
             //atualizar o dist_map com o novo walkTime
             for (const auto &p : parking_nodes_walk) {
@@ -199,7 +212,7 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
                 if (alternative_routes.size() >= 2) break;
             }
 
-            helperWalkTime += 10;
+            helperWalkTime += WALK_INCREMENT;
         }
 
         if (!alternative_routes.empty()) {

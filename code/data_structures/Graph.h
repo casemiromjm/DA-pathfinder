@@ -517,7 +517,7 @@ inline bool Graph::constructCity() {
 }
 
 // clear the graph for each task
-void Graph::clear() {
+inline void Graph::clear() {
     for (auto v : this->getVertexSet()) {
         v->setVisited(false);
         v->setDist(0);      // de volta ao padrão

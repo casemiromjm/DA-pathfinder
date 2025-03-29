@@ -4,7 +4,7 @@
 #include <InputData.h>
 #include <OutputData.h>
 #include <set>
-#include "../algorithms/dijkstra.h"
+#include "dijkstra.h"
 
 using namespace std;
 
@@ -35,7 +35,7 @@ void dijkstra_driving(Graph * g, const int &origin) {
     }
 
     //nó de origem
-    Vertex *s = g->findVertex(origin);
+    Vertex* s = g->findVertex(origin);
     s->setDist(0);
 
     MutablePriorityQueue<Vertex> pq;
@@ -116,7 +116,6 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
     }
 
 }
-
 
 std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     std::vector<int> res;
