@@ -143,7 +143,8 @@ pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) 
 }
 
 //find alternative routes (if they exist)
-void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, bool& isRestricted, Graph* g) {
+void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
+    bool& isRestricted, Graph* g) {
 
     int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
     map <int, double>  alternative_routes;
