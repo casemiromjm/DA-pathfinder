@@ -66,7 +66,8 @@ protected:
     Edge *path = nullptr;
     Edge *walkPath = nullptr; // adicionado para o path do modo Drive-Walk
 
-    int parking; // adicionamos parking var (0 s/ park ou 1 c/ park)
+    int parking; // added parking var (0 no park or 1 w/ park)
+
 
     std::vector<Edge *> incoming; // incoming edges
 
@@ -466,9 +467,9 @@ inline bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, doubl
 }
 
 /*!
- * Function for constructing a city/graph
- * @retval true if the construction was successful
- * @retval false if it was not
+ * Constructs a city/graph
+ * @retval True if the construction was successful
+ * @retval False if it was not
  */
 inline bool Graph::constructCity() {
 
@@ -476,7 +477,7 @@ inline bool Graph::constructCity() {
 
     Csv *csv_file = new Csv();
     // csv_file->readCSV("../data/Locations.csv");  uncomment for creating the real graph
-    csv_file->readCSV("../data/Locations_test.csv");
+    csv_file->readCSV("../data/example_locations.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Locations.csv or file is empty." << std::endl;
@@ -497,7 +498,7 @@ inline bool Graph::constructCity() {
     // read distances
 
     // csv_file->readCSV("../data/Distances.csv");      // uncomment for the real graph
-    csv_file->readCSV("../data/Distances_test.csv");
+    csv_file->readCSV("../data/example_distances.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Distances.csv or file is empty." << std::endl;
@@ -517,9 +518,9 @@ inline bool Graph::constructCity() {
 }
 
 /*!
- * Function for cleaning any signs of previous tasks
+ * Cleans the graph for being able to run multiple tasks
  */
-void Graph::clear() {
+inline void Graph::clear() {
     for (auto v : this->getVertexSet()) {
         v->setVisited(false);
         v->setDist(0);      // de volta ao padrão

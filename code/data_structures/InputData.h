@@ -10,11 +10,10 @@
 
 
 /*!
- * given a string, transforms it to its lower form
+ * Given a string, transforms it to its lower form
  * @param str string that will be transformed
- * @return void
  */
-void str_tolower(std::string& str) {
+inline void str_tolower(std::string& str) {
     for (char& c : str) {
         if (c >= 'A' && c <= 'Z') {
             c = 'a' + (c - 'A');
@@ -23,7 +22,7 @@ void str_tolower(std::string& str) {
 }
 
 /*!
- * stores the input data
+ * Stores the input data
  */
 struct InputData {
     std::string mode;
@@ -37,7 +36,7 @@ struct InputData {
     // methods
 
     /*!
-     * Function for reading an input file
+     * Reads an input file
      * @param filename which file you are trying to read from input_output folder
      */
     void readInputFile(const std::string &filename) {
@@ -113,7 +112,7 @@ struct InputData {
     }
 
     /*!
-     * Function for reading inputs from terminal
+     * Reads input from terminal
      */
     void readTerminal() {
 
@@ -189,7 +188,7 @@ struct InputData {
      * @param choice method of the input (1 for file or 2 for CLI)
      * @param filename file name if it is via file
      */
-    void in (const char &choice, const std::string& filename="") {
+    void in(const char &choice, const std::string& filename="") {
         if (choice == '1') {
             this->readInputFile(filename);
         }

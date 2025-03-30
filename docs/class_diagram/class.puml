@@ -1,0 +1,143 @@
+@startuml Class Diagram
+
+class Vertex {
+    - path : Edge*
+    - walkPath : Edge*
+    - visited : bool
+    - parking - int
+    - info - int
+    - adj : vector<Edge *>
+
+    + Vertex(in : int, p : int)
+    + getParking() : int
+    + getInfo() : int
+    + getPath() : Edge*
+    + getWalkPath() : Edge*
+    + getAdj() : vector<Edge*>
+    + isVisited() : bool
+}
+
+class Edge {
+    - orig : Vertex*
+    - dest : Vertex*
+    - drive : double
+    - walk : double
+
+    + Edge(orig : Vertex*, dest : Vertex*, d : double, w : double)
+    + getOrig() : Vertex*
+    + getDest() : Vertex*
+    + getDrive : double
+    + getWalk : double
+}
+
+class Graph {
+    - vertexSet : vector<Vertex*>
+
+    + getVertexSet() : vector<Vertex*>
+    + constructCity() : bool
+    + findVertex(in : int) : Vertex*
+    + addVertex(in : int, parking : int) : bool
+    + addBidirectionalEdge(sourc : int, dest : int, d : double, w : double)
+}
+
+struct InputData {
+    + mode : int
+    + source : int
+    + destination : int 
+    + maxWalkTime : int 
+    + avoidNodes : set<int>
+    + avoidSegments : set<std::pair<int,int>>
+    + includeNode : int 
+
+    + readInputFile(filename : string) : void
+    + readTerminal() : void
+    + in(choice : int, filename : string) : void
+}
+
+struct OutputData {
+    + source : int
+    + destination : int
+    + parkingNode1 : int
+    + parkingNode2 : int
+    + bestDrivingRoute : vector<int>
+    + bestWalkingRoute : vector<int>
+    + alternativeDrivingRoute1 : vector<int>
+    + alternativeDrivingRoute2 : vector<int>
+    + alternativeWalkingRoute1 : vector<int>
+    + alternativeWalkingRoute2 : vector<int>
+    + message : string
+    + min_time_1 : double
+    + min_time_2 : double
+    + min_time_3 : double
+    + min_time_4 : double
+    + total_time1 : double
+    + total_time2 : double
+
+    + printRoute(route : vector<int>)
+    + print_multiroute() : void
+    + print_restricted_route() : void
+    + print_restricted_drive_walk() : void
+    + print_alternative_drive_walk() : void
+    + out(choice : int, mode : string, isRestricted : bool)
+}
+
+note top of OutputData
+    For each printing method, there is a variant for CLI and another for an output file.
+end note
+
+class Csv {
+    - data: vector<vector<string>>
+
+    + readCSV(file_name: string) : void
+    + getData() : vector<vector<string>>
+}
+
+class MutablePriorityQueue<T> {
+    - heap : vector<T>
+    
+    + insert(item: T*) : void
+    + extractMin() : T*
+    + decreaseKey(item : T*) : void
+    + empty() : bool
+}
+
+' Associações entre as classes
+Graph "1" *-- "0..*" Vertex
+Graph "1" *-- "0..*" Edge
+Vertex "1" o-- "0..*" Edge
+Graph --> Csv
+Graph --> MutablePriorityQueue
+
+' InputData e OutputData são independentes
+InputData ..> Graph : uses >
+OutputData ..> Graph : uses >
+
+note top of MutablePriorityQueue
+    Located in MutablePriorityQueue.h
+end note
+
+note top of Csv
+    Located in CSV.h
+end note
+
+note top of OutputData
+    Located in OutputData.h
+end note
+
+note top of InputData
+    Located in InputData.h
+end note
+
+note top of Graph
+    Located in Graph.h
+end note
+
+note top of Edge
+    Located in Graph.h
+end note
+
+note top of Vertex
+    Located in Graph.h
+end note
+
+@enduml

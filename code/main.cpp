@@ -2,11 +2,9 @@
 #include "data_structures/Graph.h"
 #include "data_structures/InputData.h"
 #include <string>
-#include "algorithms/dijsktra_driving.cpp"
-#include "algorithms/dijkstra_drive_walk.cpp"
+#include "algorithms/dijkstra.h"
 #include <thread>
 #include "data_structures/OutputData.h"
-
 
 int main() {
     // Graph city;
@@ -27,6 +25,11 @@ int main() {
         return 1;
     }
     std::cout << "Test City constructed successfully!" << std::endl;
+
+    std::cout << "========================================\n";
+    std::cout << "    ROUTE PLANNING SYSTEM - MAIN MENU    \n";
+    std::cout << "developed by Casemiro, Rafael and Sebastiao\n";
+    std::cout << "========================================\n";
 
     bool isRunning = true;
     while (isRunning) {
@@ -58,7 +61,7 @@ int main() {
                 }
 
                 else if (input_data.mode == "driving-walking") {
-                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city);
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
 
                 output_data.out(choice, input_data.mode, isRestricted);
@@ -77,15 +80,21 @@ int main() {
                     dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
                 }
 
+                else if (input_data.mode == "driving-walking") {
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                }
+
                 output_data.out(choice, input_data.mode, isRestricted);
             }
             test_city.clear();
             break;
 
             case '0':
-                std::cout << "- Receive inputs via CLI or via .txt file inside input_output/. Outputs are made in the same place where the inputs were." << std::endl;
-                std::cout << "- Calculates the best route and an alternative given where you are and to where you want to go." << std::endl;
-                std::cout << "- Calculates the best route that from a point to another respecting the constraints given." << std::endl;
+                std::cout << "- Accept inputs either via command line or via .txt file in input_output/. Outputs will be generated in the same location as the inputs." << std::endl;
+                std::cout << "- Calculate the optimal driving route plus an alternative route between your origin and destination points." << std::endl;
+                std::cout << "- Determine the best driving route between two locations while respecting all given constraints." << std::endl;
+                std::cout << "- Find eco-friendly routes combining driving and walking" << std::endl;
+                std::cout << "- Finds closest possible route by adjusting walking sections when needed" << std::endl;
                 std::cout << std::endl;
             break;
 
