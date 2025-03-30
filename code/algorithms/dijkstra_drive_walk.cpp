@@ -11,6 +11,11 @@
 
 using namespace std;
 
+//some global variables
+map<int, double> dist_map; //store the parking node used per route and the sums of driving + walking distances
+map<int,double> parking_nodes_drive;//stores the driving distances from source to parking nodes
+map<int,double> parking_nodes_walk;//store the walking distances from destination to parking nodes
+
 bool relax_walk(Edge *edge) { // d[u] + w(u,v) < d[v]
 
     if (edge->getOrig()->getDist() + edge->getWalk() < edge->getDest()->getDist()) {
@@ -138,8 +143,7 @@ pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) 
 }
 
 //find alternative routes (if they exist)
-void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, map<int, double>& dist_map,
-    bool& isRestricted, map<int,double> parking_nodes_drive, map<int,double> parking_nodes_walk, Graph* g) {
+void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, bool& isRestricted, Graph* g) {
 
     int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
     map <int, double>  alternative_routes;
@@ -215,17 +219,16 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
-    map<int, double> dist_map; //store the parking node used per route and the sums of driving + walking distances
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
     //compute driving distances from source to parking nodes and store them
     dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
-    map<int,double> parking_nodes_drive = parking_nodes_dist(g);
+    parking_nodes_drive = parking_nodes_dist(g);
 
     //compute walking distances from destination to parking nodes and store them
     dijkstra_walk(g, input_data->destination, input_data->avoidNodes, input_data->avoidSegments);
-    map<int,double> parking_nodes_walk = parking_nodes_dist(g);
+    parking_nodes_walk = parking_nodes_dist(g);
 
     for (const auto &p : parking_nodes_walk) {
         //if the walking distance of the path exceeds MaxWalkTime, it's not added to dist_map
@@ -248,7 +251,7 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
     else if (dist_map.empty()) {  //if no path is found with the normal maxWalkTime:
 
         //search for alternative routes by increasing maxWalkTime and output to a separate file
-        findAlternativeRoutes(input_data, output_data, dist_map, isRestricted, parking_nodes_drive, parking_nodes_walk, g);
+        findAlternativeRoutes(input_data, output_data, isRestricted, g);
 
         //store error message because we decided to output alternative routes in a separate file (not 100% correct)
         output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
