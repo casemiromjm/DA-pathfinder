@@ -87,7 +87,7 @@ map<int, double> parking_nodes_dist(const Graph* g) {
     }
 
     for (auto v : g->getVertexSet()) {
-        if (v->getParking() == 1) {
+        if (v->getParking()) {
             parking_nodes[v->getInfo()] = v->getDist();
         }
     }

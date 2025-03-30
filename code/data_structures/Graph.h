@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <map>
 #include "../data_structures/CSV.h"
-#include "../data_structures/MutablePriorityQueue.h" // not needed for now
+#include "../data_structures/MutablePriorityQueue.h"
 
 class Edge;
 
@@ -54,7 +54,7 @@ public:
 
     friend class MutablePriorityQueue<Vertex>;
 protected:
-    int info;                // info node
+    int info;                // info node; alterado para int pq no nosso dataset só temos nós com inteiros
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
@@ -66,7 +66,8 @@ protected:
     Edge *path = nullptr;
     Edge *walkPath = nullptr; // adicionado para o path do modo Drive-Walk
 
-    int parking; // added parking var (0 s/ park or 1 c/ park)
+    int parking; // added parking var (0 no park or 1 w/ park)
+
 
     std::vector<Edge *> incoming; // incoming edges
 
