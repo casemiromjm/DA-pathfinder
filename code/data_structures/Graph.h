@@ -66,7 +66,7 @@ protected:
     Edge *path = nullptr;
     Edge *walkPath = nullptr; // adicionado para o path do modo Drive-Walk
 
-    int parking; // adicionamos parking var (0 s/ park or 1 c/ park)
+    int parking; // added parking var (0 s/ park or 1 c/ park)
 
     std::vector<Edge *> incoming; // incoming edges
 

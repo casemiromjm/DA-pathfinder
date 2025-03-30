@@ -31,14 +31,12 @@ void dijkstra_walk(Graph * g, const int &origin,
         return;
     }
 
-    //inicializar variáveis auxiliares
-
     for (auto v : g->getVertexSet()) {
         v->setDist(INF);
         v->setWalkPath(nullptr);
     }
 
-    //nó de origem
+    //source node
     Vertex *s = g->findVertex(origin);
     s->setDist(0);
 
@@ -48,15 +46,14 @@ void dijkstra_walk(Graph * g, const int &origin,
     while (!pq.empty()) {
         auto v = pq.extractMin();
 
-        //verifica se o vertex está na lista a ser ignorado, se sim continua (ignora)
+        //checks if the node is in the "ignore list"(avoidNodes) if yes, it continues (skips the node).
         if (avoidNodes.contains(v->getInfo())) {
             continue;
         }
 
-        for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
+        for (auto e : v->getAdj()) { //for all edges of the node being processed
 
-
-            //verifica se a aresta (par de vertex) está na lista de arestas a serem ignoradas
+            //checks if the edge (node pair) is in the list of edges to be ignored (avoidSegments)
             if (avoidSegments.contains({v->getInfo(), e->getDest()->getInfo()})) {
                 continue;
             }
@@ -76,12 +73,12 @@ void dijkstra_walk(Graph * g, const int &origin,
 
 }
 
-//Associar a cada nó de parking uma distância
+//associate a distance to each parking node
 map<int, double> parking_nodes_dist(const Graph* g) {
     map<int,double> parking_nodes {};
 
     if (g->getVertexSet().empty()) {
-        return parking_nodes;       // vazio
+        return parking_nodes;       //empty
     }
 
     for (auto v : g->getVertexSet()) {
@@ -98,7 +95,7 @@ vector<int> getWalkPath(Graph* g, const int &origin, const int &dest) {
     auto d = g->findVertex(origin);
 
     if (d == nullptr || d->getDist() == INF) {
-        return res;     // dest não alcançável
+        return res;     //destination unreachable
     }
 
     while (d->getInfo() != dest) {
@@ -112,24 +109,24 @@ vector<int> getWalkPath(Graph* g, const int &origin, const int &dest) {
 
 pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) {
 
-    double best_sum = INF;  // double p/ usar o INF sem ter problemas
+    double best_sum = INF;  //use double to handle INF without issues
     int best_parking = 0;
 
     for (const auto &d : dist_map) {
 
-        //d.first = id do nó
-        //d.second = dist computada p esse nó
+        //d.first = node ID
+        //d.second = computed distance for this node
 
-        // se existir um distancia menor do q atual, atualiza o parking node
+        //if a shorter distance exists than the current one, update the parking node
         if (d.second < best_sum) {
             best_sum = d.second;
             best_parking = d.first;
         }
 
-        // critério de desempate: maior distancia walking
+        //tiebreaker: longest walking distance
         else if (d.second == best_sum) {
 
-            //Como o dijkstra_walk foi chamado mais recentemente, getDist retorna a distância walk
+            //since dijkstra_walk was called most recently, getDist() returns the walking distance
             if (g->findVertex(d.first)->getDist() > g->findVertex(best_parking)->getDist()) {
                 best_parking = d.first;
                 best_sum = d.second;
@@ -140,16 +137,17 @@ pair<int, double> getBestPath(const map<int, double> &dist_map, const Graph* g) 
     return {best_parking, best_sum};
 }
 
+//find alternative routes (if they exist)
 void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, map<int, double>& dist_map,
     bool& isRestricted, map<int,double> parking_nodes_drive, map<int,double> parking_nodes_walk, Graph* g) {
 
     int helperWalkTime = input_data->maxWalkTime + WALK_INCREMENT;
     map <int, double>  alternative_routes;
 
-    //enquanto não tiver pelo menos 2 rotas alternativas (ou se não ultrapassar range maximo do walkTime)
+    //while there are fewer than 2 alternative routes (or until exceeding maximum walkTime range) the loop continues
     while (alternative_routes.size() < 2 && helperWalkTime < MAX_WALK_RANGE) {
 
-        //atualizar o dist_map com o novo walkTime
+        //update dist_map with the new walkTime
         for (const auto &p : parking_nodes_walk) {
             if (p.second <= helperWalkTime) {
                     dist_map[p.first] = p.second;
@@ -162,8 +160,8 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
             }
         }
 
-        //depois de fazer as combinações com o novo walkTime vamos colocando as melhores rotas no vetor "alternative_routes"
-        //até o dist_map ficar vazio ou o vetor ter 2 rotas alternativas
+        //after computing combinations with the new walkTime, we progressively store the best routes in the 'alternative_routes' vector
+        //until either the dist_map is exhausted, or the vector contains 2 alternative routes the loop continues
         while (!dist_map.empty()) {
             auto best = getBestPath(dist_map, g);
 
@@ -171,7 +169,7 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
                 alternative_routes.insert(best);
             }
 
-            dist_map.erase(best.first); //apaga o "best" atual
+            dist_map.erase(best.first); //remove the current 'best' entry
 
             if (alternative_routes.size() >= 2) break;
         }
@@ -181,13 +179,13 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
 
     if (!alternative_routes.empty()) {
         isRestricted = true;
-        auto first_elem = alternative_routes.begin(); //1 elemento
-        auto second_elem = first_elem++; //2 elemento
+        auto first_elem = alternative_routes.begin(); //1 element
+        auto second_elem = first_elem++; //2 element
 
-        //verifica se existe segunda rota alternativa, se sim trata de ordenar como vai ser feito o output e atribuir os valores da 2 rota
+        //checks if a second alternative route exists, if yes organizes the output structure and assigns the 2 route's values
         if (second_elem != alternative_routes.end()) {
 
-            //logica para fazer output na ordem certa, ou seja, com o menor totalTime primeiro
+            //logic to ensure output is ordered correctly, i.e., with the lowest totalTime first
             if (first_elem->second > second_elem->second) {
                 auto aux = first_elem;
                 first_elem = second_elem;
@@ -216,27 +214,27 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
-    map<int, double> dist_map; //Vão se guardar o nó de parking usado por caminho e as somas das distâncias drive + walk
+    map<int, double> dist_map; //store the parking node used per route and the sums of driving + walking distances
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
-    //Computar distâncias driving da source aos nós com parking e guardá-las
+    //compute driving distances from source to parking nodes and store them
     dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
     map<int,double> parking_nodes_drive = parking_nodes_dist(g);
 
-    //Computar distâncias walking da dest aos nós com parking e guardá-las
+    //compute walking distances from destination to parking nodes and store them
     dijkstra_walk(g, input_data->destination, input_data->avoidNodes, input_data->avoidSegments);
     map<int,double> parking_nodes_walk = parking_nodes_dist(g);
 
     for (const auto &p : parking_nodes_walk) {
-        //Se a distância walk do caminho excede o MaxWalkTime, não se adiciona ao dist_map
+        //if the walking distance of the path exceeds MaxWalkTime, it's not added to dist_map
         if (p.second <= input_data->maxWalkTime) {
             dist_map[p.first] = p.second;
         }
     }
 
     for (const auto &p : parking_nodes_drive) {
-        //Só se vai inserir as distâncias driving se já estiver lá a distância walk (válida)
+        //driving distances are only inserted if a valid walking distance already exists
         if (dist_map.contains(p.first)) {
             dist_map[p.first] += p.second;
         }
@@ -246,12 +244,12 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
         output_data->message = "No parking nodes found.";
     }
 
-    else if (dist_map.empty()) {  //se não achar nenhum caminho com o maxWalkTime "normal"
+    else if (dist_map.empty()) {  //if no path is found with the normal maxWalkTime:
 
-        //procura rotas alternativas aumentando o maxWalkTime e dá output num ficheiro a parte
+        //search for alternative routes by increasing maxWalkTime and output to a separate file
         findAlternativeRoutes(input_data, output_data, dist_map, isRestricted, parking_nodes_drive, parking_nodes_walk, g);
 
-        // guarda mensagem de erro pq decidimos deixar o output das outras alterantivas num outro ficheiro pq não está 100 correto
+        //store error message because we decided to output alternative routes in a separate file (not 100% correct)
         output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
     }
 

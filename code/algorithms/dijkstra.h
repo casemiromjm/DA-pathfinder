@@ -21,7 +21,9 @@ bool relax_drive(Edge *edge);
  * @param g The graph itself
  * @param origin The origin node of a route
  * @note
- * Time Complexity: O(
+ * Time Complexity: O((V + E)log(V))
+ * - E: Number of Edges
+ * - V: Number of vertexes
  */
 void dijkstra_driving(Graph *g, const int &origin);
 
@@ -33,7 +35,9 @@ void dijkstra_driving(Graph *g, const int &origin);
  * @param avoidNodes Nodes to be avoided, in other words, it can't be part of the route
  * @param avoidSegments Edges to be avoided, in other words, it can't be part of the route
  * @note
- * Time Complexity: O(
+ * Time Complexity: O((V + E)log(V))
+ * - E: Number of Edges
+ * - V: Number of vertexes
  */
 void dijkstra_restricted_driving(Graph *g, const int &origin,
                                  const std::set<int> &avoidNodes,
@@ -67,7 +71,9 @@ bool relax_walk(Edge *edge);
  * @param avoidNodes Nodes to be avoided, in other words, it can't be part of the route
  * @param avoidSegments Edges to be avoided, in other words, it can't be part of the route
  * @note
- * Time Complexity: O(
+ * Time Complexity: O((V + E)log(V))
+ * - E: Number of Edges
+ * - V: Number of vertexes
  */
 void dijkstra_walk(Graph *g, const int &origin,
                    const std::set<int> &avoidNodes,
@@ -123,8 +129,6 @@ std::pair<int, double> getBestPath(const std::map<int, double> &dist_map, const 
  * - Key: Parking node ID
  * - Value: The walking time to that node
  * @param g The graph previously initialized
- * @note
- * Time Complexity: O(
  */
 void findAlternativeRoutes(const InputData* input_data, OutputData* output_data, std::map<int, double>& dist_map,
     bool& isRestricted, std::map<int,double> parking_nodes_drive, std::map<int,double> parking_nodes_walk, Graph* g);

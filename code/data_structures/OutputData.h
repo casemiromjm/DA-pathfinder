@@ -28,7 +28,7 @@ struct OutputData {
 
     // methods
 
-    // CLI SIGNIFICA QUE VAI PARA O TERMINAL
+    // CLI means the output will go to the terminal (command-line interface)
 
     /*!
      * Function for printing a vector in the format x1,x2,...,xn on terminal
@@ -322,7 +322,9 @@ struct OutputData {
         out_file.close();
     }
 
-
+    /*!
+     * Prints the alternative routes, considering restrictions and driving+walking, to an output file
+     */
     void print_alternative_drive_walk_file() {
         std::ofstream out_file;
 

@@ -27,14 +27,12 @@ void dijkstra_driving(Graph * g, const int &origin) {
         return;
     }
 
-    //inicializar variáveis auxiliares
-
     for (auto v : g->getVertexSet()) {
         v->setDist(INF);
         v->setPath(nullptr);
     }
 
-    //nó de origem
+    //source node
     Vertex* s = g->findVertex(origin);
     s->setDist(0);
 
@@ -44,9 +42,9 @@ void dijkstra_driving(Graph * g, const int &origin) {
     while (!pq.empty()) {
         auto v = pq.extractMin();
 
-        for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
+        for (auto e : v->getAdj()) { //for all edges of the node being processed
             if (e->getDest()->isVisited()) {
-              // se o nó foi visitado na primeira visita, ignorar na segunda
+              //if the node was visited in the first time, ignore it in the second time
               continue;
             }
 
@@ -72,14 +70,11 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
         return;
     }
 
-    //inicializar variáveis auxiliares
-
     for (auto v : g->getVertexSet()) {
         v->setDist(INF);
         v->setPath(nullptr);
     }
 
-    //nó de origem
     Vertex *s = g->findVertex(origin);
     s->setDist(0);
 
@@ -89,15 +84,14 @@ void dijkstra_restricted_driving(Graph * g, const int &origin,
     while (!pq.empty()) {
         auto v = pq.extractMin();
 
-        //verifica se o vertex está na lista a ser ignorado, se sim continua (ignora)
+        //Checks if the node is in the ignore list, if yes continues (skip the node)
         if (avoidNodes.contains(v->getInfo())) {
             continue;
         }
 
-        for (auto e : v->getAdj()) { // para todos os edges do nó a ser processado
+        for (auto e : v->getAdj()) {
 
-
-            //verifica se a aresta (par de vertex) está na lista de arestas a serem ignoradas
+            //checks if the edge (node pair) is in the list of edges to be ignored, if yes then ignore it
             if (avoidSegments.contains({v->getInfo(), e->getDest()->getInfo()})) {
                 continue;
             }
@@ -122,14 +116,14 @@ std::vector<int> getPath(Graph * g, const int &origin, const int &dest) {
     auto d = g->findVertex(dest);
 
     if (d == nullptr || d->getDist() == INF) {
-        return res;     // dest ñ alcançável
+        return res;     //destination unreachable
     }
 
     while (d->getInfo() != origin) {
         res.push_back(d->getInfo());
 
-        // nós que não sejam dest ou origin marcados como visitados após a primeira call do dijkstra
-        // p não ter nós repetidos em cada rota
+        //nodes that aren't the destination or origin are marked as visited after the first Dijkstra call
+        //to ensure no repeated nodes in each route
         if (d->getInfo() != origin && d->getInfo() != dest) {
             d->setVisited(true);
         }
@@ -147,34 +141,37 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
-    //Verificar se a rota vai ser restrita
+    //check if the route will be restricted
     if (input_data->includeNode != -1 || !input_data->avoidNodes.empty() || !input_data->avoidSegments.empty()) {
         isRestricted = true;
-        //Verificar se tem include node
+
+        //check if there's an node to be included
         if (input_data->includeNode != -1) {
-            // se tem q passar por um nó, faz 2 dijkstras. 1 ate o nó e outro do nó ao destino
+            //if the route must pass through a specific node, perform 2 Dijkstra searches, one from the origin to the required node
+            //and other from the required node to destination
 
             dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
 
-            //depois do dijkstra vamos encontrar o caminho mais curto até ao "include Node"
+            //after running Dijkstra, we'll find the shortest path to the include node
             std::vector<int> path_to_include = getPath(g,input_data->source, input_data->includeNode);
             int path_size1 = g->findVertex(input_data->includeNode)->getDist();
 
             dijkstra_restricted_driving(g, input_data->includeNode, input_data->avoidNodes, input_data->avoidSegments);
 
-            //depois fazemos outro dijkstra e encontramos o caminho mais curto do "include Node" até ao nó final
+            //we execute another Dijkstra to find the shortest path from the include node to the final destination node
             std::vector<int> path_include_to_dest = getPath(g,input_data->includeNode, input_data->destination);
             int path_size2 = g->findVertex(input_data->destination)->getDist();
 
-            path_to_include.pop_back(); //tirar o "include Node" do primeiro caminho
-            //depois combinamos o caminho 1 com o 2 para ter o caminho final
+            path_to_include.pop_back(); //remove the 'include node' from the first path to simplify route combination
+
+            //then we combine path 1 with path 2 to obtain the final complete route
             path_to_include.insert(path_to_include.end(), path_include_to_dest.begin(), path_include_to_dest.end());
 
             output_data->bestDrivingRoute = path_to_include;
             output_data->min_time_1 = path_size1 + path_size2;
         }
 
-        //Não tem include node, mas tem restrições de vértices e/ou de arestas
+        //no "includeNode", but there are nodes and/or edge restrictions
         else {
             dijkstra_restricted_driving(g, input_data->source, input_data->avoidNodes, input_data->avoidSegments);
             output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
@@ -182,7 +179,7 @@ void dijkstra_driving_wrapper(const InputData* input_data, OutputData* output_da
         }
     }
 
-    // sem quaisquer restrições
+    //no restrictions
     else {
         dijkstra_driving(g, input_data->source);
         output_data->bestDrivingRoute = getPath(g, input_data->source, input_data->destination);
