@@ -219,6 +219,12 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
 }
 
 void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output_data, Graph* g, bool& isRestricted) {
+
+    // ensure good use of global variables, since only the wrapper is called from outside and only the wrapper calls other functions from this file
+    dist_map.clear();
+    parking_nodes_walk.clear();
+    parking_nodes_drive.clear();
+
     output_data->source = input_data->source;
     output_data->destination = input_data->destination;
 
