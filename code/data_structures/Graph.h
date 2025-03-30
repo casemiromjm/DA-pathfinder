@@ -476,7 +476,7 @@ inline bool Graph::constructCity() {
 
     Csv *csv_file = new Csv();
     // csv_file->readCSV("../data/Locations.csv");  uncomment for creating the real graph
-    csv_file->readCSV("../data/Locations_test.csv");
+    csv_file->readCSV("../data/example_locations.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Locations.csv or file is empty." << std::endl;
@@ -497,7 +497,7 @@ inline bool Graph::constructCity() {
     // read distances
 
     // csv_file->readCSV("../data/Distances.csv");      // uncomment for the real graph
-    csv_file->readCSV("../data/Distances_test.csv");
+    csv_file->readCSV("../data/example_distances.csv");
 
     if (csv_file->getData().empty()) {
         std::cerr << "Failed to read Distances.csv or file is empty." << std::endl;

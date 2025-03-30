@@ -28,7 +28,7 @@ int main() {
 
     std::cout << "========================================\n";
     std::cout << "    ROUTE PLANNING SYSTEM - MAIN MENU    \n";
-    std::cout << "developed by Casemiro, Rafael and Sebastião\n";
+    std::cout << "developed by Casemiro, Rafael and Sebastiao\n";
     std::cout << "========================================\n";
 
     bool isRunning = true;

@@ -177,6 +177,7 @@ void findAlternativeRoutes(const InputData* input_data, OutputData* output_data,
         helperWalkTime += WALK_INCREMENT;
     }
 
+    // found alternatives routes
     if (!alternative_routes.empty()) {
         isRestricted = true;
         auto first_elem = alternative_routes.begin(); //1 element
@@ -253,6 +254,7 @@ void dijkstra_drive_walk_wrapper(const InputData* input_data, OutputData* output
         output_data->message = "No path with max. walk time of " + to_string(input_data->maxWalkTime) + " minutes was found.";
     }
 
+    // found path with original maxwalktime
     else {
         pair<int, double> best_path = getBestPath(dist_map, g);
 

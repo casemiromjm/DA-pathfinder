@@ -389,8 +389,11 @@ struct OutputData {
             }
 
             else if (mode == "driving-walking") {
+                // as we considered that the alternative routes aren't 100% correct, we will always print the output for the original maxwalktime
                 print_restricted_drive_walk_file();
-                print_alternative_drive_walk_file();
+                if (isRestricted) {
+                    print_alternative_drive_walk_file();
+                }
             }
         }
 
