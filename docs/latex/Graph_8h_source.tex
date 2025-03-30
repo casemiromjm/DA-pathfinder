@@ -1,0 +1,549 @@
+\doxysection{Graph.\+h}
+\hypertarget{Graph_8h_source}{}\label{Graph_8h_source}\index{code/data\_structures/Graph.h@{code/data\_structures/Graph.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Based\ on\ the\ code\ made\ available\ by\ DA\ Team}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifndef\ DA\_TP\_CLASSES\_GRAPH}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ DA\_TP\_CLASSES\_GRAPH}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}../data\_structures/CSV.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}../data\_structures/MutablePriorityQueue.h"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classEdge}{Edge}};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ INF\ std::numeric\_limits<double>::max()}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{/*************************\ Vertex\ \ **************************/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }Vertex\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ Vertex(\textcolor{keywordtype}{int}\ in,\ \textcolor{keywordtype}{int}\ p);\ \ \ \ \textcolor{comment}{//\ adicionamos\ info\ do\ parking\ no\ constructor}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(Vertex\ \&\ vertex)\ \textcolor{keyword}{const};\ \textcolor{comment}{//\ //\ required\ by\ MutablePriorityQueue}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<Edge\ *>\ getAdj()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVisited()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ isProcessing()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ getIndegree()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{double}\ getDist()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classEdge}{Edge}}\ *getPath()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classEdge}{Edge}}\ *getWalkPath()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \ \ \ \ std::vector<Edge\ *>\ getIncoming()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ setInfo(\textcolor{keywordtype}{int}\ info);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ setVisited(\textcolor{keywordtype}{bool}\ visited);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setParking(\textcolor{keywordtype}{int}\ park);\ \ \textcolor{comment}{//adicionamos\ o\ setter\ do\ parking}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setProcessing(\textcolor{keywordtype}{bool}\ processing);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ getLow()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ getParking()\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//adicionamos\ o\ getter\ do\ parking}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ setLow(\textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ getNum()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ setNum(\textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ setIndegree(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ indegree);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ setDist(\textcolor{keywordtype}{double}\ dist);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ setPath(\mbox{\hyperlink{classEdge}{Edge}}\ *path);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ setWalkPath(\mbox{\hyperlink{classEdge}{Edge}}\ *path);}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{classEdge}{Edge}}*\ addEdge(Vertex\ *dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ removeEdge(\textcolor{keywordtype}{int}\ in);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ removeOutgoingEdges();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMutablePriorityQueue}{MutablePriorityQueue}}<Vertex>;}
+\DoxyCodeLine{00056\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{int}\ info;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ info\ node;\ alterado\ para\ int\ pq\ no\ nosso\ dataset\ só\ temos\ nós\ com\ inteiros}}
+\DoxyCodeLine{00058\ \ \ \ \ std::vector<Edge\ *>\ adj;\ \ \textcolor{comment}{//\ outgoing\ edges}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ auxiliary\ fields}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ visited\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ used\ by\ DFS,\ BFS,\ Prim\ ...}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ processing\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ used\ by\ isDAG\ (in\ addition\ to\ the\ visited\ attribute)}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ low\ =\ -\/1,\ num\ =\ -\/1;\ \textcolor{comment}{//\ used\ by\ SCC\ Tarjan}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ indegree;\ \textcolor{comment}{//\ used\ by\ topsort}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{double}\ dist\ =\ 0;}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{classEdge}{Edge}}\ *path\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{classEdge}{Edge}}\ *walkPath\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ adicionado\ para\ o\ path\ do\ modo\ Drive-\/Walk}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ parking;\ \textcolor{comment}{//\ added\ parking\ var\ (0\ no\ park\ or\ 1\ w/\ park)}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ std::vector<Edge\ *>\ incoming;\ \textcolor{comment}{//\ incoming\ edges}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ queueIndex\ =\ 0;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ required\ by\ MutablePriorityQueue\ and\ UFDS}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteEdge(\mbox{\hyperlink{classEdge}{Edge}}\ *edge);}
+\DoxyCodeLine{00077\ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{/**********************\ Edge\ \ ****************************/}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{class\ }Edge\ \{}
+\DoxyCodeLine{00082\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00083\ \ \ \ \ Edge(\mbox{\hyperlink{classVertex}{Vertex}}\ *orig,\ \mbox{\hyperlink{classVertex}{Vertex}}\ *dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{classVertex}{Vertex}}\ *\ getDest()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{double}\ getDrive()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{double}\ getWalk()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSelected()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{classVertex}{Vertex}}\ *\ getOrig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00090\ \ \ \ \ Edge\ *getReverse()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{double}\ getFlow()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ setSelected(\textcolor{keywordtype}{bool}\ selected);}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ setReverse(Edge\ *reverse);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ setFlow(\textcolor{keywordtype}{double}\ flow);}
+\DoxyCodeLine{00096\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{classVertex}{Vertex}}\ *\ dest;\ \textcolor{comment}{//\ destination\ vertex}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{double}\ drive;\ \textcolor{comment}{//\ edge\ weight\ when\ driving,\ can\ also\ be\ used\ for\ capacity}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{double}\ walk;\ \textcolor{comment}{//\ edge\ weight\ when\ walking,\ can\ also\ be\ used\ for\ capacity}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ auxiliary\ fields}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ selected\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ used\ for\ bidirectional\ edges}}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{classVertex}{Vertex}}\ *orig;}
+\DoxyCodeLine{00106\ \ \ \ \ Edge\ *reverse\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{double}\ flow;\ \textcolor{comment}{//\ for\ flow-\/related\ problems}}
+\DoxyCodeLine{00109\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{comment}{/**********************\ Graph\ \ ****************************/}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGraph}{Graph}}\ \{}
+\DoxyCodeLine{00114\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{classGraph}{\string~Graph}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ *\ Auxiliary\ function\ to\ find\ a\ vertex\ with\ a\ given\ the\ content.}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{classVertex}{Vertex}}\ *findVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\ \ \ \ \ *\ \ Adds\ a\ vertex\ with\ a\ given\ content\ or\ info\ (in)\ to\ a\ graph\ (this).}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ \ *\ \ Returns\ true\ if\ successful,\ and\ false\ if\ a\ vertex\ with\ that\ content\ already\ exists.}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{bool}\ addVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in,\ \textcolor{keywordtype}{int}\ \&parking);}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ removeVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ \ *\ Adds\ an\ edge\ to\ a\ graph\ (this),\ given\ the\ contents\ of\ the\ source\ and}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ \ *\ destination\ vertices\ and\ the\ edge\ weight\ (w).}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \ *\ Returns\ true\ if\ successful,\ and\ false\ if\ the\ source\ or\ destination\ vertex\ does\ not\ exist.}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ addEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&sourc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w);}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{bool}\ removeEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&source,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest);}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{bool}\ addBidirectionalEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&sourc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w);}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{int}\ getNumVertex()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGraph_a6a9ca78cbcbcd4e532e57e89e1ecea2d}{constructCity}}();}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{clear}}();}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ std::vector<Vertex\ *>\ getVertexSet()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00146\ \ \ \ \ std::vector<Vertex\ *>\ vertexSet;\ \ \ \ \textcolor{comment}{//\ vertex\ set}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{double}\ **\ distMatrix\ =\ \textcolor{keyword}{nullptr};\ \ \ \textcolor{comment}{//\ dist\ matrix\ for\ Floyd-\/Warshall}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{int}\ **pathMatrix\ =\ \textcolor{keyword}{nullptr};\ \ \ \textcolor{comment}{//\ path\ matrix\ for\ Floyd-\/Warshall}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ \ \ \ \ *\ Finds\ the\ index\ of\ the\ vertex\ with\ a\ given\ content.}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{int}\ findVertexIdx(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \textcolor{keywordtype}{void}\ deleteMatrix(\textcolor{keywordtype}{int}\ **m,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00162\ \textcolor{keywordtype}{void}\ deleteMatrix(\textcolor{keywordtype}{double}\ **m,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{comment}{/*************************\ Vertex\ \ **************************/}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{keyword}{inline}\ Vertex::Vertex(\textcolor{keywordtype}{int}\ in,\ \textcolor{keywordtype}{int}\ p):\ info(in),\ parking(p)\ \{\}}
+\DoxyCodeLine{00168\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00169\ \textcolor{comment}{\ *\ Auxiliary\ function\ to\ add\ an\ outgoing\ edge\ to\ a\ vertex\ (this),}}
+\DoxyCodeLine{00170\ \textcolor{comment}{\ *\ with\ a\ given\ destination\ vertex\ (d)\ and\ edge\ weight\ (w).}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classEdge}{Edge}}*\ Vertex::addEdge(\mbox{\hyperlink{classVertex}{Vertex}}\ *b,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w)\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{auto}\ newEdge\ =\ \textcolor{keyword}{new}\ Edge(\textcolor{keyword}{this},\ b,\ d,\ w);}
+\DoxyCodeLine{00175\ \ \ \ \ adj.push\_back(newEdge);}
+\DoxyCodeLine{00176\ \ \ \ \ b-\/>incoming.push\_back(newEdge);}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ newEdge;}
+\DoxyCodeLine{00178\ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00181\ \textcolor{comment}{\ *\ Auxiliary\ function\ to\ remove\ an\ outgoing\ edge\ (with\ a\ given\ destination\ (d))}}
+\DoxyCodeLine{00182\ \textcolor{comment}{\ *\ from\ a\ vertex\ (this).}}
+\DoxyCodeLine{00183\ \textcolor{comment}{\ *\ Returns\ true\ if\ successful,\ and\ false\ if\ such\ edge\ does\ not\ exist.}}
+\DoxyCodeLine{00184\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Vertex::removeEdge(\textcolor{keywordtype}{int}\ in)\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ removedEdge\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ adj.begin();}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{while}\ (it\ !=\ adj.end())\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ Edge\ *edge\ =\ *it;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ Vertex\ *dest\ =\ edge-\/>getDest();}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dest-\/>getInfo()\ ==\ in)\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ it\ =\ adj.erase(it);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ deleteEdge(edge);}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ removedEdge\ =\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ allows\ for\ multiple\ edges\ to\ connect\ the\ same\ pair\ of\ vertices\ (multigraph)}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ it++;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00200\ \ \ \ \ \}}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{return}\ removedEdge;}
+\DoxyCodeLine{00202\ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00205\ \textcolor{comment}{\ *\ Auxiliary\ function\ to\ remove\ an\ outgoing\ edge\ of\ a\ vertex.}}
+\DoxyCodeLine{00206\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00207\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::removeOutgoingEdges()\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ adj.begin();}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{while}\ (it\ !=\ adj.end())\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ Edge\ *edge\ =\ *it;}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ it\ =\ adj.erase(it);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ deleteEdge(edge);}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Vertex::operator<(\mbox{\hyperlink{classVertex}{Vertex}}\ \&\ vertex)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>dist\ <\ vertex.dist;}
+\DoxyCodeLine{00218\ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Vertex::getInfo()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>info;}
+\DoxyCodeLine{00222\ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Vertex::getLow()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>low;}
+\DoxyCodeLine{00226\ \}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setLow(\textcolor{keywordtype}{int}\ value)\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ this-\/>low\ =\ value;}
+\DoxyCodeLine{00230\ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{comment}{//adicionamos\ o\ setParking}}
+\DoxyCodeLine{00233\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setParking(\textcolor{keywordtype}{int}\ value)\ \{}
+\DoxyCodeLine{00234\ \ \ \ \ this-\/>parking\ =\ value;}
+\DoxyCodeLine{00235\ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \textcolor{comment}{//adicionamos\ o\ getParking}}
+\DoxyCodeLine{00238\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Vertex::getParking()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>parking;}
+\DoxyCodeLine{00240\ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Vertex::getNum()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>num;}
+\DoxyCodeLine{00244\ \}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setNum(\textcolor{keywordtype}{int}\ value)\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ this-\/>num\ =\ value;}
+\DoxyCodeLine{00248\ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \textcolor{keyword}{inline}\ std::vector<Edge*>\ Vertex::getAdj()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>adj;}
+\DoxyCodeLine{00252\ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Vertex::isVisited()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>visited;}
+\DoxyCodeLine{00256\ \}}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Vertex::isProcessing()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>processing;}
+\DoxyCodeLine{00260\ \}}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ Vertex::getIndegree()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>indegree;}
+\DoxyCodeLine{00264\ \}}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ Vertex::getDist()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>dist;}
+\DoxyCodeLine{00268\ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classEdge}{Edge}}*\ Vertex::getPath()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>path;}
+\DoxyCodeLine{00272\ \}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classEdge}{Edge}}*\ Vertex::getWalkPath()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>walkPath;}
+\DoxyCodeLine{00276\ \}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \textcolor{keyword}{inline}\ std::vector<Edge\ *>\ Vertex::getIncoming()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>incoming;}
+\DoxyCodeLine{00280\ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setInfo(\textcolor{keywordtype}{int}\ in)\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ this-\/>info\ =\ in;}
+\DoxyCodeLine{00284\ \}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setVisited(\textcolor{keywordtype}{bool}\ visited)\ \{}
+\DoxyCodeLine{00287\ \ \ \ \ this-\/>visited\ =\ visited;}
+\DoxyCodeLine{00288\ \}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setProcessing(\textcolor{keywordtype}{bool}\ processing)\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ this-\/>processing\ =\ processing;}
+\DoxyCodeLine{00292\ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setIndegree(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ indegree)\ \{}
+\DoxyCodeLine{00295\ \ \ \ \ this-\/>indegree\ =\ indegree;}
+\DoxyCodeLine{00296\ \}}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setDist(\textcolor{keywordtype}{double}\ dist)\ \{}
+\DoxyCodeLine{00299\ \ \ \ \ this-\/>dist\ =\ dist;}
+\DoxyCodeLine{00300\ \}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setPath(\mbox{\hyperlink{classEdge}{Edge}}\ *path)\ \{}
+\DoxyCodeLine{00303\ \ \ \ \ this-\/>path\ =\ path;}
+\DoxyCodeLine{00304\ \}}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::setWalkPath(\mbox{\hyperlink{classEdge}{Edge}}\ *path)\ \{}
+\DoxyCodeLine{00307\ \ \ \ \ this-\/>walkPath\ =\ path;}
+\DoxyCodeLine{00308\ \}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Vertex::deleteEdge(\mbox{\hyperlink{classEdge}{Edge}}\ *edge)\ \{}
+\DoxyCodeLine{00311\ \ \ \ \ Vertex\ *dest\ =\ edge-\/>getDest();}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{comment}{//\ Remove\ the\ corresponding\ edge\ from\ the\ incoming\ list}}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ dest-\/>incoming.begin();}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{while}\ (it\ !=\ dest-\/>incoming.end())\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*it)-\/>getOrig()-\/>getInfo()\ ==\ info)\ \{}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ it\ =\ dest-\/>incoming.erase(it);}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ it++;}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00321\ \ \ \ \ \}}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keyword}{delete}\ edge;}
+\DoxyCodeLine{00323\ \}}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \textcolor{comment}{/**********************\ Edge\ \ ****************************/}}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \textcolor{keyword}{inline}\ Edge::Edge(\mbox{\hyperlink{classVertex}{Vertex}}\ *orig,\ \mbox{\hyperlink{classVertex}{Vertex}}\ *dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w):\ orig(orig),\ dest(dest),\ drive(d),\ walk(w)\ \{\}\ \textcolor{comment}{//mudamos\ o\ construtor}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classVertex}{Vertex}}*\ Edge::getDest()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>dest;}
+\DoxyCodeLine{00331\ \}}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ Edge::getDrive()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>drive;}
+\DoxyCodeLine{00335\ \}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ Edge::getWalk()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>walk;}
+\DoxyCodeLine{00339\ \}}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classVertex}{Vertex}}*\ Edge::getOrig()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>orig;}
+\DoxyCodeLine{00343\ \}}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classEdge}{Edge}}*\ Edge::getReverse()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>reverse;}
+\DoxyCodeLine{00347\ \}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Edge::isSelected()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>selected;}
+\DoxyCodeLine{00351\ \}}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ Edge::getFlow()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{return}\ flow;}
+\DoxyCodeLine{00355\ \}}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Edge::setSelected(\textcolor{keywordtype}{bool}\ selected)\ \{}
+\DoxyCodeLine{00358\ \ \ \ \ this-\/>selected\ =\ selected;}
+\DoxyCodeLine{00359\ \}}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Edge::setReverse(\mbox{\hyperlink{classEdge}{Edge}}\ *reverse)\ \{}
+\DoxyCodeLine{00362\ \ \ \ \ this-\/>reverse\ =\ reverse;}
+\DoxyCodeLine{00363\ \}}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Edge::setFlow(\textcolor{keywordtype}{double}\ flow)\ \{}
+\DoxyCodeLine{00366\ \ \ \ \ this-\/>flow\ =\ flow;}
+\DoxyCodeLine{00367\ \}}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00369\ \textcolor{comment}{/**********************\ Graph\ \ ****************************/}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Graph::getNumVertex()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keywordflow}{return}\ vertexSet.size();}
+\DoxyCodeLine{00373\ \}}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \textcolor{keyword}{inline}\ std::vector<Vertex\ *>\ Graph::getVertexSet()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordflow}{return}\ vertexSet;}
+\DoxyCodeLine{00377\ \}}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00380\ \textcolor{comment}{\ *\ Auxiliary\ function\ to\ find\ a\ vertex\ with\ a\ given\ content.}}
+\DoxyCodeLine{00381\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00382\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classVertex}{Vertex}}*\ Graph::findVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00383\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ v\ :\ vertexSet)}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v-\/>getInfo()\ ==\ in)}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v;}
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00387\ \}}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00390\ \textcolor{comment}{\ *\ Finds\ the\ index\ of\ the\ vertex\ with\ a\ given\ content.}}
+\DoxyCodeLine{00391\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00392\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Graph::findVertexIdx(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ i\ =\ 0;\ i\ <\ vertexSet.size();\ i++)}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vertexSet[i]-\/>getInfo()\ ==\ in)}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00397\ \}}
+\DoxyCodeLine{00398\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00399\ \textcolor{comment}{\ *\ \ Adds\ a\ vertex\ with\ a\ given\ content\ or\ info\ (in)\ to\ a\ graph\ (this).}}
+\DoxyCodeLine{00400\ \textcolor{comment}{\ *\ \ Returns\ true\ if\ successful,\ and\ false\ if\ a\ vertex\ with\ that\ content\ already\ exists.}}
+\DoxyCodeLine{00401\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00402\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Graph::addVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in,\ \textcolor{keywordtype}{int}\&\ parking)\ \{}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keywordflow}{if}\ (findVertex(in)\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00405\ \ \ \ \ vertexSet.push\_back(\textcolor{keyword}{new}\ Vertex(in,\ parking));}
+\DoxyCodeLine{00406\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00407\ \}}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00410\ \textcolor{comment}{\ *\ \ Removes\ a\ vertex\ with\ a\ given\ content\ (in)\ from\ a\ graph\ (this),\ and}}
+\DoxyCodeLine{00411\ \textcolor{comment}{\ *\ \ all\ outgoing\ and\ incoming\ edges.}}
+\DoxyCodeLine{00412\ \textcolor{comment}{\ *\ \ Returns\ true\ if\ successful,\ and\ false\ if\ such\ vertex\ does\ not\ exist.}}
+\DoxyCodeLine{00413\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00414\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Graph::removeVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&in)\ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\ =\ vertexSet.begin();\ it\ !=\ vertexSet.end();\ it++)\ \{}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*it)-\/>getInfo()\ ==\ in)\ \{}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ v\ =\ *it;}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ v-\/>removeOutgoingEdges();}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ u\ :\ vertexSet)\ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ u-\/>removeEdge(v-\/>getInfo());}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ vertexSet.erase(it);}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ v;}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00426\ \ \ \ \ \}}
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00428\ \}}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00431\ \textcolor{comment}{\ *\ Adds\ an\ edge\ to\ a\ graph\ (this),\ given\ the\ contents\ of\ the\ source\ and}}
+\DoxyCodeLine{00432\ \textcolor{comment}{\ *\ destination\ vertices\ and\ the\ edge\ weight\ (w).}}
+\DoxyCodeLine{00433\ \textcolor{comment}{\ *\ Returns\ true\ if\ successful,\ and\ false\ if\ the\ source\ or\ destination\ vertex\ does\ not\ exist.}}
+\DoxyCodeLine{00434\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00435\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Graph::addEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&sourc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w)\ \{}
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{keyword}{auto}\ v1\ =\ findVertex(sourc);}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keyword}{auto}\ v2\ =\ findVertex(dest);}
+\DoxyCodeLine{00438\ \ \ \ \ \textcolor{keywordflow}{if}\ (v1\ ==\ \textcolor{keyword}{nullptr}\ ||\ v2\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00440\ \ \ \ \ v1-\/>addEdge(v2,\ d,\ w);}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00442\ \}}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00445\ \textcolor{comment}{\ *\ Removes\ an\ edge\ from\ a\ graph\ (this).}}
+\DoxyCodeLine{00446\ \textcolor{comment}{\ *\ The\ edge\ is\ identified\ by\ the\ source\ (sourc)\ and\ destination\ (dest)\ contents.}}
+\DoxyCodeLine{00447\ \textcolor{comment}{\ *\ Returns\ true\ if\ successful,\ and\ false\ if\ such\ edge\ does\ not\ exist.}}
+\DoxyCodeLine{00448\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00449\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Graph::removeEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&sourc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest)\ \{}
+\DoxyCodeLine{00450\ \ \ \ \ Vertex\ *\ srcVertex\ =\ findVertex(sourc);}
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordflow}{if}\ (srcVertex\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00453\ \ \ \ \ \}}
+\DoxyCodeLine{00454\ \ \ \ \ \textcolor{keywordflow}{return}\ srcVertex-\/>removeEdge(dest);}
+\DoxyCodeLine{00455\ \}}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00457\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Graph::addBidirectionalEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&sourc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest,\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keywordtype}{double}\ w)\ \{}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{keyword}{auto}\ v1\ =\ findVertex(sourc);}
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keyword}{auto}\ v2\ =\ findVertex(dest);}
+\DoxyCodeLine{00460\ \ \ \ \ \textcolor{keywordflow}{if}\ (v1\ ==\ \textcolor{keyword}{nullptr}\ ||\ v2\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{keyword}{auto}\ e1\ =\ v1-\/>addEdge(v2,\ d,\ w);}
+\DoxyCodeLine{00463\ \ \ \ \ \textcolor{keyword}{auto}\ e2\ =\ v2-\/>addEdge(v1,\ d,\ w);}
+\DoxyCodeLine{00464\ \ \ \ \ e1-\/>setReverse(e2);}
+\DoxyCodeLine{00465\ \ \ \ \ e2-\/>setReverse(e1);}
+\DoxyCodeLine{00466\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00467\ \}}
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00474\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGraph_a6a9ca78cbcbcd4e532e57e89e1ecea2d}{Graph::constructCity}}()\ \{}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \textcolor{comment}{//\ read\ Locations.csv;}}
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00478\ \ \ \ \ \mbox{\hyperlink{classCsv}{Csv}}\ *csv\_file\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCsv}{Csv}}();}
+\DoxyCodeLine{00479\ \ \ \ \ csv\_file-\/>\mbox{\hyperlink{classCsv_af0215acb99738bafc790557456f35048}{readCSV}}(\textcolor{stringliteral}{"{}../data/Locations.csv"{}});}
+\DoxyCodeLine{00480\ \ \ \ \ \textcolor{comment}{//csv\_file-\/>readCSV("{}../data/example\_locations.csv"{});\ \ //\ presentation\ example}}
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keywordflow}{if}\ (csv\_file-\/>\mbox{\hyperlink{classCsv_a34edd8c6ea9b3de5dc6e99913d040c05}{getData}}().empty())\ \{}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ read\ Locations.csv\ or\ file\ is\ empty."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00485\ \ \ \ \ \}}
+\DoxyCodeLine{00486\ }
+\DoxyCodeLine{00487\ \ \ \ \ std::map<std::string,\ int>\ loc\_IdCode;\ \ \ \ \ \ \textcolor{comment}{//\ maps\ each\ code\ to\ its\ id}}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00489\ \ \ \ \ \textcolor{comment}{//\ create\ vertexes;\ create\ map}}
+\DoxyCodeLine{00490\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ loc\_info\ :\ csv\_file-\/>\mbox{\hyperlink{classCsv_a34edd8c6ea9b3de5dc6e99913d040c05}{getData}}())\ \{}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ locId\ =\ std::stoi(loc\_info[1]);\ \textcolor{comment}{//\ Convert\ loc\ ID\ to\ int}}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ parkingStatus\ =\ std::stoi(loc\_info[3]);\ \textcolor{comment}{//\ Convert\ parking\ status\ to\ int}}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ this-\/>addVertex(locId,\ parkingStatus);}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ loc\_IdCode[loc\_info[2]]\ =\ locId;}
+\DoxyCodeLine{00496\ \ \ \ \ \}}
+\DoxyCodeLine{00497\ }
+\DoxyCodeLine{00498\ \ \ \ \ \textcolor{comment}{//\ read\ distances}}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00500\ \ \ \ \ csv\_file-\/>\mbox{\hyperlink{classCsv_af0215acb99738bafc790557456f35048}{readCSV}}(\textcolor{stringliteral}{"{}../data/Distances.csv"{}});\ \ \ \ \ \ \textcolor{comment}{//\ uncomment\ for\ the\ real\ graph}}
+\DoxyCodeLine{00501\ \ \ \ \ \textcolor{comment}{//csv\_file-\/>readCSV("{}../data/example\_distances.csv"{});\ //\ presentation\ example}}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{keywordflow}{if}\ (csv\_file-\/>\mbox{\hyperlink{classCsv_a34edd8c6ea9b3de5dc6e99913d040c05}{getData}}().empty())\ \{}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ read\ Distances.csv\ or\ file\ is\ empty."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00506\ \ \ \ \ \}}
+\DoxyCodeLine{00507\ }
+\DoxyCodeLine{00508\ \ \ \ \ \textcolor{comment}{//\ create\ edges}}
+\DoxyCodeLine{00509\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ edge\_info\ :\ csv\_file-\/>\mbox{\hyperlink{classCsv_a34edd8c6ea9b3de5dc6e99913d040c05}{getData}}())\ \{}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ source\ =\ loc\_IdCode[edge\_info[0]];}
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dest\ =\ loc\_IdCode[edge\_info[1]];}
+\DoxyCodeLine{00512\ }
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ the\ case\ when\ you\ cant\ drive}}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ this-\/>addBidirectionalEdge(source,\ dest,\ edge\_info[2]\ ==\ \textcolor{stringliteral}{"{}X"{}}\ ?\ INF\ :\ stoi(edge\_info[2]),\ stoi(edge\_info[3]));}
+\DoxyCodeLine{00515\ \ \ \ \ \}}
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00518\ \}}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00523\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{Graph::clear}}()\ \{}
+\DoxyCodeLine{00524\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ v\ :\ this-\/>getVertexSet())\ \{}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ v-\/>setVisited(\textcolor{keyword}{false});}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ v-\/>setDist(0);\ \ \ \ \ \ \textcolor{comment}{//\ de\ volta\ ao\ padrão}}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ v-\/>setPath(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00528\ \ \ \ \ \}}
+\DoxyCodeLine{00529\ \}}
+\DoxyCodeLine{00530\ }
+\DoxyCodeLine{00531\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ deleteMatrix(\textcolor{keywordtype}{int}\ **m,\ \textcolor{keywordtype}{int}\ n)\ \{}
+\DoxyCodeLine{00532\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ i++)}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m[i]\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ m[i];}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ m;}
+\DoxyCodeLine{00537\ \ \ \ \ \}}
+\DoxyCodeLine{00538\ \}}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ deleteMatrix(\textcolor{keywordtype}{double}\ **m,\ \textcolor{keywordtype}{int}\ n)\ \{}
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ i++)}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m[i]\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ m[i];}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ m;}
+\DoxyCodeLine{00546\ \ \ \ \ \}}
+\DoxyCodeLine{00547\ \}}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ \textcolor{keyword}{inline}\ Graph::\string~Graph()\ \{}
+\DoxyCodeLine{00550\ \ \ \ \ deleteMatrix(distMatrix,\ vertexSet.size());}
+\DoxyCodeLine{00551\ \ \ \ \ deleteMatrix(pathMatrix,\ vertexSet.size());}
+\DoxyCodeLine{00552\ \}}
+\DoxyCodeLine{00553\ }
+\DoxyCodeLine{00554\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ DA\_TP\_CLASSES\_GRAPH\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,0 +1,188 @@
+\doxysection{Input\+Data.\+h}
+\hypertarget{InputData_8h_source}{}\label{InputData_8h_source}\index{code/data\_structures/InputData.h@{code/data\_structures/InputData.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ INPUTDATA\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ INPUTDATA\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ str\_tolower(std::string\&\ str)\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\&\ c\ :\ str)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'Z'})\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ \textcolor{charliteral}{'a'}\ +\ (c\ -\/\ \textcolor{charliteral}{'A'});}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structInputData}{InputData}}\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ std::string\ mode;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ source;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ destination;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ maxWalkTime\ =\ -\/1;}
+\DoxyCodeLine{00032\ \ \ \ \ std::set<int>\ avoidNodes;}
+\DoxyCodeLine{00033\ \ \ \ \ std::set<std::pair<int,int>>\ avoidSegments;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ includeNode\ =\ -\/1;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ methods}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structInputData_a29ba6946f6e69d6bc9577cf7398a2d32}{readInputFile}}(\textcolor{keyword}{const}\ std::string\ \&filename)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ std::ifstream\ file(\textcolor{stringliteral}{"{}../input\_output/"{}}\ +\ filename);\ \textcolor{comment}{//recebe\ o\ filename\ e\ procura\ na\ pasta\ input\_output}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ open\ file:\ "{}}\ <<\ filename\ <<\ std::endl;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(file,\ line))\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::stringstream\ ss(line);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::string\ input;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ getline(ss,\ input,\ \textcolor{charliteral}{':'});}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ getline(ss,\ value);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ str\_tolower(input);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}mode"{}})\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>mode\ =\ value;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}source"{}})\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>source\ =\ std::stoi(value);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}destination"{}})\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>destination\ =\ std::stoi(value);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}maxwalktime"{}})\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.empty())\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>maxWalkTime\ =\ std::stoi(value);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}avoidnodes"{}})\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ ssNodes(value);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ node;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (getline(ssNodes,\ node,\ \textcolor{charliteral}{','}))\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>avoidNodes.insert(std::stoi(node));}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}avoidsegments"{}})\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ ssSegments(value);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ first,\ second;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ ch;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (ssSegments\ >>\ ch)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ch\ ==\ \textcolor{charliteral}{'('})\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ first;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ ch;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ second;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ ch;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>avoidSegments.insert(std::make\_pair(first,\ second));}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}includenode"{}})\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.empty())\ \{\ \ \textcolor{comment}{//Só\ converte\ n\ estiver\ vazio}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>includeNode\ =\ std::stoi(value);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ file.close();}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structInputData_a238297e391e04d40bee5584f9a0f0d11}{readTerminal}}()\ \{}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(std::cin,\ line))\ \{}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (line\ ==\ \textcolor{stringliteral}{"{}q"{}})\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ std::istringstream\ iss(line);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ input;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ std::getline(iss,\ input,\ \textcolor{charliteral}{':'});}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ std::getline(iss,\ value);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ str\_tolower(input);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}mode"{}})\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>mode\ =\ value;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}source"{}})\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>source\ =\ std::stoi(value);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}destination"{}})\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>destination\ =\ std::stoi(value);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}maxwalktime"{}})\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.empty())\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>maxWalkTime\ =\ std::stoi(value);}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}avoidnodes"{}})\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ ssNodes(value);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ node;}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (getline(ssNodes,\ node,\ \textcolor{charliteral}{','}))\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>avoidNodes.insert(std::stoi(node));}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}avoidsegments"{}})\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ ssSegments(value);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ first,\ second;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ ch;}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (ssSegments\ >>\ ch)\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ch\ ==\ \textcolor{charliteral}{'('})\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ first;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ ch;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ second;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ssSegments\ >>\ ch;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>avoidSegments.insert(std::make\_pair(first,\ second));}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (input\ ==\ \textcolor{stringliteral}{"{}includenode"{}})\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.empty())\ \{\ \ \textcolor{comment}{//Só\ converte\ n\ estiver\ vazio}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>includeNode\ =\ std::stoi(value);}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structInputData_aff97a66a0e9ee32075df79a7f1356d40}{in}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \&choice,\ \textcolor{keyword}{const}\ std::string\&\ filename=\textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (choice\ ==\ \textcolor{charliteral}{'1'})\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structInputData_a29ba6946f6e69d6bc9577cf7398a2d32}{readInputFile}}(filename);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (choice\ ==\ \textcolor{charliteral}{'2'})\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structInputData_a238297e391e04d40bee5584f9a0f0d11}{readTerminal}}();}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00198\ \ \ \ \ \}}
+\DoxyCodeLine{00199\ \};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//INPUTDATA\_H}}
+
+\end{DoxyCode}

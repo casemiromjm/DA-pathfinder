@@ -7,24 +7,24 @@
 #include "data_structures/OutputData.h"
 
 int main() {
-    // Graph city;
-    // std::cout << "Building the city..." << std::endl;
+     Graph city;
+     std::cout << "Building the city..." << std::endl;
 
-    //std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // if (!city.constructCity()) {
-    //     std::cerr << "City construction failed" << std::endl;
+     if (!city.constructCity()) {
+         std::cerr << "City construction failed" << std::endl;
+         return 1;
+     }
+
+     std::cout << "City constructed successfully!" << std::endl;
+
+    // Graph test_city;
+    // if (!test_city.constructCity()) {
+    //     std::cerr << "Test City construction failed" << std::endl;
     //     return 1;
     // }
-    //
-    // std::cout << "City constructed successfully!" << std::endl;
-
-    Graph test_city;
-    if (!test_city.constructCity()) {
-        std::cerr << "Test City construction failed" << std::endl;
-        return 1;
-    }
-    std::cout << "Test City constructed successfully!" << std::endl;
+    // std::cout << "Test City constructed successfully!" << std::endl;
 
     std::cout << "========================================\n";
     std::cout << "    ROUTE PLANNING SYSTEM - MAIN MENU    \n";
@@ -57,16 +57,16 @@ int main() {
                 bool isRestricted = false;
 
                 if (input_data.mode == "driving") {
-                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                    dijkstra_driving_wrapper(&input_data, &output_data, &city, isRestricted);
                 }
 
                 else if (input_data.mode == "driving-walking") {
-                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &city, isRestricted);
                 }
 
                 output_data.out(choice, input_data.mode, isRestricted);
             }
-            test_city.clear();
+            city.clear();
             break;
 
             case '2': {
@@ -77,16 +77,16 @@ int main() {
                 bool isRestricted = false;
 
                 if (input_data.mode == "driving") {
-                    dijkstra_driving_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                    dijkstra_driving_wrapper(&input_data, &output_data, &city, isRestricted);
                 }
 
                 else if (input_data.mode == "driving-walking") {
-                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &test_city, isRestricted);
+                    dijkstra_drive_walk_wrapper(&input_data, &output_data, &city, isRestricted);
                 }
 
                 output_data.out(choice, input_data.mode, isRestricted);
             }
-            test_city.clear();
+            city.clear();
             break;
 
             case '0':

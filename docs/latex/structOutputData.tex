@@ -1,0 +1,239 @@
+\doxysection{Output\+Data Struct Reference}
+\hypertarget{structOutputData}{}\label{structOutputData}\index{OutputData@{OutputData}}
+
+
+{\ttfamily \#include $<$Output\+Data.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structOutputData_ad8b6439f572c4cece9266f290b753d6e}{print\+Route\+\_\+cli}} (const std\+::vector$<$ int $>$ \&vec)
+\item 
+void \mbox{\hyperlink{structOutputData_a58533535c1e430d5dc369c03a8930e2d}{print\+Source\+\_\+cli}} (const int \&source)
+\item 
+void \mbox{\hyperlink{structOutputData_a16cd566d10271ffa2f47992d7e544327}{print\+Dest\+\_\+cli}} (const int \&dest)
+\item 
+void \mbox{\hyperlink{structOutputData_aab6d4003a39c467c9f866bb0e53d631b}{print\+\_\+multiroute\+\_\+cli}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_aeee98cd1bb9d1a287d8c3e77a5648f1c}{print\+\_\+restricted\+\_\+route\+\_\+cli}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a35b39bd4545e04a84390a9027161ebb9}{print\+\_\+restricted\+\_\+drive\+\_\+walk\+\_\+cli}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a3617c4590fd264bc8cae98d5e03cedbd}{print\+\_\+alternative\+\_\+drive\+\_\+walk\+\_\+cli}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a1a9810f7c142cf98e4a21bfd56e56378}{print\+Route\+\_\+file}} (const std\+::vector$<$ int $>$ \&vec, std\+::ofstream \&out\+\_\+file)
+\item 
+void \mbox{\hyperlink{structOutputData_a951076fef1956e1735a4a37572a0533a}{print\+Source\+\_\+file}} (const int \&source, std\+::ofstream \&out\+\_\+file)
+\item 
+void \mbox{\hyperlink{structOutputData_a7c2a07102846f646971cda801a2a195c}{print\+Dest\+\_\+file}} (const int \&dest, std\+::ofstream \&out\+\_\+file)
+\item 
+void \mbox{\hyperlink{structOutputData_affd2864db5a4a1446b7eb14753a6921b}{print\+\_\+multiroute\+\_\+file}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a34883bc717965e5c892caaeba25d2381}{print\+\_\+restricted\+\_\+route\+\_\+file}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a19b69304bd6b94b68d7eb1569f2b481c}{print\+\_\+restricted\+\_\+drive\+\_\+walk\+\_\+file}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a0122a9c96aa288865b34793c972bae29}{print\+\_\+alternative\+\_\+drive\+\_\+walk\+\_\+file}} ()
+\item 
+void \mbox{\hyperlink{structOutputData_a326e574cf7a816da15438448e5fc6d5c}{out}} (const char \&choice, const std\+::string \&mode, const bool \&is\+Restricted)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structOutputData_aec5e3aa041fcb50463e8288f97ecb2ad}\label{structOutputData_aec5e3aa041fcb50463e8288f97ecb2ad} 
+int {\bfseries source}
+\item 
+\Hypertarget{structOutputData_ad863a86239e8290dc84068c576363da4}\label{structOutputData_ad863a86239e8290dc84068c576363da4} 
+int {\bfseries destination}
+\item 
+\Hypertarget{structOutputData_a9e5bd9aad2790271cfbf61d5e3a3d6b9}\label{structOutputData_a9e5bd9aad2790271cfbf61d5e3a3d6b9} 
+int {\bfseries parking\+Node1}
+\item 
+\Hypertarget{structOutputData_a15ebe00c955cd90bff1ca2869bd7017a}\label{structOutputData_a15ebe00c955cd90bff1ca2869bd7017a} 
+int {\bfseries parking\+Node2}
+\item 
+\Hypertarget{structOutputData_a3c3c1b475ccdf2b743c6ca85e1597d8a}\label{structOutputData_a3c3c1b475ccdf2b743c6ca85e1597d8a} 
+std\+::vector$<$ int $>$ {\bfseries best\+Driving\+Route}
+\item 
+\Hypertarget{structOutputData_ad7474140a44c515b18dc46324ea2d14f}\label{structOutputData_ad7474140a44c515b18dc46324ea2d14f} 
+std\+::vector$<$ int $>$ {\bfseries best\+Walking\+Route}
+\item 
+\Hypertarget{structOutputData_ade1a7ecc4d027c75cb3bc287b0992760}\label{structOutputData_ade1a7ecc4d027c75cb3bc287b0992760} 
+std\+::vector$<$ int $>$ {\bfseries alternative\+Driving\+Route1}
+\item 
+\Hypertarget{structOutputData_a32aa19e71fc053783908db3b9319d080}\label{structOutputData_a32aa19e71fc053783908db3b9319d080} 
+std\+::vector$<$ int $>$ {\bfseries alternative\+Driving\+Route2}
+\item 
+\Hypertarget{structOutputData_a1ef6c0ef9462cc9b351e211d02dd3f1d}\label{structOutputData_a1ef6c0ef9462cc9b351e211d02dd3f1d} 
+std\+::vector$<$ int $>$ {\bfseries alternative\+Walking\+Route1}
+\item 
+\Hypertarget{structOutputData_a942b145404b0af788745d2449b8ab1b0}\label{structOutputData_a942b145404b0af788745d2449b8ab1b0} 
+std\+::vector$<$ int $>$ {\bfseries alternative\+Walking\+Route2}
+\item 
+\Hypertarget{structOutputData_a5cbb7066ed364303f6e3ab67b6bf5417}\label{structOutputData_a5cbb7066ed364303f6e3ab67b6bf5417} 
+std\+::string {\bfseries message}
+\item 
+\Hypertarget{structOutputData_a923c207791f5fb921d822ab0a8a6ec5b}\label{structOutputData_a923c207791f5fb921d822ab0a8a6ec5b} 
+double {\bfseries min\+\_\+time\+\_\+1}
+\item 
+\Hypertarget{structOutputData_a6f51dba0e65439ca6d71c2f55a96163d}\label{structOutputData_a6f51dba0e65439ca6d71c2f55a96163d} 
+double {\bfseries min\+\_\+time\+\_\+2}
+\item 
+\Hypertarget{structOutputData_ae1465d318a272311a56db1bc62528717}\label{structOutputData_ae1465d318a272311a56db1bc62528717} 
+double {\bfseries min\+\_\+time\+\_\+3}
+\item 
+\Hypertarget{structOutputData_a27aad7e47ebeca2646ec08d84d663307}\label{structOutputData_a27aad7e47ebeca2646ec08d84d663307} 
+double {\bfseries min\+\_\+time\+\_\+4}
+\item 
+\Hypertarget{structOutputData_a0570617fc945b3edddc488ebdeca3368}\label{structOutputData_a0570617fc945b3edddc488ebdeca3368} 
+double {\bfseries total\+\_\+time1}
+\item 
+\Hypertarget{structOutputData_abda2f218a56d2b66f21ec38d6dc700fd}\label{structOutputData_abda2f218a56d2b66f21ec38d6dc700fd} 
+double {\bfseries total\+\_\+time2}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores output data 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structOutputData_a326e574cf7a816da15438448e5fc6d5c}\index{OutputData@{OutputData}!out@{out}}
+\index{out@{out}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{out()}{out()}}
+{\footnotesize\ttfamily \label{structOutputData_a326e574cf7a816da15438448e5fc6d5c} 
+void Output\+Data\+::out (\begin{DoxyParamCaption}\item[{const char \&}]{choice}{, }\item[{const std\+::string \&}]{mode}{, }\item[{const bool \&}]{is\+Restricted}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wrapper function to output data 
+\begin{DoxyParams}{Parameters}
+{\em choice} & stores from where it took the inputs and to where it should output route information \\
+\hline
+{\em mode} & mode of the route planning. can be "{}driving"{} or "{}driving-\/walking"{} \\
+\hline
+{\em is\+Restricted} & stores if there are restrictions on the route or not \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_a3617c4590fd264bc8cae98d5e03cedbd}\index{OutputData@{OutputData}!print\_alternative\_drive\_walk\_cli@{print\_alternative\_drive\_walk\_cli}}
+\index{print\_alternative\_drive\_walk\_cli@{print\_alternative\_drive\_walk\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_alternative\_drive\_walk\_cli()}{print\_alternative\_drive\_walk\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_a3617c4590fd264bc8cae98d5e03cedbd} 
+void Output\+Data\+::print\+\_\+alternative\+\_\+drive\+\_\+walk\+\_\+cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the alternative routes, considering restrictions and driving+walking, to terminal \Hypertarget{structOutputData_a0122a9c96aa288865b34793c972bae29}\index{OutputData@{OutputData}!print\_alternative\_drive\_walk\_file@{print\_alternative\_drive\_walk\_file}}
+\index{print\_alternative\_drive\_walk\_file@{print\_alternative\_drive\_walk\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_alternative\_drive\_walk\_file()}{print\_alternative\_drive\_walk\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a0122a9c96aa288865b34793c972bae29} 
+void Output\+Data\+::print\+\_\+alternative\+\_\+drive\+\_\+walk\+\_\+file (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the alternative routes, considering restrictions and driving+walking, to an output file \Hypertarget{structOutputData_aab6d4003a39c467c9f866bb0e53d631b}\index{OutputData@{OutputData}!print\_multiroute\_cli@{print\_multiroute\_cli}}
+\index{print\_multiroute\_cli@{print\_multiroute\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_multiroute\_cli()}{print\_multiroute\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_aab6d4003a39c467c9f866bb0e53d631b} 
+void Output\+Data\+::print\+\_\+multiroute\+\_\+cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route and alternative route on terminal \Hypertarget{structOutputData_affd2864db5a4a1446b7eb14753a6921b}\index{OutputData@{OutputData}!print\_multiroute\_file@{print\_multiroute\_file}}
+\index{print\_multiroute\_file@{print\_multiroute\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_multiroute\_file()}{print\_multiroute\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_affd2864db5a4a1446b7eb14753a6921b} 
+void Output\+Data\+::print\+\_\+multiroute\+\_\+file (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route and alternative route on an output file \Hypertarget{structOutputData_a35b39bd4545e04a84390a9027161ebb9}\index{OutputData@{OutputData}!print\_restricted\_drive\_walk\_cli@{print\_restricted\_drive\_walk\_cli}}
+\index{print\_restricted\_drive\_walk\_cli@{print\_restricted\_drive\_walk\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_restricted\_drive\_walk\_cli()}{print\_restricted\_drive\_walk\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_a35b39bd4545e04a84390a9027161ebb9} 
+void Output\+Data\+::print\+\_\+restricted\+\_\+drive\+\_\+walk\+\_\+cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route, considering restrictions and driving+walking, to terminal \Hypertarget{structOutputData_a19b69304bd6b94b68d7eb1569f2b481c}\index{OutputData@{OutputData}!print\_restricted\_drive\_walk\_file@{print\_restricted\_drive\_walk\_file}}
+\index{print\_restricted\_drive\_walk\_file@{print\_restricted\_drive\_walk\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_restricted\_drive\_walk\_file()}{print\_restricted\_drive\_walk\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a19b69304bd6b94b68d7eb1569f2b481c} 
+void Output\+Data\+::print\+\_\+restricted\+\_\+drive\+\_\+walk\+\_\+file (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route, considering restrictions and driving+walking, to an output file \Hypertarget{structOutputData_aeee98cd1bb9d1a287d8c3e77a5648f1c}\index{OutputData@{OutputData}!print\_restricted\_route\_cli@{print\_restricted\_route\_cli}}
+\index{print\_restricted\_route\_cli@{print\_restricted\_route\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_restricted\_route\_cli()}{print\_restricted\_route\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_aeee98cd1bb9d1a287d8c3e77a5648f1c} 
+void Output\+Data\+::print\+\_\+restricted\+\_\+route\+\_\+cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route, considering restrictions, to terminal \Hypertarget{structOutputData_a34883bc717965e5c892caaeba25d2381}\index{OutputData@{OutputData}!print\_restricted\_route\_file@{print\_restricted\_route\_file}}
+\index{print\_restricted\_route\_file@{print\_restricted\_route\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{print\_restricted\_route\_file()}{print\_restricted\_route\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a34883bc717965e5c892caaeba25d2381} 
+void Output\+Data\+::print\+\_\+restricted\+\_\+route\+\_\+file (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the best route, considering restrictions, to output file \Hypertarget{structOutputData_a16cd566d10271ffa2f47992d7e544327}\index{OutputData@{OutputData}!printDest\_cli@{printDest\_cli}}
+\index{printDest\_cli@{printDest\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printDest\_cli()}{printDest\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_a16cd566d10271ffa2f47992d7e544327} 
+void Output\+Data\+::print\+Dest\+\_\+cli (\begin{DoxyParamCaption}\item[{const int \&}]{dest}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Function for printing the dest on terminal 
+\begin{DoxyParams}{Parameters}
+{\em dest} & destination node \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_a7c2a07102846f646971cda801a2a195c}\index{OutputData@{OutputData}!printDest\_file@{printDest\_file}}
+\index{printDest\_file@{printDest\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printDest\_file()}{printDest\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a7c2a07102846f646971cda801a2a195c} 
+void Output\+Data\+::print\+Dest\+\_\+file (\begin{DoxyParamCaption}\item[{const int \&}]{dest}{, }\item[{std\+::ofstream \&}]{out\+\_\+file}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the destination on out\+\_\+file 
+\begin{DoxyParams}{Parameters}
+{\em dest} & the dest node \\
+\hline
+{\em out\+\_\+file} & where the text will be written \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_ad8b6439f572c4cece9266f290b753d6e}\index{OutputData@{OutputData}!printRoute\_cli@{printRoute\_cli}}
+\index{printRoute\_cli@{printRoute\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printRoute\_cli()}{printRoute\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_ad8b6439f572c4cece9266f290b753d6e} 
+void Output\+Data\+::print\+Route\+\_\+cli (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Function for printing a vector in the format x1,x2,...,xn on terminal 
+\begin{DoxyParams}{Parameters}
+{\em vec} & the vector you want to print \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_a1a9810f7c142cf98e4a21bfd56e56378}\index{OutputData@{OutputData}!printRoute\_file@{printRoute\_file}}
+\index{printRoute\_file@{printRoute\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printRoute\_file()}{printRoute\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a1a9810f7c142cf98e4a21bfd56e56378} 
+void Output\+Data\+::print\+Route\+\_\+file (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{vec}{, }\item[{std\+::ofstream \&}]{out\+\_\+file}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints a vector in the format x1,x2,...,xn on out\+\_\+file 
+\begin{DoxyParams}{Parameters}
+{\em vec} & the vector you want to print \\
+\hline
+{\em out\+\_\+file} & where the text will be written \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_a58533535c1e430d5dc369c03a8930e2d}\index{OutputData@{OutputData}!printSource\_cli@{printSource\_cli}}
+\index{printSource\_cli@{printSource\_cli}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printSource\_cli()}{printSource\_cli()}}
+{\footnotesize\ttfamily \label{structOutputData_a58533535c1e430d5dc369c03a8930e2d} 
+void Output\+Data\+::print\+Source\+\_\+cli (\begin{DoxyParamCaption}\item[{const int \&}]{source}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Function for printing the source on terminal 
+\begin{DoxyParams}{Parameters}
+{\em source} & source node \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structOutputData_a951076fef1956e1735a4a37572a0533a}\index{OutputData@{OutputData}!printSource\_file@{printSource\_file}}
+\index{printSource\_file@{printSource\_file}!OutputData@{OutputData}}
+\doxysubsubsection{\texorpdfstring{printSource\_file()}{printSource\_file()}}
+{\footnotesize\ttfamily \label{structOutputData_a951076fef1956e1735a4a37572a0533a} 
+void Output\+Data\+::print\+Source\+\_\+file (\begin{DoxyParamCaption}\item[{const int \&}]{source}{, }\item[{std\+::ofstream \&}]{out\+\_\+file}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the source on out\+\_\+file 
+\begin{DoxyParams}{Parameters}
+{\em source} & the source node \\
+\hline
+{\em out\+\_\+file} & where the text will be written \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+code/data\+\_\+structures/Output\+Data.\+h\end{DoxyCompactItemize}

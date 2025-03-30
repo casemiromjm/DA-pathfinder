@@ -1,0 +1,80 @@
+\doxysection{Input\+Data Struct Reference}
+\hypertarget{structInputData}{}\label{structInputData}\index{InputData@{InputData}}
+
+
+{\ttfamily \#include $<$Input\+Data.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structInputData_a29ba6946f6e69d6bc9577cf7398a2d32}{read\+Input\+File}} (const std\+::string \&filename)
+\item 
+void \mbox{\hyperlink{structInputData_a238297e391e04d40bee5584f9a0f0d11}{read\+Terminal}} ()
+\item 
+void \mbox{\hyperlink{structInputData_aff97a66a0e9ee32075df79a7f1356d40}{in}} (const char \&choice, const std\+::string \&filename="{}"{})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structInputData_ab2c8c49e8f275533a4f46a9a65eec4f3}\label{structInputData_ab2c8c49e8f275533a4f46a9a65eec4f3} 
+std\+::string {\bfseries mode}
+\item 
+\Hypertarget{structInputData_a390b4ea180d1499b02ab79602b68f987}\label{structInputData_a390b4ea180d1499b02ab79602b68f987} 
+int {\bfseries source}
+\item 
+\Hypertarget{structInputData_a23d8005b7e2fd84c1f304304859da87e}\label{structInputData_a23d8005b7e2fd84c1f304304859da87e} 
+int {\bfseries destination}
+\item 
+\Hypertarget{structInputData_a8bf41fe41b46ed3c75e2c049570a0eed}\label{structInputData_a8bf41fe41b46ed3c75e2c049570a0eed} 
+int {\bfseries max\+Walk\+Time} = -\/1
+\item 
+\Hypertarget{structInputData_a529b8c6d3a2cf41aa05cf63703612a53}\label{structInputData_a529b8c6d3a2cf41aa05cf63703612a53} 
+std\+::set$<$ int $>$ {\bfseries avoid\+Nodes}
+\item 
+\Hypertarget{structInputData_ab23905940d2788fe8e7293c390aadaf2}\label{structInputData_ab23905940d2788fe8e7293c390aadaf2} 
+std\+::set$<$ std\+::pair$<$ int, int $>$ $>$ {\bfseries avoid\+Segments}
+\item 
+\Hypertarget{structInputData_a03cccdaf0329a7d8de711f611731ab67}\label{structInputData_a03cccdaf0329a7d8de711f611731ab67} 
+int {\bfseries include\+Node} = -\/1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores the input data 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structInputData_aff97a66a0e9ee32075df79a7f1356d40}\index{InputData@{InputData}!in@{in}}
+\index{in@{in}!InputData@{InputData}}
+\doxysubsubsection{\texorpdfstring{in()}{in()}}
+{\footnotesize\ttfamily \label{structInputData_aff97a66a0e9ee32075df79a7f1356d40} 
+void Input\+Data\+::in (\begin{DoxyParamCaption}\item[{const char \&}]{choice}{, }\item[{const std\+::string \&}]{filename}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wrapper function to read inputs 
+\begin{DoxyParams}{Parameters}
+{\em choice} & method of the input (1 for file or 2 for CLI) \\
+\hline
+{\em filename} & file name if it is via file \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structInputData_a29ba6946f6e69d6bc9577cf7398a2d32}\index{InputData@{InputData}!readInputFile@{readInputFile}}
+\index{readInputFile@{readInputFile}!InputData@{InputData}}
+\doxysubsubsection{\texorpdfstring{readInputFile()}{readInputFile()}}
+{\footnotesize\ttfamily \label{structInputData_a29ba6946f6e69d6bc9577cf7398a2d32} 
+void Input\+Data\+::read\+Input\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Reads an input file 
+\begin{DoxyParams}{Parameters}
+{\em filename} & which file you are trying to read from input\+\_\+output folder \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structInputData_a238297e391e04d40bee5584f9a0f0d11}\index{InputData@{InputData}!readTerminal@{readTerminal}}
+\index{readTerminal@{readTerminal}!InputData@{InputData}}
+\doxysubsubsection{\texorpdfstring{readTerminal()}{readTerminal()}}
+{\footnotesize\ttfamily \label{structInputData_a238297e391e04d40bee5584f9a0f0d11} 
+void Input\+Data\+::read\+Terminal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Reads input from terminal 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+code/data\+\_\+structures/Input\+Data.\+h\end{DoxyCompactItemize}

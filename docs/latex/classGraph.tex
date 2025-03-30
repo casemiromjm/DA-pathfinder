@@ -1,0 +1,78 @@
+\doxysection{Graph Class Reference}
+\hypertarget{classGraph}{}\label{classGraph}\index{Graph@{Graph}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGraph_a80e4dc6dc4d094e7c728015346705863}\label{classGraph_a80e4dc6dc4d094e7c728015346705863} 
+\mbox{\hyperlink{classVertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Vertex} (const int \&in) const
+\item 
+\Hypertarget{classGraph_a150c3a9f119a09afa5ae1c21222bc783}\label{classGraph_a150c3a9f119a09afa5ae1c21222bc783} 
+bool {\bfseries add\+Vertex} (const int \&in, int \&parking)
+\item 
+\Hypertarget{classGraph_ad1d6b5aeb4fd53f6a3b366afd51cb8cc}\label{classGraph_ad1d6b5aeb4fd53f6a3b366afd51cb8cc} 
+bool {\bfseries remove\+Vertex} (const int \&in)
+\item 
+\Hypertarget{classGraph_a8cbe08f57f13e79ed1de9e6b3652e5b0}\label{classGraph_a8cbe08f57f13e79ed1de9e6b3652e5b0} 
+bool {\bfseries add\+Edge} (const int \&sourc, const int \&dest, double d, double w)
+\item 
+\Hypertarget{classGraph_a764e3181643efb34ff0209ca6e33275b}\label{classGraph_a764e3181643efb34ff0209ca6e33275b} 
+bool {\bfseries remove\+Edge} (const int \&source, const int \&dest)
+\item 
+\Hypertarget{classGraph_a16ae5a5bcba44d6d56ec6c54f5a087c8}\label{classGraph_a16ae5a5bcba44d6d56ec6c54f5a087c8} 
+bool {\bfseries add\+Bidirectional\+Edge} (const int \&sourc, const int \&dest, double d, double w)
+\item 
+\Hypertarget{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}\label{classGraph_abb5e0517e2979c54eebdafc2a9875e8f} 
+int {\bfseries get\+Num\+Vertex} () const
+\item 
+bool \mbox{\hyperlink{classGraph_a6a9ca78cbcbcd4e532e57e89e1ecea2d}{construct\+City}} ()
+\item 
+void \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{clear}} ()
+\item 
+\Hypertarget{classGraph_a619ac583094079134074658e29463c0e}\label{classGraph_a619ac583094079134074658e29463c0e} 
+std\+::vector$<$ \mbox{\hyperlink{classVertex}{Vertex}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+Vertex\+Set} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGraph_ace82e2a5c15c2a2d11cbcb65d355d8d3}\label{classGraph_ace82e2a5c15c2a2d11cbcb65d355d8d3} 
+int {\bfseries find\+Vertex\+Idx} (const int \&in) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGraph_aa9b0a6d8ad43c5eabaca5a7140bcc8b6}\label{classGraph_aa9b0a6d8ad43c5eabaca5a7140bcc8b6} 
+std\+::vector$<$ \mbox{\hyperlink{classVertex}{Vertex}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries vertex\+Set}
+\item 
+\Hypertarget{classGraph_a9e61864da69191c1896a25a708d1a02d}\label{classGraph_a9e61864da69191c1896a25a708d1a02d} 
+double \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries dist\+Matrix} = nullptr
+\item 
+\Hypertarget{classGraph_a3ae09699c3616af3ebfcb1eb045f2b62}\label{classGraph_a3ae09699c3616af3ebfcb1eb045f2b62} 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} {\bfseries path\+Matrix} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGraph_ac6192a41101102ca8aa6acca607c84f3}\index{Graph@{Graph}!clear@{clear}}
+\index{clear@{clear}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classGraph_ac6192a41101102ca8aa6acca607c84f3} 
+void Graph\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Cleans the graph for being able to run multiple tasks \Hypertarget{classGraph_a6a9ca78cbcbcd4e532e57e89e1ecea2d}\index{Graph@{Graph}!constructCity@{constructCity}}
+\index{constructCity@{constructCity}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{constructCity()}{constructCity()}}
+{\footnotesize\ttfamily \label{classGraph_a6a9ca78cbcbcd4e532e57e89e1ecea2d} 
+bool Graph\+::construct\+City (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a city/graph 
+\begin{DoxyRetVals}{Return values}
+{\em True} & if the construction was successful \\
+\hline
+{\em False} & if it was not \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+code/data\+\_\+structures/Graph.\+h\end{DoxyCompactItemize}

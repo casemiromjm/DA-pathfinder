@@ -1,0 +1,44 @@
+\doxysection{dijkstra.\+h}
+\hypertarget{dijkstra_8h_source}{}\label{dijkstra_8h_source}\index{code/algorithms/dijkstra.h@{code/algorithms/dijkstra.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DIJKSTRA\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DIJKSTRA\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../data\_structures/Graph.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../data\_structures/InputData.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../data\_structures/OutputData.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{bool}\ relax\_drive(\mbox{\hyperlink{classEdge}{Edge}}\ *edge);}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{void}\ dijkstra\_driving(\mbox{\hyperlink{classGraph}{Graph}}\ *g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&origin);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ dijkstra\_restricted\_driving(\mbox{\hyperlink{classGraph}{Graph}}\ *g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&origin,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::set<int>\ \&avoidNodes,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::set<std::pair<int,\ int>>\ \&avoidSegments);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00056\ std::vector<int>\ getPath(\mbox{\hyperlink{classGraph}{Graph}}\ *g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&origin,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{bool}\ relax\_walk(\mbox{\hyperlink{classEdge}{Edge}}\ *edge);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ dijkstra\_walk(\mbox{\hyperlink{classGraph}{Graph}}\ *g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&origin,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::set<int>\ \&avoidNodes,}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::set<std::pair<int,\ int>>\ \&avoidSegments);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00092\ std::map<int,\ double>\ parking\_nodes\_dist(\textcolor{keyword}{const}\ \mbox{\hyperlink{classGraph}{Graph}}*\ g);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00103\ std::vector<int>\ getWalkPath(\mbox{\hyperlink{classGraph}{Graph}}\ *g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&origin,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&dest);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00115\ std::pair<int,\ double>\ getBestPath(\textcolor{keyword}{const}\ std::map<int,\ double>\ \&dist\_map,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classGraph}{Graph}}*\ g);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{void}\ findAlternativeRoutes(\textcolor{keyword}{const}\ \mbox{\hyperlink{structInputData}{InputData}}*\ input\_data,\ \mbox{\hyperlink{structOutputData}{OutputData}}*\ output\_data,\ \textcolor{keywordtype}{bool}\&\ isRestricted,\ \mbox{\hyperlink{classGraph}{Graph}}*\ g);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{void}\ dijkstra\_drive\_walk\_wrapper(\textcolor{keyword}{const}\ \mbox{\hyperlink{structInputData}{InputData}}*\ input\_data,\ \mbox{\hyperlink{structOutputData}{OutputData}}*\ output\_data,\ \mbox{\hyperlink{classGraph}{Graph}}*\ g,\ \textcolor{keywordtype}{bool}\&\ isRestricted);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00142\ \textcolor{keywordtype}{void}\ dijkstra\_driving\_wrapper(\textcolor{keyword}{const}\ \mbox{\hyperlink{structInputData}{InputData}}*\ input\_data,\ \mbox{\hyperlink{structOutputData}{OutputData}}*\ output\_data,\ \mbox{\hyperlink{classGraph}{Graph}}*\ g,\ \textcolor{keywordtype}{bool}\&\ isRestricted);}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DIJKSTRA\_H}}
+
+\end{DoxyCode}
