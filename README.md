@@ -1,10 +1,12 @@
 # Pathfinding Tool
+## Description
 A CLI tool using greedy algorithmic approach for creating a path-planning tool to assist with urban navigation.
 
 All streets are assumed to be two-way streets. The city is represented as a weighted undirected graph. Each edge is associated with two integers: the driving and walking time. Each node has an indication of whether there is parking available there or not.
 
 If you can drive through an edge, you can walk through it as well. Also, we consider that there are always free parking spots.
 
+## Data
 The [data](code/data/) folder contains the files used for creating the city representation graph.
 
 [Locations.csv](code/data/Locations.csv) contains a header with 3 columns: *Location*, *Id*, *Code*, *Parking*.
