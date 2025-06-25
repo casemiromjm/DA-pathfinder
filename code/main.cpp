@@ -99,7 +99,7 @@ int main() {
             break;
 
             case 'x':
-                std::cout << "Finished the demo!" << std::endl;
+                std::cout << "Finished the program!" << std::endl;
                 isRunning = false;
             break;
 

@@ -1,5 +1,6 @@
 # TODO
 _checklist used during development_
+
 ## Task 1 - Initial Functionalities
 - [X] *T1.1* - **CLI menu (+ batch mode)** that exposes all functionalities. When displaying the results, show all relevant details, including the full sequence path
 points from origin to destination. The program should handle exceptional cases/errors properly *(1 point)*

@@ -40,7 +40,7 @@ struct InputData {
      * @param filename which file you are trying to read from input_output folder
      */
     void readInputFile(const std::string &filename) {
-    std::ifstream file("../input_output/" + filename); //recebe o filename e procura na pasta input_output
+    std::ifstream file("../code/input_output/" + filename); //recebe o filename e procura na pasta input_output
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;

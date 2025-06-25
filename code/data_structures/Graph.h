@@ -476,7 +476,7 @@ inline bool Graph::constructCity() {
     // read Locations.csv;
 
     Csv *csv_file = new Csv();
-    csv_file->readCSV("../data/Locations.csv");
+    csv_file->readCSV("../code/data/Locations.csv");
     //csv_file->readCSV("../data/example_locations.csv");  // presentation example
 
     if (csv_file->getData().empty()) {
@@ -497,7 +497,7 @@ inline bool Graph::constructCity() {
 
     // read distances
 
-    csv_file->readCSV("../data/Distances.csv");      // uncomment for the real graph
+    csv_file->readCSV("../code/data/Distances.csv");      // uncomment for the real graph
     //csv_file->readCSV("../data/example_distances.csv"); // presentation example
 
     if (csv_file->getData().empty()) {

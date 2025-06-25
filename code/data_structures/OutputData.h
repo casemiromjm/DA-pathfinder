@@ -216,10 +216,10 @@ struct OutputData {
     void print_multiroute_file() {
         std::ofstream out_file;
 
-        out_file.open("../input_output/output.txt");
+        out_file.open("../code/input_output/output.txt");
 
         if (!out_file.is_open()) {
-            std::cerr << "Failed to open output file" << std::endl;
+            std::cerr << "Failed to create output file" << std::endl;
         }
 
         printSource_file(this->source, out_file);
@@ -255,10 +255,10 @@ struct OutputData {
     void print_restricted_route_file() {
         std::ofstream out_file;
 
-        out_file.open("../input_output/output.txt");
+        out_file.open("../code/input_output/output.txt");
 
         if (!out_file.is_open()) {
-            std::cerr << "Failed to open output file" << std::endl;
+            std::cerr << "Failed to create output file" << std::endl;
         }
 
         printSource_file(this->source, out_file);
@@ -273,7 +273,7 @@ struct OutputData {
             out_file << std::endl;
         }
 
-        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << "output.txt successfully created in /input_output/" << std::endl;
         std::cout << std::endl;
 
         out_file.close();
@@ -285,10 +285,10 @@ struct OutputData {
     void print_restricted_drive_walk_file() {
         std::ofstream out_file;
 
-        out_file.open("../input_output/output.txt");
+        out_file.open("../code/input_output/output.txt");
 
         if (!out_file.is_open()) {
-            std::cerr << "Failed to open output file" << std::endl;
+            std::cerr << "Failed to create output file" << std::endl;
         }
 
         printSource_file(this->source, out_file);
@@ -316,7 +316,7 @@ struct OutputData {
 
         }
 
-        std::cout << "output.txt successfully created in ./input_output/" << std::endl;
+        std::cout << "output.txt successfully created in /input_output/" << std::endl;
         std::cout << std::endl;
 
         out_file.close();
@@ -328,10 +328,10 @@ struct OutputData {
     void print_alternative_drive_walk_file() {
         std::ofstream out_file;
 
-        out_file.open("../input_output/alternative_routes.txt");
+        out_file.open("../code/input_output/alternative_routes.txt");
 
         if (!out_file.is_open()) {
-            std::cerr << "Failed to open output file" << std::endl;
+            std::cerr << "Failed to create output file" << std::endl;
         }
 
         printSource_file(this->source, out_file);
@@ -364,7 +364,7 @@ struct OutputData {
         out_file << "TotalTime2:" << total_time2 << std::endl;
 
 
-        std::cout << "alternatives_routes.txt successfully created in ./input_output/" << std::endl;
+        std::cout << "alternatives_routes.txt successfully created in /input_output/" << std::endl;
         std::cout << std::endl;
 
         out_file.close();
